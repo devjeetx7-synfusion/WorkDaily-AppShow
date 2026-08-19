@@ -75,6 +75,26 @@
   padding: 0;
 }
 
+/* Hide Blogger default header section to eliminate duplicate text */
+.header-section, #header-section, #Header1, #Header1_header-inner {
+  display: none !important;
+  visibility: hidden !important;
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+}
+
+/* Hide unwanted Blogger footer info block widget */
+.footer-section, #footer-section, #HTML1, .widget.HTML {
+  display: none !important;
+  visibility: hidden !important;
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+}
+
 html {
   scroll-behavior: smooth;
   font-size: 16px;
@@ -857,6 +877,11 @@ body {
   border-radius: var(--radius-full);
   border: 1px solid rgba(255, 255, 255, 0.12);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  pointer-events: none;
+}
+
+.wd-indicator-dot, .wd-indicator-counter, .wd-indicator-rail {
+  pointer-events: auto;
 }
 
 .wd-indicator-counter {
@@ -1457,7 +1482,6 @@ body {
   .wd-showcase-section {
     height: 100vh;
     height: 100svh;
-    height: 100dvh;
     width: 100%;
     overflow: hidden;
   }
@@ -1476,7 +1500,6 @@ body {
   .wd-slide {
     height: 100vh;
     height: 100svh;
-    height: 100dvh;
     width: 100%;
     max-width: 100%;
     padding: calc(88px + env(safe-area-inset-top)) 16px calc(16px + env(safe-area-inset-bottom));
@@ -1572,9 +1595,62 @@ body {
 
   .wd-slide-img {
     border-radius: 22px;
-    object-fit: cover;
+    object-fit: contain;
     width: 100%;
     height: 100%;
+    background-color: #000;
+  }
+
+  /* SMALL DEVICE OPTIMIZATIONS (320px-380px width or short viewports <= 700px) */
+  @media (max-width: 380px), (max-height: 700px) {
+    .wd-slide {
+      padding: calc(64px + env(safe-area-inset-top)) 12px calc(12px + env(safe-area-inset-bottom));
+    }
+
+    .wd-slide-eyebrow {
+      font-size: 9px;
+      margin-bottom: 2px;
+    }
+
+    .wd-slide-title {
+      font-size: clamp(17px, 5vw, 22px);
+      margin-bottom: 4px;
+    }
+
+    .wd-slide-desc {
+      font-size: 12px;
+      line-height: 1.3;
+      margin-bottom: 6px;
+      max-width: 280px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .wd-slide-badge {
+      font-size: 9px;
+      padding: 2px 8px;
+      margin-bottom: 2px;
+    }
+
+    .wd-slide-phone {
+      height: 38vh;
+      max-height: 280px;
+      min-height: 150px;
+      border-radius: 22px;
+      padding: 5px;
+    }
+
+    .wd-slide-img {
+      border-radius: 17px;
+    }
+
+    .wd-indicator-wrapper {
+      right: 8px;
+      bottom: calc(12px + env(safe-area-inset-bottom));
+      padding: 6px 4px;
+    }
   }
 
   /* BOTTOM-RIGHT VERTICAL INDICATOR ON MOBILE */
@@ -1706,9 +1782,13 @@ body {
     </div>
   </div>
 
-  <!-- Blogger Layout Section for Header Widget if needed -->
+  <!-- Blogger Layout Section for Header Widget (suppressed to prevent duplicate title text) -->
   <b:section class='header-section' id='header-section' maxwidgets='1' showelement='no'>
-    <b:widget id='Header1' locked='true' title='Header' type='Header'/>
+    <b:widget id='Header1' locked='true' title='Header' type='Header'>
+      <b:includable id='main'>
+        <!-- Suppress default Blogger header widget text -->
+      </b:includable>
+    </b:widget>
   </b:section>
 
   <!-- ================= HERO SECTION ================= -->
@@ -2129,9 +2209,13 @@ body {
     </div>
   </footer>
 
-  <!-- Optional Blogger Footer Section for Widgets -->
+  <!-- Optional Blogger Footer Section for Widgets (suppressed) -->
   <b:section class='footer-section' id='footer-section' showelement='no'>
-    <b:widget id='HTML1' locked='false' title='Footer Info' type='HTML'/>
+    <b:widget id='HTML1' locked='false' title='Footer Info' type='HTML'>
+      <b:includable id='main'>
+        <!-- Suppress default footer info widget -->
+      </b:includable>
+    </b:widget>
   </b:section>
 
   <!-- ================= WORKDAILY JAVASCRIPT ARCHITECTURE ================= -->
@@ -2392,35 +2476,67 @@ body {
       const dot = document.createElement("button");
       dot.className = "wd-indicator-dot" + (index === 0 ? " active" : "");
       dot.setAttribute("aria-label", "Go to slide " + (index + 1));
-      dot.addEventListener("click", function() {
+      dot.addEventListener("click", function(e) {
+        e.preventDefault();
         const targetSlide = document.getElementById("wd-slide-" + index);
-        if (targetSlide) {
-          targetSlide.scrollIntoView({ behavior: "smooth" });
+        if (targetSlide && viewport) {
+          viewport.scrollTo({ top: targetSlide.offsetTop, behavior: "smooth" });
         }
       });
       rail.appendChild(dot);
     });
 
-    // IntersectionObserver to Track Active Slide
+    // Track visibility ratio for each slide
+    let visibleRatios = new Array(workDailyScreens.length).fill(0);
+    let activeIdx = 0;
+
     const observerOptions = {
       root: viewport,
-      threshold: 0.6
+      threshold: [0, 0.25, 0.5, 0.75, 1.0]
     };
 
     const observer = new IntersectionObserver(function(entries) {
       entries.forEach(function(entry) {
-        if (entry.isIntersecting) {
-          const idx = parseInt(entry.target.getAttribute("data-slide-index"), 10);
-          updateActiveIndicator(idx);
-          preloadAdjacentImages(idx);
+        const idx = parseInt(entry.target.getAttribute("data-slide-index"), 10);
+        visibleRatios[idx] = entry.isIntersecting ? entry.intersectionRatio : 0;
+      });
+
+      let maxRatio = -1;
+      let maxIdx = activeIdx;
+      visibleRatios.forEach(function(ratio, i) {
+        if (ratio > maxRatio) {
+          maxRatio = ratio;
+          maxIdx = i;
         }
       });
+
+      if (maxRatio > 0 && maxIdx !== activeIdx) {
+        activeIdx = maxIdx;
+        updateActiveIndicator(activeIdx);
+        preloadAdjacentImages(activeIdx);
+      }
     }, observerOptions);
 
     const slides = track.querySelectorAll(".wd-slide");
     slides.forEach(function(slide) {
       observer.observe(slide);
     });
+
+    // Edge boundary fallback scroll listener to guarantee returning to Screenshot 01
+    viewport.addEventListener("scroll", function() {
+      if (viewport.scrollTop <= 10) {
+        if (activeIdx !== 0) {
+          activeIdx = 0;
+          updateActiveIndicator(0);
+        }
+      } else if (viewport.scrollTop + viewport.clientHeight >= viewport.scrollHeight - 20) {
+        const lastIdx = workDailyScreens.length - 1;
+        if (activeIdx !== lastIdx) {
+          activeIdx = lastIdx;
+          updateActiveIndicator(lastIdx);
+        }
+      }
+    }, { passive: true });
 
     function updateActiveIndicator(activeIndex) {
       currentNumEl.textContent = String(activeIndex + 1).padStart(2, '0');
