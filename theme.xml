@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html>
-<html expr:dir='data:blog.languageDirection' xmlns='http://www.w3.org/1999/xhtml' xmlns:b='http://www.google.com/2005/gml/b' xmlns:data='http://www.google.com/2005/gml/data' xmlns:expr='http://www.google.com/2005/gml/expr'>
+<html expr:dir='data:blog.languageDirection' xmlns='http://www.w3.org/1999/xhtml' xmlns:b='http://www.google.com/2005/gml/b' xmlns:data='http://www.google.com/2005/gml/data' xmlns:expr='http://www.google.com/2005/gml/expr' b:responsive='true'>
 <head>
   <meta charset='utf-8'/>
   <meta content='width=device-width, initial-scale=1.0, viewport-fit=cover' name='viewport'/>
-  <b:responsive='true'/>
 
   <!-- Dynamic Title -->
   <b:if cond='data:view.isHomepage'>
@@ -1487,6 +1486,8 @@ body {
     justify-content: center;
     align-items: center;
     overflow: hidden;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
   }
 
   /* Standardize all variant layouts on mobile into single vertical stack */
