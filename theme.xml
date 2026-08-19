@@ -694,8 +694,8 @@ body {
   position: relative;
   width: 100%;
   height: 100svh;
-  background-color: #0E1410;
-  color: #FFFFFF;
+  background: linear-gradient(180deg, #F7F8F5 0%, #EBF2EC 100%);
+  color: var(--color-text);
   overflow: hidden;
   overscroll-behavior-y: auto;
 }
@@ -727,12 +727,11 @@ body {
   scroll-snap-align: start;
   scroll-snap-stop: always;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   position: relative;
-  padding: 80px 24px;
-  padding-top: calc(80px + env(safe-area-inset-top));
-  padding-bottom: calc(40px + env(safe-area-inset-bottom));
+  padding: calc(80px + env(safe-area-inset-top, 0px)) 16px calc(20px + env(safe-area-inset-bottom, 0px));
   box-sizing: border-box;
 }
 
@@ -741,13 +740,13 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 600px;
-  height: 600px;
-  background: radial-gradient(circle, var(--slide-accent, rgba(46, 125, 50, 0.25)) 0%, transparent 70%);
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, var(--slide-accent, rgba(46, 125, 50, 0.18)) 0%, transparent 70%);
   filter: blur(80px);
   pointer-events: none;
   z-index: 0;
-  opacity: 0.6;
+  opacity: 0.8;
 }
 
 .wd-slide-container {
@@ -755,116 +754,118 @@ body {
   z-index: 1;
   width: 100%;
   max-width: 1140px;
+  height: 100%;
   margin: 0 auto;
-}
-
-/* VARIANT A: Text Left / Phone Right */
-.wd-slide-variant-a {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 50px;
-  align-items: center;
-}
-
-/* VARIANT B: Phone Center / Text Top */
-.wd-slide-variant-b {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-between;
+}
+
+.wd-slide-text-header {
   text-align: center;
-  gap: 30px;
-}
-
-/* VARIANT C: Text Top / Phone Center */
-.wd-slide-variant-c {
-  display: flex;
-  flex-direction: column-reverse;
-  align-items: center;
-  text-align: center;
-  gap: 30px;
-}
-
-/* VARIANT D: Phone Left / Text Right */
-.wd-slide-variant-d {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 50px;
-  align-items: center;
-}
-
-.wd-slide-text {
-  max-width: 500px;
+  max-width: 480px;
+  margin: 0 auto 8px;
+  flex: 0 0 auto;
 }
 
 .wd-slide-eyebrow {
-  font-size: 12px;
+  font-size: clamp(10px, 2.8vw, 12px);
   font-weight: 800;
   letter-spacing: 0.12em;
-  color: var(--color-light-accent);
+  color: #145A32;
   text-transform: uppercase;
-  margin-bottom: 12px;
+  margin-bottom: 4px;
   display: flex;
   align-items: center;
-  gap: 8px;
+  justify-content: center;
+  gap: 6px;
 }
 
 .wd-slide-title {
-  font-size: clamp(28px, 4vw, 52px);
+  font-size: clamp(18px, 4.8vw, 32px);
   font-weight: 800;
-  line-height: 1.1;
-  color: #FFFFFF;
+  line-height: 1.15;
+  color: #101410;
   letter-spacing: -0.02em;
-  margin-bottom: 16px;
+  margin: 0 0 4px;
 }
 
 .wd-slide-desc {
-  font-size: clamp(15px, 1.5vw, 18px);
-  color: rgba(255, 255, 255, 0.72);
-  line-height: 1.6;
-  margin-bottom: 24px;
-}
-
-.wd-slide-badge {
-  display: inline-flex;
-  align-items: center;
-  padding: 6px 14px;
-  border-radius: var(--radius-full);
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  font-size: 11px;
-  font-weight: 700;
-  color: #FFFFFF;
-  letter-spacing: 0.05em;
+  font-size: clamp(12px, 3.2vw, 15px);
+  color: #667067;
+  line-height: 1.4;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .wd-slide-phone-wrap {
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+  flex: 1 1 auto;
+  min-height: 0;
+  position: relative;
+  margin-top: 4px;
 }
 
 /* SLIDE PHONE FRAME */
 .wd-slide-phone {
-  width: 320px;
-  height: 650px;
-  max-height: 82vh;
-  aspect-ratio: 9 / 19.5;
-  background: #000;
-  border-radius: 42px;
-  padding: 10px;
-  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6), 0 0 40px rgba(46, 125, 50, 0.2);
-  border: 2px solid rgba(255, 255, 255, 0.2);
+  height: clamp(340px, 68svh, 580px);
+  max-height: 70svh;
+  max-width: 88vw;
+  width: auto;
+  align-self: center;
+  flex-shrink: 1;
+  background: #FFFFFF;
+  border-radius: 24px;
+  padding: 6px;
+  box-shadow: 0 16px 38px rgba(16, 20, 16, 0.08), 0 0 24px rgba(46, 125, 50, 0.12);
+  border: 1.5px solid rgba(20, 90, 50, 0.15);
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   position: relative;
-  transition: transform var(--transition-slow);
   box-sizing: border-box;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .wd-slide-img {
-  width: 100%;
+  border-radius: 18px;
+  object-fit: contain;
+  width: auto;
+  max-width: 100%;
   height: 100%;
-  object-fit: cover;
-  border-radius: 32px;
+  background-color: #FFFFFF;
   display: block;
+}
+
+.wd-feature-icon-badge {
+  position: absolute;
+  top: -14px;
+  right: -14px;
+  width: clamp(40px, 11vw, 50px);
+  height: clamp(40px, 11vw, 50px);
+  border-radius: 50%;
+  background: #FFFFFF;
+  border: 1.5px solid rgba(20, 90, 50, 0.18);
+  box-shadow: 0 8px 22px rgba(20, 90, 50, 0.18), 0 0 14px rgba(46, 125, 50, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  pointer-events: none;
+  transition: transform 0.3s ease;
+}
+
+.wd-feature-icon-badge svg {
+  width: clamp(20px, 5.5vw, 24px);
+  height: clamp(20px, 5.5vw, 24px);
 }
 
 /* BOTTOM-RIGHT VERTICAL INDICATOR */
@@ -1286,76 +1287,105 @@ body {
 
 /* FOOTER */
 .wd-footer {
-  background-color: #0B0E0C;
-  color: #8E9890;
-  padding: 80px 0 40px;
-  font-size: 14.5px;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.wd-footer-grid {
-  display: grid;
-  grid-template-columns: 1.5fr 1fr 1fr 1fr;
-  gap: 48px;
-  margin-bottom: 60px;
-}
-
-.wd-footer .wd-logo-text {
-  color: #FFFFFF;
-}
-
-.wd-footer-brand-desc {
-  margin-top: 16px;
-  max-width: 320px;
-  line-height: 1.6;
+  position: relative;
+  background-color: #F7F8F5;
+  color: #667067;
+  padding: 0 0 48px;
   font-size: 14px;
+  text-align: center;
 }
 
-.wd-footer-heading {
-  color: #FFFFFF;
-  font-size: 15px;
-  font-weight: 700;
+.wd-footer-curve-wrap {
+  width: 100%;
+  height: 50px;
+  overflow: hidden;
+  line-height: 0;
   margin-bottom: 20px;
 }
 
-.wd-footer-links {
-  list-style: none;
+.wd-footer-curve-svg {
+  width: 100%;
+  height: 100%;
+}
+
+.wd-footer-container {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  align-items: center;
+  gap: 20px;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 0 20px;
 }
 
-.wd-footer-links a {
-  color: #8E9890;
-  text-decoration: none;
-  transition: color var(--transition-fast);
+.wd-footer-cta-wrap {
+  margin-bottom: 4px;
 }
 
-.wd-footer-links a:hover {
-  color: #FFFFFF;
+.wd-footer-cta-btn {
+  border-radius: var(--radius-full);
+  padding: 14px 32px;
+  font-size: 15px;
+  font-weight: 700;
+  box-shadow: 0 8px 24px rgba(20, 90, 50, 0.22);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
 }
 
-.wd-footer-bottom {
+.wd-footer-brand-wrap {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding-top: 32px;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  justify-content: center;
+}
+
+.wd-footer-brand-wrap .wd-logo-text {
+  color: #101410;
+  font-size: 22px;
+  font-weight: 800;
+}
+
+.wd-footer-support {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #667067;
+}
+
+.wd-footer-support a {
+  color: #145A32;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.wd-footer-legal-links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
   font-size: 13.5px;
 }
 
-.wd-footer-bottom-links {
-  display: flex;
-  gap: 24px;
-}
-
-.wd-footer-bottom-links a {
-  color: #8E9890;
+.wd-footer-legal-links a {
+  color: #667067;
   text-decoration: none;
+  transition: color 0.2s ease;
 }
 
-.wd-footer-bottom-links a:hover {
-  color: #FFFFFF;
+.wd-footer-legal-links a:hover {
+  color: #145A32;
+}
+
+.wd-footer-sep {
+  color: #A0ABA2;
+}
+
+.wd-footer-copy {
+  font-size: 12.5px;
+  color: #8E9890;
+  margin-top: 4px;
 }
 
 /* RESPONSIVE MEDIA QUERIES */
@@ -1512,7 +1542,7 @@ body {
     min-height: 100svh;
     width: 100%;
     max-width: 100%;
-    padding: calc(60px + env(safe-area-inset-top, 0px)) 12px calc(12px + env(safe-area-inset-bottom, 0px));
+    padding: calc(84px + env(safe-area-inset-top, 0px)) 12px calc(16px + env(safe-area-inset-bottom, 0px));
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
@@ -1545,18 +1575,18 @@ body {
 
   /* DYNAMIC SIZING FOR MOBILE APP SCREENSHOT PHONE MOCKUP */
   .wd-slide-phone {
-    height: 78svh;
-    max-height: 82svh;
-    max-width: 92vw;
+    height: clamp(320px, 68svh, 560px);
+    max-height: 70svh;
+    max-width: 88vw;
     width: auto;
-    aspect-ratio: 9 / 19.5;
     align-self: center;
     flex-shrink: 1;
-    border-radius: 28px;
-    padding: 6px;
-    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.55), 0 0 25px rgba(46, 125, 50, 0.2);
-    border: 1.5px solid rgba(255, 255, 255, 0.2);
-    display: flex;
+    border-radius: 22px;
+    padding: 5px;
+    background: #FFFFFF;
+    box-shadow: 0 16px 36px rgba(16, 20, 16, 0.08), 0 0 22px rgba(46, 125, 50, 0.12);
+    border: 1.5px solid rgba(20, 90, 50, 0.15);
+    display: inline-flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -1564,28 +1594,25 @@ body {
     box-sizing: border-box;
   }
 
-  .wd-slide-phone .wd-floating-badge {
-    display: none;
-  }
-
   .wd-slide-img {
-    border-radius: 22px;
+    border-radius: 17px;
     object-fit: contain;
-    width: 100%;
+    width: auto;
+    max-width: 100%;
     height: 100%;
-    background-color: #000;
+    background-color: #FFFFFF;
     display: block;
   }
 
   /* SMALL DEVICE OPTIMIZATIONS (320px-380px width or short viewports <= 700px) */
   @media (max-width: 380px), (max-height: 700px) {
     .wd-slide {
-      padding: calc(40px + env(safe-area-inset-top, 0px)) 8px calc(8px + env(safe-area-inset-bottom, 0px));
+      padding: calc(76px + env(safe-area-inset-top, 0px)) 8px calc(8px + env(safe-area-inset-bottom, 0px));
     }
 
     .wd-slide-phone {
-      height: 76svh;
-      max-height: 80svh;
+      height: 68svh;
+      max-height: 72svh;
       max-width: 88vw;
       border-radius: 22px;
       padding: 5px;
@@ -2095,65 +2122,49 @@ body {
 
   <!-- ================= FOOTER ================= -->
   <footer class="wd-footer" id="footer">
-    <div class="wd-container">
-      <div class="wd-footer-grid">
-        <div class="wd-footer-brand">
-          <a expr:href='data:blog.homepageUrl' class="wd-logo">
-            <div class="wd-logo-icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect x="3" y="3" width="8" height="8" rx="2" fill="#145A32"/>
-                <rect x="13" y="3" width="8" height="8" rx="2" fill="#2E7D32"/>
-                <rect x="3" y="13" width="8" height="8" rx="2" fill="#6B8E23"/>
-                <rect x="13" y="13" width="8" height="8" rx="2" fill="#9ACD32"/>
-              </svg>
-            </div>
-            <span class="wd-logo-text">Work<span>Daily</span></span>
-          </a>
-          <p class="wd-footer-brand-desc">
-            The premium daily work, workforce, contractor and payment management solution for modern enterprises and site leaders.
-          </p>
-        </div>
-
-        <div class="wd-footer-col">
-          <h4 class="wd-footer-heading">Product</h4>
-          <ul class="wd-footer-links">
-            <li><a href="#showcase">App Showcase</a></li>
-            <li><a href="#benefits">Features</a></li>
-            <li><a href="#hero">Workforce Tracking</a></li>
-            <li><a href="#showcase">Payment Reports</a></li>
-          </ul>
-        </div>
-
-        <div class="wd-footer-col">
-          <h4 class="wd-footer-heading">Features</h4>
-          <ul class="wd-footer-links">
-            <li><a href="#showcase">Daily Attendance</a></li>
-            <li><a href="#showcase">Contractor Mode</a></li>
-            <li><a href="#showcase">Instant Search</a></li>
-            <li><a href="#showcase">Business Insights</a></li>
-          </ul>
-        </div>
-
-        <div class="wd-footer-col">
-          <h4 class="wd-footer-heading">Company &amp; Blog</h4>
-          <ul class="wd-footer-links">
-            <li><a href="#blog">Latest News</a></li>
-            <li><a href="#blog">Best Practices</a></li>
-            <li><a href="#footer">About WorkDaily</a></li>
-            <li><a href="#cta">Contact Support</a></li>
-          </ul>
-        </div>
+    <div class="wd-footer-curve-wrap">
+      <svg class="wd-footer-curve-svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+        <path d="M 0,0 Q 600,120 1200,0 L 1200,120 L 0,120 Z" fill="#F7F8F5"/>
+        <path d="M 0,0 Q 600,120 1200,0" fill="none" stroke="rgba(20, 90, 50, 0.18)" stroke-width="2"/>
+      </svg>
+    </div>
+    <div class="wd-container wd-footer-container">
+      <div class="wd-footer-cta-wrap">
+        <a href="#showcase" class="wd-btn wd-btn-primary wd-btn-lg wd-footer-cta-btn">
+          <span>Get Started</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
       </div>
 
-      <div class="wd-footer-bottom">
-        <div class="wd-footer-copy">
-          &#169; <script>document.write(new Date().getFullYear())</script> <data:blog.title/>. All rights reserved. WorkDaily Product Specification.
-        </div>
-        <div class="wd-footer-bottom-links">
-          <a href="#">Privacy Policy</a>
-          <a href="#">Terms of Service</a>
-          <a href="#">Security</a>
-        </div>
+      <div class="wd-footer-brand-wrap">
+        <a expr:href='data:blog.homepageUrl' class="wd-logo">
+          <div class="wd-logo-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="3" y="3" width="8" height="8" rx="2" fill="#145A32"/>
+              <rect x="13" y="3" width="8" height="8" rx="2" fill="#2E7D32"/>
+              <rect x="3" y="13" width="8" height="8" rx="2" fill="#6B8E23"/>
+              <rect x="13" y="13" width="8" height="8" rx="2" fill="#9ACD32"/>
+            </svg>
+          </div>
+          <span class="wd-logo-text">Work<span>Daily</span></span>
+        </a>
+      </div>
+
+      <div class="wd-footer-support">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#145A32" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        <a href="mailto:support@workdaily.app">support@workdaily.app</a>
+      </div>
+
+      <div class="wd-footer-legal-links">
+        <a href="#">Privacy Policy</a>
+        <span class="wd-footer-sep">&#8226;</span>
+        <a href="#">Terms</a>
+        <span class="wd-footer-sep">&#8226;</span>
+        <a href="#">Disclaimer</a>
+      </div>
+
+      <div class="wd-footer-copy">
+        &#169; 2026 WorkDaily. All rights reserved.
       </div>
     </div>
   </footer>
@@ -2347,6 +2358,25 @@ body {
     });
   }
 
+  /* FEATURE-SPECIFIC VECTOR SVG ICONS FOR ALL 12 SCREENS */
+  function getFeatureIconSvg(index) {
+    const icons = [
+      '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#145A32" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>', // 01 Dashboard
+      '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#145A32" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>', // 02 Work
+      '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#145A32" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/><polyline points="12 11 12 17 15 14"/></svg>', // 03 Project
+      '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#145A32" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>', // 04 Workforce
+      '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#145A32" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><path d="M9 16l2 2 4-4"/></svg>', // 05 Attendance
+      '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#145A32" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>', // 06 Contractor
+      '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#145A32" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/><circle cx="12" cy="15" r="1"/></svg>', // 07 Payments
+      '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#145A32" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>', // 08 History
+      '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#145A32" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>', // 09 Analytics
+      '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#145A32" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>', // 10 Notifications
+      '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#145A32" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>', // 11 Search
+      '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#145A32" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>' // 12 Workspace
+    ];
+    return icons[index] || icons[0];
+  }
+
   /* SHOWCASE EXPERIENCE & VERTICAL INDICATOR */
   function initShowcase() {
     const track = document.getElementById("wd-showcase-track");
@@ -2359,7 +2389,7 @@ body {
 
     totalNumEl.textContent = String(workDailyScreens.length).padStart(2, '0');
 
-    // Render Showcase Slides - Cleaned & Focused on Screenshots
+    // Render Showcase Slides - Premium Layout System with Top-Right Floating Feature Icons
     workDailyScreens.forEach(function(item, index) {
       const slide = document.createElement("div");
       slide.className = "wd-slide";
@@ -2371,9 +2401,17 @@ body {
       slide.innerHTML = `
         <div class="wd-slide-bg-glow" style="--slide-accent: ${item.accentColor};"></div>
         <div class="wd-slide-container">
+          <div class="wd-slide-text-header">
+            <div class="wd-slide-eyebrow">${item.eyebrow}</div>
+            <h2 class="wd-slide-title">${item.title}</h2>
+            <p class="wd-slide-desc">${item.description}</p>
+          </div>
           <div class="wd-slide-phone-wrap">
             <div class="wd-slide-phone">
-              <img src="${item.image}" alt="WorkDaily Screenshot ${index + 1}" class="wd-slide-img" loading="${loadingAttr}" decoding="async" />
+              <div class="wd-feature-icon-badge" aria-hidden="true">
+                ${getFeatureIconSvg(index)}
+              </div>
+              <img src="${item.image}" alt="WorkDaily - ${item.title}" class="wd-slide-img" loading="${loadingAttr}" decoding="async" />
             </div>
           </div>
         </div>
