@@ -1,0 +1,2235 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html expr:dir='data:blog.languageDirection' xmlns='http://www.w3.org/1999/xhtml' xmlns:b='http://www.google.com/2005/gml/b' xmlns:data='http://www.google.com/2005/gml/data' xmlns:expr='http://www.google.com/2005/gml/expr'>
+<head>
+  <meta charset='utf-8'/>
+  <meta content='width=device-width, initial-scale=1, viewport-fit=cover' name='viewport'/>
+
+  <!-- Dynamic Title -->
+  <b:if cond='data:view.isHomepage'>
+    <title><data:blog.title/></title>
+  <b:else/>
+    <title><data:blog.pageTitle/></title>
+  </b:if>
+
+  <!-- Meta SEO & OpenGraph -->
+  <meta content='WorkDaily — Premium Daily Work, Workforce &amp; Payment Management Application' name='description'/>
+  <link expr:href='data:blog.canonicalUrl' rel='canonical'/>
+  <meta expr:content='data:blog.pageTitle' property='og:title'/>
+  <meta expr:content='data:blog.canonicalUrl' property='og:url'/>
+  <meta content='WorkDaily' property='og:site_name'/>
+  <meta content='summary_large_image' name='twitter:card'/>
+  <meta content='#145A32' name='theme-color'/>
+
+  <!-- Google Typography: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"/>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+
+  <!-- Blogger Skin & CSS -->
+  <b:skin><![CDATA[
+/*
+  WorkDaily Blogger Theme Variables & Styles
+  -----------------------------------------
+  <Variable name="primaryColor" description="Primary Color" type="color" default="#145A32" value="#145A32"/>
+  <Variable name="secondaryColor" description="Secondary Color" type="color" default="#2E7D32" value="#2E7D32"/>
+  <Variable name="accentColor" description="Accent Color" type="color" default="#6B8E23" value="#6B8E23"/>
+  <Variable name="lightAccentColor" description="Light Accent" type="color" default="#9ACD32" value="#9ACD32"/>
+  <Variable name="bgColor" description="Background Color" type="color" default="#F7F8F5" value="#F7F8F5"/>
+  <Variable name="textColor" description="Text Color" type="color" default="#101410" value="#101410"/>
+  <Variable name="secTextColor" description="Secondary Text" type="color" default="#667067" value="#667067"/>
+*/
+
+:root {
+  --color-primary: #145A32;
+  --color-secondary: #2E7D32;
+  --color-accent: #6B8E23;
+  --color-light-accent: #9ACD32;
+  --color-bg: #F7F8F5;
+  --color-surface: #FFFFFF;
+  --color-text: #101410;
+  --color-text-muted: #667067;
+  --color-border: rgba(16, 20, 16, 0.10);
+  --color-border-glow: rgba(46, 125, 50, 0.25);
+
+  --font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 24px;
+  --radius-full: 9999px;
+
+  --shadow-sm: 0 4px 12px rgba(16, 20, 16, 0.04);
+  --shadow-md: 0 8px 24px rgba(16, 20, 16, 0.08);
+  --shadow-lg: 0 20px 40px rgba(16, 20, 16, 0.12);
+  --shadow-phone: 0 30px 80px rgba(20, 90, 50, 0.18), 0 10px 30px rgba(16, 20, 16, 0.08);
+
+  --transition-fast: 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-normal: 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-slow: 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-family);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-family);
+  line-height: 1.6;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* Blogger default reset overrides */
+.widget, .section {
+  margin: 0;
+  padding: 0;
+}
+
+/* LAYOUT CONTAINER */
+.wd-container {
+  width: 100%;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* BUTTONS */
+.wd-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 14px 28px;
+  border-radius: var(--radius-full);
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all var(--transition-fast);
+  cursor: pointer;
+  border: 1px solid transparent;
+  white-space: nowrap;
+}
+
+.wd-btn-primary {
+  background-color: var(--color-primary);
+  color: #FFFFFF;
+  box-shadow: 0 6px 20px rgba(20, 90, 50, 0.25);
+}
+
+.wd-btn-primary:hover {
+  background-color: var(--color-secondary);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(20, 90, 50, 0.35);
+  color: #FFFFFF;
+}
+
+.wd-btn-secondary {
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  border-color: var(--color-border);
+  box-shadow: var(--shadow-sm);
+}
+
+.wd-btn-secondary:hover {
+  background-color: #F0F2ED;
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  transform: translateY(-2px);
+}
+
+.wd-btn-sm {
+  padding: 9px 18px;
+  font-size: 13.5px;
+}
+
+.wd-btn-lg {
+  padding: 18px 36px;
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.wd-btn-full {
+  width: 100%;
+}
+
+/* HEADER */
+.wd-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  padding: 20px 0;
+  transition: all var(--transition-normal);
+}
+
+.wd-header.scrolled {
+  padding: 12px 0;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
+}
+
+.wd-header-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.wd-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  font-weight: 800;
+  font-size: 20px;
+  color: var(--color-text);
+  letter-spacing: -0.02em;
+}
+
+.wd-logo-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-sm);
+  background: rgba(20, 90, 50, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wd-logo-text span {
+  color: var(--color-secondary);
+}
+
+.wd-nav {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  background: rgba(255, 255, 255, 0.7);
+  padding: 8px 24px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--color-border);
+  backdrop-filter: blur(10px);
+}
+
+.wd-nav-link {
+  text-decoration: none;
+  color: var(--color-text-muted);
+  font-size: 14.5px;
+  font-weight: 500;
+  transition: color var(--transition-fast);
+}
+
+.wd-nav-link:hover, .wd-nav-link.active {
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+.wd-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.wd-menu-toggle {
+  display: none;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  width: 42px;
+  height: 42px;
+  border-radius: var(--radius-md);
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--color-text);
+}
+
+.wd-menu-toggle .wd-icon-close {
+  display: none;
+}
+
+.wd-menu-toggle.open .wd-icon-menu {
+  display: none;
+}
+
+.wd-menu-toggle.open .wd-icon-close {
+  display: block;
+}
+
+/* MOBILE DRAWER */
+.wd-mobile-drawer {
+  position: fixed;
+  inset: 0;
+  background: var(--color-surface);
+  z-index: 999;
+  padding: 100px 24px 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transform: translateY(-100%);
+  opacity: 0;
+  visibility: hidden;
+  transition: all var(--transition-normal);
+}
+
+.wd-mobile-drawer.open {
+  transform: translateY(0);
+  opacity: 1;
+  visibility: visible;
+}
+
+.wd-mobile-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.wd-mobile-nav-link {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+.wd-mobile-nav-link:hover {
+  color: var(--color-primary);
+}
+
+/* HERO SECTION */
+.wd-hero {
+  position: relative;
+  padding: 160px 0 100px;
+  overflow: hidden;
+}
+
+.wd-hero-bg-glow {
+  position: absolute;
+  top: -10%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 800px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(154, 205, 50, 0.15) 0%, rgba(46, 125, 50, 0.08) 40%, rgba(247, 248, 245, 0) 70%);
+  filter: blur(60px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.wd-hero-container {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 60px;
+  align-items: center;
+}
+
+.wd-hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  background: rgba(20, 90, 50, 0.08);
+  border: 1px solid rgba(20, 90, 50, 0.15);
+  border-radius: var(--radius-full);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--color-primary);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 24px;
+}
+
+.wd-badge-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: var(--color-secondary);
+  box-shadow: 0 0 8px var(--color-secondary);
+}
+
+.wd-hero-title {
+  font-size: clamp(42px, 5.5vw, 76px);
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  color: var(--color-text);
+  margin-bottom: 20px;
+}
+
+.wd-hero-title span {
+  color: var(--color-primary);
+  background: linear-gradient(135deg, #145A32 0%, #2E7D32 50%, #6B8E23 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.wd-hero-desc {
+  font-size: clamp(16px, 1.8vw, 19px);
+  color: var(--color-text-muted);
+  max-width: 540px;
+  margin-bottom: 36px;
+  line-height: 1.6;
+}
+
+.wd-hero-buttons {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 48px;
+  flex-wrap: wrap;
+}
+
+.wd-hero-stats {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  padding-top: 28px;
+  border-top: 1px solid var(--color-border);
+}
+
+.wd-stat-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.wd-stat-number {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--color-text);
+}
+
+.wd-stat-label {
+  font-size: 13px;
+  color: var(--color-text-muted);
+}
+
+.wd-stat-divider {
+  width: 1px;
+  height: 32px;
+  background-color: var(--color-border);
+}
+
+/* PHONE MOCKUP COMPOSITION */
+.wd-phone-frame-wrapper {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.wd-phone-ambient-glow {
+  position: absolute;
+  inset: -20px;
+  background: radial-gradient(circle, rgba(46, 125, 50, 0.25) 0%, rgba(154, 205, 50, 0.1) 50%, transparent 75%);
+  filter: blur(40px);
+  border-radius: 60px;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.wd-phone-mockup {
+  position: relative;
+  z-index: 1;
+  width: 310px;
+  height: 620px;
+  background: #0B100C;
+  border-radius: 46px;
+  padding: 12px;
+  box-shadow: var(--shadow-phone);
+  border: 3px solid rgba(255, 255, 255, 0.15);
+  outline: 1px solid rgba(16, 20, 16, 0.12);
+}
+
+.wd-phone-notch {
+  position: absolute;
+  top: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 22px;
+  background: #0B100C;
+  border-radius: 12px;
+  z-index: 10;
+}
+
+.wd-phone-screen {
+  width: 100%;
+  height: 100%;
+  background: var(--color-surface);
+  border-radius: 36px;
+  overflow: hidden;
+  position: relative;
+}
+
+/* APP SCREEN MOCK (CSS RENDERED APP INTERFACE) */
+.wd-app-screen-mock {
+  padding: 42px 18px 20px;
+  background: #F8FAF7;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.wd-app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.wd-app-user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.wd-app-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wd-app-greeting {
+  font-size: 10px;
+  color: var(--color-text-muted);
+}
+
+.wd-app-username {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.wd-app-pill {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  background: rgba(46, 125, 50, 0.12);
+  color: var(--color-secondary);
+}
+
+.wd-app-card {
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+  padding: 14px;
+  border: 1px solid rgba(16, 20, 16, 0.06);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+}
+
+.wd-app-card-primary {
+  background: linear-gradient(135deg, #145A32 0%, #2E7D32 100%);
+  color: #FFFFFF;
+}
+
+.wd-app-card-primary .wd-app-card-title {
+  color: rgba(255,255,255,0.8);
+  font-size: 11px;
+}
+
+.wd-app-card-primary .wd-app-card-stat {
+  font-size: 18px;
+  font-weight: 800;
+  color: #FFFFFF;
+  margin: 4px 0 10px;
+}
+
+.wd-app-progress-bar {
+  width: 100%;
+  height: 6px;
+  background: rgba(255,255,255,0.25);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.wd-app-progress-fill {
+  height: 100%;
+  background: var(--color-light-accent);
+  border-radius: 3px;
+}
+
+.wd-app-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.wd-app-card-label {
+  font-size: 10px;
+  color: var(--color-text-muted);
+  display: block;
+}
+
+.wd-app-card-val {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--color-text);
+}
+
+.wd-app-list-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(0,0,0,0.04);
+}
+
+.wd-app-list-item:last-child {
+  border-bottom: none;
+}
+
+.wd-app-item-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #ccc;
+}
+
+.wd-app-item-dot.active {
+  background: var(--color-secondary);
+}
+
+.wd-app-item-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.wd-app-item-info strong {
+  font-size: 11px;
+  color: var(--color-text);
+}
+
+.wd-app-item-info span {
+  font-size: 9.5px;
+  color: var(--color-text-muted);
+}
+
+/* FLOATING BADGES */
+.wd-floating-badge {
+  position: absolute;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(12px);
+  border-radius: var(--radius-full);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-md);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--color-text);
+  white-space: nowrap;
+}
+
+.wd-float-top-left {
+  top: 40px;
+  left: -30px;
+  animation: floatAnim 4s ease-in-out infinite alternate;
+}
+
+.wd-float-bottom-right {
+  bottom: 60px;
+  right: -30px;
+  animation: floatAnim 5s ease-in-out 1s infinite alternate;
+}
+
+@keyframes floatAnim {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-10px); }
+}
+
+/* SHOWCASE SECTION (100svh VERTICAL SWIPE EXPERIENCE) */
+.wd-showcase-section {
+  position: relative;
+  width: 100%;
+  height: 100svh;
+  background-color: #0E1410;
+  color: #FFFFFF;
+  overflow: hidden;
+}
+
+.wd-showcase-viewport {
+  width: 100%;
+  height: 100%;
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none; /* Firefox */
+}
+
+.wd-showcase-viewport::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
+}
+
+.wd-showcase-track {
+  width: 100%;
+}
+
+/* SHOWCASE SLIDE */
+.wd-slide {
+  width: 100%;
+  height: 100svh;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 80px 24px;
+  padding-top: calc(80px + env(safe-area-inset-top));
+  padding-bottom: calc(40px + env(safe-area-inset-bottom));
+  box-sizing: border-box;
+}
+
+.wd-slide-bg-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, var(--slide-accent, rgba(46, 125, 50, 0.25)) 0%, transparent 70%);
+  filter: blur(80px);
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.6;
+}
+
+.wd-slide-container {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 1140px;
+  margin: 0 auto;
+}
+
+/* VARIANT A: Text Left / Phone Right */
+.wd-slide-variant-a {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 50px;
+  align-items: center;
+}
+
+/* VARIANT B: Phone Center / Text Top */
+.wd-slide-variant-b {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 30px;
+}
+
+/* VARIANT C: Text Top / Phone Center */
+.wd-slide-variant-c {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  text-align: center;
+  gap: 30px;
+}
+
+/* VARIANT D: Phone Left / Text Right */
+.wd-slide-variant-d {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 50px;
+  align-items: center;
+}
+
+.wd-slide-text {
+  max-width: 500px;
+}
+
+.wd-slide-eyebrow {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  color: var(--color-light-accent);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.wd-slide-title {
+  font-size: clamp(28px, 4vw, 52px);
+  font-weight: 800;
+  line-height: 1.1;
+  color: #FFFFFF;
+  letter-spacing: -0.02em;
+  margin-bottom: 16px;
+}
+
+.wd-slide-desc {
+  font-size: clamp(15px, 1.5vw, 18px);
+  color: rgba(255, 255, 255, 0.72);
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+.wd-slide-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  font-size: 11px;
+  font-weight: 700;
+  color: #FFFFFF;
+  letter-spacing: 0.05em;
+}
+
+.wd-slide-phone-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* SLIDE PHONE FRAME */
+.wd-slide-phone {
+  width: 280px;
+  height: 560px;
+  background: #000;
+  border-radius: 42px;
+  padding: 10px;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6), 0 0 40px rgba(46, 125, 50, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  position: relative;
+  transition: transform var(--transition-slow);
+}
+
+.wd-slide-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 32px;
+  display: block;
+}
+
+/* BOTTOM-RIGHT VERTICAL INDICATOR */
+.wd-indicator-wrapper {
+  position: absolute;
+  right: 32px;
+  bottom: 90px;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  background: rgba(20, 25, 21, 0.75);
+  backdrop-filter: blur(16px);
+  padding: 14px 10px;
+  border-radius: var(--radius-full);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+.wd-indicator-counter {
+  font-size: 11px;
+  font-weight: 800;
+  color: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+}
+
+.wd-indicator-counter #wd-indicator-current {
+  color: var(--color-light-accent);
+}
+
+.wd-indicator-sep {
+  opacity: 0.4;
+  font-size: 9px;
+  margin: 2px 0;
+}
+
+.wd-indicator-rail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: 12px;
+}
+
+.wd-indicator-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.3);
+  transition: all var(--transition-fast);
+  cursor: pointer;
+  border: none;
+  padding: 0;
+}
+
+.wd-indicator-dot.active {
+  height: 22px;
+  border-radius: 10px;
+  background-color: var(--color-light-accent);
+  box-shadow: 0 0 12px var(--color-light-accent);
+}
+
+/* FEATURE GRID SECTION */
+.wd-benefits-section {
+  padding: 120px 0;
+  background-color: var(--color-bg);
+}
+
+.wd-section-header {
+  text-align: center;
+  max-width: 680px;
+  margin: 0 auto 60px;
+}
+
+.wd-eyebrow {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  color: var(--color-primary);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.wd-section-title {
+  font-size: clamp(32px, 4vw, 54px);
+  font-weight: 800;
+  color: var(--color-text);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin-bottom: 16px;
+}
+
+.wd-section-subtitle {
+  font-size: clamp(16px, 1.5vw, 18px);
+  color: var(--color-text-muted);
+}
+
+.wd-feature-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+}
+
+.wd-feature-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 36px 28px;
+  transition: all var(--transition-normal);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+}
+
+.wd-feature-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--color-border-glow);
+  box-shadow: var(--shadow-md);
+}
+
+.wd-feature-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: var(--radius-md);
+  background: rgba(20, 90, 50, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+.wd-feature-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: 12px;
+}
+
+.wd-feature-desc {
+  font-size: 15px;
+  color: var(--color-text-muted);
+  line-height: 1.6;
+}
+
+/* BLOG SECTION */
+.wd-blog-section {
+  padding: 100px 0 120px;
+  background-color: #FFFFFF;
+  border-top: 1px solid var(--color-border);
+}
+
+.wd-blog-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+  margin-bottom: 48px;
+}
+
+.wd-blog-card {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: all var(--transition-normal);
+}
+
+.wd-blog-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--color-primary);
+}
+
+.wd-blog-thumb {
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  background-color: #E2E6DF;
+}
+
+.wd-blog-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--transition-slow);
+}
+
+.wd-blog-card:hover .wd-blog-thumb img {
+  transform: scale(1.05);
+}
+
+.wd-blog-thumb-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wd-blog-card-body {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.wd-blog-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.wd-label-pill {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--color-primary);
+  background: rgba(20, 90, 50, 0.1);
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  text-decoration: none;
+}
+
+.wd-label-pill:hover {
+  background: var(--color-primary);
+  color: #FFFFFF;
+}
+
+.wd-blog-date {
+  font-size: 12px;
+  color: var(--color-text-muted);
+}
+
+.wd-blog-card-title {
+  font-size: 19px;
+  font-weight: 700;
+  line-height: 1.35;
+  margin-bottom: 10px;
+}
+
+.wd-blog-card-title a {
+  color: var(--color-text);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.wd-blog-card-title a:hover {
+  color: var(--color-primary);
+}
+
+.wd-blog-snippet {
+  font-size: 14.5px;
+  color: var(--color-text-muted);
+  line-height: 1.55;
+  margin-bottom: 20px;
+  flex-grow: 1;
+}
+
+.wd-blog-read-more {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+.wd-blog-read-more:hover {
+  gap: 10px;
+}
+
+/* SINGLE POST PAGE */
+.wd-single-post {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 40px 0;
+}
+
+.wd-post-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.wd-post-labels {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.wd-post-title {
+  font-size: clamp(32px, 4vw, 52px);
+  font-weight: 800;
+  color: var(--color-text);
+  line-height: 1.15;
+  margin-bottom: 16px;
+}
+
+.wd-post-byline {
+  font-size: 14px;
+  color: var(--color-text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.wd-dot-sep {
+  opacity: 0.4;
+}
+
+.wd-post-body {
+  font-size: 18px;
+  line-height: 1.75;
+  color: #222B23;
+  margin-bottom: 60px;
+}
+
+.wd-post-body p {
+  margin-bottom: 24px;
+}
+
+.wd-post-body img {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radius-md);
+  margin: 24px 0;
+}
+
+.wd-comments-area {
+  padding-top: 40px;
+  border-top: 1px solid var(--color-border);
+}
+
+.wd-comments-heading {
+  font-size: 24px;
+  font-weight: 800;
+  margin-bottom: 24px;
+}
+
+/* PAGINATION */
+.wd-pagination {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 40px;
+}
+
+/* FINAL CTA SECTION */
+.wd-cta-section {
+  position: relative;
+  padding: 120px 24px;
+  background: linear-gradient(180deg, #101511 0%, #145A32 100%);
+  color: #FFFFFF;
+  text-align: center;
+  overflow: hidden;
+}
+
+.wd-cta-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 700px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(154, 205, 50, 0.2) 0%, transparent 70%);
+  filter: blur(80px);
+  pointer-events: none;
+}
+
+.wd-cta-container {
+  position: relative;
+  z-index: 1;
+  max-width: 760px;
+}
+
+.wd-cta-badge {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  color: var(--color-light-accent);
+  margin-bottom: 16px;
+}
+
+.wd-cta-title {
+  font-size: clamp(36px, 5vw, 64px);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin-bottom: 20px;
+}
+
+.wd-cta-desc {
+  font-size: clamp(16px, 1.8vw, 19px);
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 40px;
+}
+
+.wd-cta-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+/* FOOTER */
+.wd-footer {
+  background-color: #0B0E0C;
+  color: #8E9890;
+  padding: 80px 0 40px;
+  font-size: 14.5px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.wd-footer-grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr 1fr;
+  gap: 48px;
+  margin-bottom: 60px;
+}
+
+.wd-footer .wd-logo-text {
+  color: #FFFFFF;
+}
+
+.wd-footer-brand-desc {
+  margin-top: 16px;
+  max-width: 320px;
+  line-height: 1.6;
+  font-size: 14px;
+}
+
+.wd-footer-heading {
+  color: #FFFFFF;
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.wd-footer-links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.wd-footer-links a {
+  color: #8E9890;
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.wd-footer-links a:hover {
+  color: #FFFFFF;
+}
+
+.wd-footer-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 32px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  font-size: 13.5px;
+}
+
+.wd-footer-bottom-links {
+  display: flex;
+  gap: 24px;
+}
+
+.wd-footer-bottom-links a {
+  color: #8E9890;
+  text-decoration: none;
+}
+
+.wd-footer-bottom-links a:hover {
+  color: #FFFFFF;
+}
+
+/* RESPONSIVE MEDIA QUERIES */
+@media (max-width: 1024px) {
+  .wd-hero-container {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .wd-hero-desc {
+    margin: 0 auto 36px;
+  }
+
+  .wd-hero-buttons {
+    justify-content: center;
+  }
+
+  .wd-hero-stats {
+    justify-content: center;
+  }
+
+  .wd-slide-variant-a, .wd-slide-variant-d {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: 30px;
+  }
+
+  .wd-slide-text {
+    max-width: 100%;
+  }
+
+  .wd-feature-grid, .wd-blog-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .wd-footer-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .wd-nav {
+    display: none;
+  }
+
+  .wd-menu-toggle {
+    display: flex;
+  }
+
+  .wd-slide-phone {
+    width: 240px;
+    height: 480px;
+  }
+
+  .wd-phone-mockup {
+    width: 270px;
+    height: 540px;
+  }
+
+  .wd-indicator-wrapper {
+    right: 16px;
+    bottom: 70px;
+    padding: 10px 8px;
+  }
+
+  .wd-feature-grid, .wd-blog-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .wd-footer-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .wd-footer-bottom {
+    flex-direction: column;
+    gap: 16px;
+    text-align: center;
+  }
+}
+
+/* PREFERS REDUCED MOTION */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+  ]]></b:skin>
+</head>
+<body>
+
+  <!-- ================= HEADER ================= -->
+  <header class="wd-header" id="wd-header">
+    <div class="wd-header-container">
+      <a expr:href='data:blog.homepageUrl' class="wd-logo">
+        <div class="wd-logo-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="3" y="3" width="8" height="8" rx="2" fill="#145A32"/>
+            <rect x="13" y="3" width="8" height="8" rx="2" fill="#2E7D32"/>
+            <rect x="3" y="13" width="8" height="8" rx="2" fill="#6B8E23"/>
+            <rect x="13" y="13" width="8" height="8" rx="2" fill="#9ACD32"/>
+          </svg>
+        </div>
+        <span class="wd-logo-text">Work<span>Daily</span></span>
+      </a>
+
+      <nav class="wd-nav" id="wd-nav">
+        <a expr:href='data:blog.homepageUrl' class="wd-nav-link active">Home</a>
+        <a href="#showcase" class="wd-nav-link">Features</a>
+        <a href="#benefits" class="wd-nav-link">WorkDaily</a>
+        <a href="#blog" class="wd-nav-link">Blog</a>
+        <a href="#footer" class="wd-nav-link">About</a>
+      </nav>
+
+      <div class="wd-header-actions">
+        <a href="#showcase" class="wd-btn wd-btn-primary wd-btn-sm">Get WorkDaily</a>
+        <button class="wd-menu-toggle" id="wd-menu-toggle" aria-label="Toggle navigation menu">
+          <svg class="wd-icon-menu" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="4" y1="7" x2="20" y2="7"></line>
+            <line x1="4" y1="12" x2="20" y2="12"></line>
+            <line x1="4" y1="17" x2="20" y2="17"></line>
+          </svg>
+          <svg class="wd-icon-close" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer Navigation -->
+  <div class="wd-mobile-drawer" id="wd-mobile-drawer">
+    <div class="wd-mobile-drawer-content">
+      <nav class="wd-mobile-nav">
+        <a expr:href='data:blog.homepageUrl' class="wd-mobile-nav-link">Home</a>
+        <a href="#showcase" class="wd-mobile-nav-link">Features</a>
+        <a href="#benefits" class="wd-mobile-nav-link">WorkDaily</a>
+        <a href="#blog" class="wd-mobile-nav-link">Blog</a>
+        <a href="#footer" class="wd-mobile-nav-link">About</a>
+      </nav>
+      <div class="wd-mobile-drawer-footer">
+        <a href="#showcase" class="wd-btn wd-btn-primary wd-btn-full">Get WorkDaily App</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Blogger Layout Section for Header Widget if needed -->
+  <b:section class='header-section' id='header-section' maxwidgets='1' showelement='no'>
+    <b:widget id='Header1' locked='true' title='Header' type='Header'/>
+  </b:section>
+
+  <!-- ================= HERO SECTION ================= -->
+  <section class="wd-hero" id="hero">
+    <div class="wd-hero-bg-glow"></div>
+    <div class="wd-container wd-hero-container">
+      <div class="wd-hero-content">
+        <div class="wd-hero-badge">
+          <span class="wd-badge-dot"></span>
+          <span>WORKDAILY</span>
+        </div>
+        <h1 class="wd-hero-title">
+          Work smarter.<br/>
+          <span>Track everything.</span>
+        </h1>
+        <p class="wd-hero-desc">
+          A simple workspace for daily work, contractors, workers and payments. Built for productivity and seamless workforce management.
+        </p>
+        <div class="wd-hero-buttons">
+          <a href="#showcase" class="wd-btn wd-btn-primary">
+            <span>Explore WorkDaily</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+          <a href="#blog" class="wd-btn wd-btn-secondary">Read the Blog</a>
+        </div>
+        <div class="wd-hero-stats">
+          <div class="wd-stat-item">
+            <span class="wd-stat-number">100%</span>
+            <span class="wd-stat-label">Real-time Sync</span>
+          </div>
+          <div class="wd-stat-divider"></div>
+          <div class="wd-stat-item">
+            <span class="wd-stat-number">12+</span>
+            <span class="wd-stat-label">Core Modules</span>
+          </div>
+          <div class="wd-stat-divider"></div>
+          <div class="wd-stat-item">
+            <span class="wd-stat-number">0s</span>
+            <span class="wd-stat-label">Paperwork</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="wd-hero-visual">
+        <div class="wd-phone-frame-wrapper wd-hero-phone">
+          <div class="wd-phone-ambient-glow"></div>
+          <div class="wd-floating-badge wd-float-top-left">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            <span>LIVE DASHBOARD</span>
+          </div>
+          <div class="wd-floating-badge wd-float-bottom-right">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+            <span>PAYMENTS DUE</span>
+          </div>
+
+          <!-- Mock Phone -->
+          <div class="wd-phone-mockup">
+            <div class="wd-phone-notch"></div>
+            <div class="wd-phone-screen">
+              <div class="wd-app-screen-mock wd-hero-app-mock">
+                <div class="wd-app-header">
+                  <div class="wd-app-user">
+                    <div class="wd-app-avatar">WD</div>
+                    <div>
+                      <div class="wd-app-greeting">Good morning,</div>
+                      <div class="wd-app-username">Contractor Hub</div>
+                    </div>
+                  </div>
+                  <div class="wd-app-pill">Active</div>
+                </div>
+                <div class="wd-app-card wd-app-card-primary">
+                  <div class="wd-app-card-title">Today's Workforce</div>
+                  <div class="wd-app-card-stat">34 Workers Active</div>
+                  <div class="wd-app-progress-bar"><div class="wd-app-progress-fill" style="width: 82%;"></div></div>
+                </div>
+                <div class="wd-app-grid-2">
+                  <div class="wd-app-card">
+                    <span class="wd-app-card-label">Jobs Done</span>
+                    <span class="wd-app-card-val">12</span>
+                  </div>
+                  <div class="wd-app-card">
+                    <span class="wd-app-card-label">Pending Pay</span>
+                    <span class="wd-app-card-val">$4,250</span>
+                  </div>
+                </div>
+                <div class="wd-app-card">
+                  <div class="wd-app-card-title">Site Attendance</div>
+                  <div class="wd-app-list-item">
+                    <div class="wd-app-item-dot active"></div>
+                    <div class="wd-app-item-info">
+                      <strong>Site A — Foundation</strong>
+                      <span>18 Workers Checked In</span>
+                    </div>
+                  </div>
+                  <div class="wd-app-list-item">
+                    <div class="wd-app-item-dot active"></div>
+                    <div class="wd-app-item-info">
+                      <strong>Site B — Electrical</strong>
+                      <span>16 Workers Checked In</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= SHOWCASE SECTION (VERTICAL SWIPE EXPERIENCE) ================= -->
+  <section class="wd-showcase-section" id="showcase">
+    <!-- Main Vertical Scroll Container -->
+    <div class="wd-showcase-viewport" id="wd-showcase-viewport">
+      <!-- Dynamic slides will be populated by JS or rendered natively -->
+      <div class="wd-showcase-track" id="wd-showcase-track">
+        <!-- Rendered via JavaScript from workDailyScreens configuration -->
+      </div>
+    </div>
+
+    <!-- Bottom-Right Vertical Navigation Indicator -->
+    <div class="wd-indicator-wrapper" id="wd-indicator-wrapper" aria-label="Showcase Slide Indicator">
+      <div class="wd-indicator-counter">
+        <span id="wd-indicator-current">01</span>
+        <span class="wd-indicator-sep">/</span>
+        <span id="wd-indicator-total">12</span>
+      </div>
+      <div class="wd-indicator-rail" id="wd-indicator-rail">
+        <!-- Dots and vertical active pill dynamically updated -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= PRODUCT BENEFITS & FEATURE GRID ================= -->
+  <section class="wd-benefits-section" id="benefits">
+    <div class="wd-container">
+      <div class="wd-section-header">
+        <div class="wd-eyebrow">ALL-IN-ONE SYSTEM</div>
+        <h2 class="wd-section-title">Everything WorkDaily handles</h2>
+        <p class="wd-section-subtitle">Designed to streamline operational workflows, team tracking, and contractor payments without clutter.</p>
+      </div>
+
+      <div class="wd-feature-grid">
+        <!-- Card 1 -->
+        <div class="wd-feature-card">
+          <div class="wd-feature-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#145A32" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+          </div>
+          <h3 class="wd-feature-title">Work Management</h3>
+          <p class="wd-feature-desc">Create daily tasks, set project milestones, assign contractors, and monitor completion progress in real time.</p>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="wd-feature-card">
+          <div class="wd-feature-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#145A32" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <h3 class="wd-feature-title">Worker Management</h3>
+          <p class="wd-feature-desc">Keep full worker profiles, contact records, skill ratings, and daily activity logs centralized for instant access.</p>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="wd-feature-card">
+          <div class="wd-feature-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#145A32" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><path d="M9 16l2 2 4-4"/></svg>
+          </div>
+          <h3 class="wd-feature-title">Attendance Tracking</h3>
+          <p class="wd-feature-desc">Record daily site attendance with one tap. Eliminate lost paper registers and human entry mistakes.</p>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="wd-feature-card">
+          <div class="wd-feature-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#145A32" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+          </div>
+          <h3 class="wd-feature-title">Payments &amp; Expenses</h3>
+          <p class="wd-feature-desc">Track pending daily wages, contractor invoices, partial payouts, and completed settlement transactions seamlessly.</p>
+        </div>
+
+        <!-- Card 5 -->
+        <div class="wd-feature-card">
+          <div class="wd-feature-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#145A32" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+          </div>
+          <h3 class="wd-feature-title">Smart Analytics</h3>
+          <p class="wd-feature-desc">Transform raw work data into actionable budget reports, workforce efficiency metrics, and project forecasts.</p>
+        </div>
+
+        <!-- Card 6 -->
+        <div class="wd-feature-card">
+          <div class="wd-feature-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#145A32" stroke-width="2"><path d="M12 8v4l3 3"/><circle cx="12" cy="12" r="10"/></svg>
+          </div>
+          <h3 class="wd-feature-title">Business History</h3>
+          <p class="wd-feature-desc">Access historical site archives, past worker logs, and export financial summaries anytime for auditing.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= BLOG CONTENT SECTION (NATIVE BLOGGER INTEGRATION) ================= -->
+  <section class="wd-blog-section" id="blog">
+    <div class="wd-container">
+      <div class="wd-section-header">
+        <div class="wd-eyebrow">UPDATES &amp; INSIGHTS</div>
+        <h2 class="wd-section-title">WorkDaily Editorial</h2>
+        <p class="wd-section-subtitle">Articles on workforce efficiency, contractor best practices, and daily management tech.</p>
+      </div>
+
+      <main class="wd-main-content">
+        <!-- Native Blogger Main Section -->
+        <b:section class='main' id='main' showelement='yes'>
+          <b:widget id='Blog1' locked='true' title='Blog Posts' type='Blog'>
+            <b:includable id='main' var='top'>
+
+              <!-- Multiple Items / Post Listing View -->
+              <b:if cond='data:view.isMultipleItems'>
+                <div class="wd-blog-grid">
+                  <b:loop values='data:posts' var='post'>
+                    <article class="wd-blog-card">
+                      <b:if cond='data:post.firstImageUrl'>
+                        <div class="wd-blog-thumb">
+                          <img expr:src='data:post.firstImageUrl' expr:alt='data:post.title' loading='lazy'/>
+                        </div>
+                      <b:else/>
+                        <div class="wd-blog-thumb wd-blog-thumb-placeholder">
+                          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#2E7D32" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                        </div>
+                      </b:if>
+                      <div class="wd-blog-card-body">
+                        <div class="wd-blog-meta">
+                          <b:if cond='data:post.labels'>
+                            <b:loop values='data:post.labels' var='label'>
+                              <a expr:href='data:label.url' class="wd-label-pill"><data:label.name/></a>
+                            </b:loop>
+                          </b:if>
+                          <span class="wd-blog-date"><data:post.timestamp/></span>
+                        </div>
+                        <h3 class="wd-blog-card-title">
+                          <a expr:href='data:post.url'><data:post.title/></a>
+                        </h3>
+                        <p class="wd-blog-snippet">
+                          <data:post.snippet/>
+                        </p>
+                        <a expr:href='data:post.url' class="wd-blog-read-more">
+                          <span>Read Article</span>
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        </a>
+                      </div>
+                    </article>
+                  </b:loop>
+                </div>
+              </b:if>
+
+              <!-- Single Item / Individual Post View -->
+              <b:if cond='data:view.isPost'>
+                <b:loop values='data:posts' var='post'>
+                  <article class="wd-single-post">
+                    <header class="wd-post-header">
+                      <b:if cond='data:post.labels'>
+                        <div class="wd-post-labels">
+                          <b:loop values='data:post.labels' var='label'>
+                            <a expr:href='data:label.url' class="wd-label-pill"><data:label.name/></a>
+                          </b:loop>
+                        </div>
+                      </b:if>
+                      <h1 class="wd-post-title"><data:post.title/></h1>
+                      <div class="wd-post-byline">
+                        <span>By <data:post.author/></span>
+                        <span class="wd-dot-sep">&#8226;</span>
+                        <span><data:post.timestamp/></span>
+                      </div>
+                    </header>
+
+                    <div class="wd-post-body">
+                      <data:post.body/>
+                    </div>
+
+                    <!-- Comments Area -->
+                    <div class="wd-comments-area">
+                      <h3 class="wd-comments-heading">Discussion</h3>
+                    <b:include data='post' name='comments'/>
+                    </div>
+                  </article>
+                </b:loop>
+              </b:if>
+
+              <!-- Pagination Navigation -->
+              <b:if cond='data:newerPageUrl or data:olderPageUrl'>
+                <div class="wd-pagination">
+                  <b:if cond='data:newerPageUrl'>
+                    <a expr:href='data:newerPageUrl' class="wd-btn wd-btn-secondary wd-btn-sm">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                      <span>Newer Posts</span>
+                    </a>
+                  </b:if>
+                  <b:if cond='data:olderPageUrl'>
+                    <a expr:href='data:olderPageUrl' class="wd-btn wd-btn-secondary wd-btn-sm">
+                      <span>Older Posts</span>
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </a>
+                  </b:if>
+                </div>
+              </b:if>
+
+          </b:includable>
+
+          <b:includable id='threadedComments' var='post'>
+            <div class='comments' id='comments'>
+              <b:if cond='data:post.allowComments'>
+                <h4><data:post.commentLabel/></h4>
+                <b:include data='post' name='commentForm'/>
+              </b:if>
+            </div>
+          </b:includable>
+
+          <b:includable id='comments' var='post'>
+            <div class='comments' id='comments'>
+              <b:if cond='data:post.allowComments'>
+                <h4><data:post.commentLabel/></h4>
+                <b:include data='post' name='commentForm'/>
+              </b:if>
+            </div>
+          </b:includable>
+
+          <b:includable id='commentForm' var='post'>
+            <div class='comment-form'>
+              <b:if cond='data:post.embedCommentForm'>
+                <b:include data='post' name='commentDeleteLink'/>
+              </b:if>
+            </div>
+            </b:includable>
+          </b:widget>
+        </b:section>
+      </main>
+    </div>
+  </section>
+
+  <!-- ================= FINAL CTA SECTION ================= -->
+  <section class="wd-cta-section" id="cta">
+    <div class="wd-cta-glow"></div>
+    <div class="wd-container wd-cta-container">
+      <div class="wd-cta-badge">GET STARTED TODAY</div>
+      <h2 class="wd-cta-title">Work smarter.<br/>Build better days.</h2>
+      <p class="wd-cta-desc">Manage your work, team, attendance and payments effortless with WorkDaily. Start optimizing your operations today.</p>
+      <div class="wd-cta-actions">
+        <a href="#showcase" class="wd-btn wd-btn-primary wd-btn-lg">
+          <span>Explore WorkDaily</span>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <a href="#blog" class="wd-btn wd-btn-secondary wd-btn-lg">Read WorkDaily Blog</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="wd-footer" id="footer">
+    <div class="wd-container">
+      <div class="wd-footer-grid">
+        <div class="wd-footer-brand">
+          <a expr:href='data:blog.homepageUrl' class="wd-logo">
+            <div class="wd-logo-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="3" y="3" width="8" height="8" rx="2" fill="#145A32"/>
+                <rect x="13" y="3" width="8" height="8" rx="2" fill="#2E7D32"/>
+                <rect x="3" y="13" width="8" height="8" rx="2" fill="#6B8E23"/>
+                <rect x="13" y="13" width="8" height="8" rx="2" fill="#9ACD32"/>
+              </svg>
+            </div>
+            <span class="wd-logo-text">Work<span>Daily</span></span>
+          </a>
+          <p class="wd-footer-brand-desc">
+            The premium daily work, workforce, contractor and payment management solution for modern enterprises and site leaders.
+          </p>
+        </div>
+
+        <div class="wd-footer-col">
+          <h4 class="wd-footer-heading">Product</h4>
+          <ul class="wd-footer-links">
+            <li><a href="#showcase">App Showcase</a></li>
+            <li><a href="#benefits">Features</a></li>
+            <li><a href="#hero">Workforce Tracking</a></li>
+            <li><a href="#showcase">Payment Reports</a></li>
+          </ul>
+        </div>
+
+        <div class="wd-footer-col">
+          <h4 class="wd-footer-heading">Features</h4>
+          <ul class="wd-footer-links">
+            <li><a href="#showcase">Daily Attendance</a></li>
+            <li><a href="#showcase">Contractor Mode</a></li>
+            <li><a href="#showcase">Instant Search</a></li>
+            <li><a href="#showcase">Business Insights</a></li>
+          </ul>
+        </div>
+
+        <div class="wd-footer-col">
+          <h4 class="wd-footer-heading">Company &amp; Blog</h4>
+          <ul class="wd-footer-links">
+            <li><a href="#blog">Latest News</a></li>
+            <li><a href="#blog">Best Practices</a></li>
+            <li><a href="#footer">About WorkDaily</a></li>
+            <li><a href="#cta">Contact Support</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="wd-footer-bottom">
+        <div class="wd-footer-copy">
+          &#169; <script>document.write(new Date().getFullYear())</script> <data:blog.title/>. All rights reserved. WorkDaily Product Specification.
+        </div>
+        <div class="wd-footer-bottom-links">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+          <a href="#">Security</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Optional Blogger Footer Section for Widgets -->
+  <b:section class='footer-section' id='footer-section' showelement='no'>
+    <b:widget id='HTML1' locked='false' title='Footer Info' type='HTML'/>
+  </b:section>
+
+  <!-- ================= WORKDAILY JAVASCRIPT ARCHITECTURE ================= -->
+  <script>//<![CDATA[
+  /*
+    WORKDAILY SCREENSHOT ASSETS & CONFIGURATION
+    -------------------------------------------
+    Replace these placeholder image URLs with your real WorkDaily app screenshots.
+  */
+  const workDailyScreens = [
+    {
+      number: "01",
+      eyebrow: "DASHBOARD",
+      title: "Everything at a glance",
+      description: "Track today's work, workers, payments and tasks from one simple dashboard.",
+      badge: "WORKDAILY",
+      accentColor: "rgba(20, 90, 50, 0.35)",
+      image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80",
+      floatingLabel: "LIVE SYNC"
+    },
+    {
+      number: "02",
+      eyebrow: "WORK MANAGEMENT",
+      title: "Add work in seconds",
+      description: "Create a new job with the details that actually matter.",
+      badge: "QUICK SETUP",
+      accentColor: "rgba(46, 125, 50, 0.35)",
+      image: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=800&q=80",
+      floatingLabel: "FAST INPUT"
+    },
+    {
+      number: "03",
+      eyebrow: "PROJECT CONTROL",
+      title: "Every job, organized",
+      description: "Keep work details, progress and assigned workers together.",
+      badge: "PROJECT VIEW",
+      accentColor: "rgba(107, 142, 35, 0.35)",
+      image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80",
+      floatingLabel: "JOB BOARDS"
+    },
+    {
+      number: "04",
+      eyebrow: "WORKFORCE",
+      title: "Know your workforce",
+      description: "Manage workers, assignments and daily activity from one place.",
+      badge: "WORKFORCE",
+      accentColor: "rgba(20, 90, 50, 0.35)",
+      image: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80",
+      floatingLabel: "CREW LOGS"
+    },
+    {
+      number: "05",
+      eyebrow: "ATTENDANCE",
+      title: "Track every working day",
+      description: "Record attendance without paperwork or complicated registers.",
+      badge: "DAILY TRACKING",
+      accentColor: "rgba(46, 125, 50, 0.35)",
+      image: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=800&q=80",
+      floatingLabel: "1-TAP CHECK-IN"
+    },
+    {
+      number: "06",
+      eyebrow: "CONTRACTOR MODE",
+      title: "Built for contractors",
+      description: "See active projects, workers and pending work in one place.",
+      badge: "CONTRACTOR",
+      accentColor: "rgba(107, 142, 35, 0.35)",
+      image: "https://images.unsplash.com/photo-1542744094-3a3172720177?auto=format&fit=crop&w=800&q=80",
+      floatingLabel: "SITE HUB"
+    },
+    {
+      number: "07",
+      eyebrow: "PAYMENTS",
+      title: "Never lose track of payments",
+      description: "Know what is paid, pending and due at a glance.",
+      badge: "FINANCE",
+      accentColor: "rgba(20, 90, 50, 0.35)",
+      image: "https://images.unsplash.com/photo-1559526324-4b87b5e36e44?auto=format&fit=crop&w=800&q=80",
+      floatingLabel: "INSTANT LEDGER"
+    },
+    {
+      number: "08",
+      eyebrow: "WORK HISTORY",
+      title: "Your complete work history",
+      description: "Find previous jobs, payments and activity whenever you need them.",
+      badge: "HISTORY",
+      accentColor: "rgba(46, 125, 50, 0.35)",
+      image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=800&q=80",
+      floatingLabel: "ARCHIVE"
+    },
+    {
+      number: "09",
+      eyebrow: "ANALYTICS",
+      title: "Understand your business",
+      description: "Turn daily work data into useful insights.",
+      badge: "INSIGHTS",
+      accentColor: "rgba(107, 142, 35, 0.35)",
+      image: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=800&q=80",
+      floatingLabel: "SMART METRICS"
+    },
+    {
+      number: "10",
+      eyebrow: "NOTIFICATIONS",
+      title: "Stay one step ahead",
+      description: "Important work updates and reminders, without the noise.",
+      badge: "SMART ALERTS",
+      accentColor: "rgba(20, 90, 50, 0.35)",
+      image: "https://images.unsplash.com/photo-1512428559087-560fa5ceab42?auto=format&fit=crop&w=800&q=80",
+      floatingLabel: "REAL-TIME"
+    },
+    {
+      number: "11",
+      eyebrow: "SMART SEARCH",
+      title: "Find anything instantly",
+      description: "Search jobs, workers and payments without digging through lists.",
+      badge: "FAST SEARCH",
+      accentColor: "rgba(46, 125, 50, 0.35)",
+      image: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=800&q=80",
+      floatingLabel: "INSTANT FILTER"
+    },
+    {
+      number: "12",
+      eyebrow: "WORKSPACE",
+      title: "Your workspace, your way",
+      description: "Manage your business profile, preferences and account settings.",
+      badge: "SETTINGS",
+      accentColor: "rgba(107, 142, 35, 0.35)",
+      image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80",
+      floatingLabel: "CUSTOMIZABLE"
+    }
+  ];
+
+  document.addEventListener("DOMContentLoaded", function() {
+    initHeader();
+    initMobileMenu();
+    initShowcase();
+    initKeyboardNav();
+  });
+
+  /* HEADER SCROLL BEHAVIOR */
+  function initHeader() {
+    const header = document.getElementById("wd-header");
+    if (!header) return;
+
+    window.addEventListener("scroll", function() {
+      if (window.scrollY > 40) {
+        header.classList.add("scrolled");
+      } else {
+        header.classList.remove("scrolled");
+      }
+    }, { passive: true });
+  }
+
+  /* MOBILE DRAWER TOGGLE */
+  function initMobileMenu() {
+    const toggleBtn = document.getElementById("wd-menu-toggle");
+    const drawer = document.getElementById("wd-mobile-drawer");
+    if (!toggleBtn || !drawer) return;
+
+    toggleBtn.addEventListener("click", function() {
+      const isOpen = drawer.classList.contains("open");
+      if (isOpen) {
+        drawer.classList.remove("open");
+        toggleBtn.classList.remove("open");
+        document.body.style.overflow = "";
+      } else {
+        drawer.classList.add("open");
+        toggleBtn.classList.add("open");
+        document.body.style.overflow = "hidden";
+      }
+    });
+
+    const mobileLinks = drawer.querySelectorAll("a");
+    mobileLinks.forEach(function(link) {
+      link.addEventListener("click", function() {
+        drawer.classList.remove("open");
+        toggleBtn.classList.remove("open");
+        document.body.style.overflow = "";
+      });
+    });
+  }
+
+  /* SHOWCASE EXPERIENCE & VERTICAL INDICATOR */
+  function initShowcase() {
+    const track = document.getElementById("wd-showcase-track");
+    const viewport = document.getElementById("wd-showcase-viewport");
+    const rail = document.getElementById("wd-indicator-rail");
+    const currentNumEl = document.getElementById("wd-indicator-current");
+    const totalNumEl = document.getElementById("wd-indicator-total");
+
+    if (!track || !viewport || !rail) return;
+
+    totalNumEl.textContent = String(workDailyScreens.length).padStart(2, '0');
+
+    // Render Showcase Slides
+    const variants = ["a", "b", "c", "d"];
+    workDailyScreens.forEach(function(item, index) {
+      const variant = variants[index % variants.length];
+      const slide = document.createElement("div");
+      slide.className = "wd-slide";
+      slide.id = "wd-slide-" + index;
+      slide.setAttribute("data-slide-index", index);
+
+      const loadingAttr = index === 0 ? "eager" : "lazy";
+
+      let compositionHTML = "";
+      if (variant === "a" || variant === "d") {
+        compositionHTML = `
+          <div class="wd-slide-container wd-slide-variant-${variant}">
+            <div class="wd-slide-text">
+              <div class="wd-slide-eyebrow">
+                <span class="wd-badge-dot"></span>
+                <span>${item.eyebrow}</span>
+              </div>
+              <h2 class="wd-slide-title">${item.title}</h2>
+              <p class="wd-slide-desc">${item.description}</p>
+              <div class="wd-slide-badge">${item.badge}</div>
+            </div>
+            <div class="wd-slide-phone-wrap">
+              <div class="wd-slide-phone">
+                ${item.floatingLabel ? `<div class="wd-floating-badge wd-float-top-left">${item.floatingLabel}</div>` : ''}
+                <img src="${item.image}" alt="${item.title}" class="wd-slide-img" loading="${loadingAttr}" decoding="async" />
+              </div>
+            </div>
+          </div>
+        `;
+      } else {
+        compositionHTML = `
+          <div class="wd-slide-container wd-slide-variant-${variant}">
+            <div class="wd-slide-text">
+              <div class="wd-slide-eyebrow">
+                <span class="wd-badge-dot"></span>
+                <span>${item.eyebrow}</span>
+              </div>
+              <h2 class="wd-slide-title">${item.title}</h2>
+              <p class="wd-slide-desc">${item.description}</p>
+              <div class="wd-slide-badge">${item.badge}</div>
+            </div>
+            <div class="wd-slide-phone-wrap">
+              <div class="wd-slide-phone">
+                <img src="${item.image}" alt="${item.title}" class="wd-slide-img" loading="${loadingAttr}" decoding="async" />
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      slide.innerHTML = `
+        <div class="wd-slide-bg-glow" style="--slide-accent: ${item.accentColor};"></div>
+        ${compositionHTML}
+      `;
+
+      track.appendChild(slide);
+    });
+
+    // Build Vertical Indicator Dots
+    workDailyScreens.forEach(function(_, index) {
+      const dot = document.createElement("button");
+      dot.className = "wd-indicator-dot" + (index === 0 ? " active" : "");
+      dot.setAttribute("aria-label", "Go to slide " + (index + 1));
+      dot.addEventListener("click", function() {
+        const targetSlide = document.getElementById("wd-slide-" + index);
+        if (targetSlide) {
+          targetSlide.scrollIntoView({ behavior: "smooth" });
+        }
+      });
+      rail.appendChild(dot);
+    });
+
+    // IntersectionObserver to Track Active Slide
+    const observerOptions = {
+      root: viewport,
+      threshold: 0.6
+    };
+
+    const observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          const idx = parseInt(entry.target.getAttribute("data-slide-index"), 10);
+          updateActiveIndicator(idx);
+          preloadAdjacentImages(idx);
+        }
+      });
+    }, observerOptions);
+
+    const slides = track.querySelectorAll(".wd-slide");
+    slides.forEach(function(slide) {
+      observer.observe(slide);
+    });
+
+    function updateActiveIndicator(activeIndex) {
+      currentNumEl.textContent = String(activeIndex + 1).padStart(2, '0');
+      const dots = rail.querySelectorAll(".wd-indicator-dot");
+      dots.forEach(function(dot, i) {
+        if (i === activeIndex) {
+          dot.classList.add("active");
+        } else {
+          dot.classList.remove("active");
+        }
+      });
+    }
+
+    function preloadAdjacentImages(currentIndex) {
+      const nextIndex = currentIndex + 1;
+      if (nextIndex < workDailyScreens.length) {
+        const img = new Image();
+        img.src = workDailyScreens[nextIndex].image;
+      }
+    }
+  }
+
+  /* KEYBOARD NAVIGATION FOR SHOWCASE */
+  function initKeyboardNav() {
+    const viewport = document.getElementById("wd-showcase-viewport");
+    if (!viewport) return;
+
+    window.addEventListener("keydown", function(e) {
+      // Only handle if showcase is currently in viewport view
+      const rect = viewport.getBoundingClientRect();
+      const inView = rect.top < window.innerHeight && rect.bottom > 0;
+      if (!inView) return;
+
+      if (e.key === "ArrowDown" || e.key === "PageDown") {
+        viewport.scrollBy({ top: viewport.clientHeight, behavior: "smooth" });
+      } else if (e.key === "ArrowUp" || e.key === "PageUp") {
+        viewport.scrollBy({ top: -viewport.clientHeight, behavior: "smooth" });
+      }
+    });
+  }
+  //]]></script>
+
+</body>
+</html>
