@@ -731,7 +731,7 @@ body {
   align-items: center;
   justify-content: center;
   position: relative;
-  padding: calc(72px + env(safe-area-inset-top, 0px)) 16px calc(16px + env(safe-area-inset-bottom, 0px));
+  padding: calc(68px + env(safe-area-inset-top, 0px)) 16px calc(16px + env(safe-area-inset-bottom, 0px));
   box-sizing: border-box;
 }
 
@@ -740,13 +740,13 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 600px;
-  height: 600px;
-  background: radial-gradient(circle, var(--slide-accent, rgba(46, 125, 50, 0.18)) 0%, transparent 70%);
+  width: clamp(500px, 60vw, 850px);
+  height: clamp(500px, 60vw, 850px);
+  background: radial-gradient(circle, var(--slide-accent, rgba(46, 125, 50, 0.22)) 0%, rgba(154, 205, 50, 0.08) 45%, transparent 70%);
   filter: blur(80px);
   pointer-events: none;
   z-index: 0;
-  opacity: 0.8;
+  opacity: 0.85;
 }
 
 .wd-slide-bg-decor {
@@ -755,33 +755,45 @@ body {
   pointer-events: none;
   z-index: 0;
   overflow: hidden;
-  opacity: 0.14;
+  opacity: 0.18;
 }
 
-.wd-slide-bg-decor .wd-decor-circle {
+.wd-slide-bg-decor .wd-decor-grid {
   position: absolute;
+  inset: -100px;
+  background-image: radial-gradient(rgba(20, 90, 50, 0.35) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+.wd-slide-bg-decor .wd-decor-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: clamp(350px, 50vw, 750px);
+  height: clamp(350px, 50vw, 750px);
   border-radius: 50%;
-  border: 1.5px dashed #145A32;
+  border: 1.5px dashed rgba(20, 90, 50, 0.4);
 }
 
 .wd-slide-bg-decor .wd-decor-blob-1 {
   position: absolute;
-  top: 15%;
-  left: 10%;
-  width: 200px;
-  height: 200px;
+  top: 12%;
+  left: 8%;
+  width: 220px;
+  height: 220px;
   background: radial-gradient(circle, #2E7D32 0%, transparent 70%);
-  filter: blur(40px);
+  filter: blur(45px);
 }
 
 .wd-slide-bg-decor .wd-decor-blob-2 {
   position: absolute;
-  bottom: 15%;
-  right: 12%;
-  width: 250px;
-  height: 250px;
+  bottom: 12%;
+  right: 10%;
+  width: 260px;
+  height: 260px;
   background: radial-gradient(circle, #9ACD32 0%, transparent 70%);
-  filter: blur(50px);
+  filter: blur(55px);
 }
 
 .wd-slide-container {
@@ -795,23 +807,23 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 6px;
 }
 
 .wd-slide-text-header {
   text-align: center;
-  max-width: 520px;
-  margin: 0 auto 4px;
+  max-width: 560px;
+  margin: 0 auto 2px;
   flex: 0 0 auto;
 }
 
 .wd-slide-eyebrow {
-  font-size: clamp(10px, 2.8vw, 12px);
+  font-size: clamp(10px, 2.5vw, 12px);
   font-weight: 800;
   letter-spacing: 0.12em;
   color: #145A32;
   text-transform: uppercase;
-  margin-bottom: 4px;
+  margin-bottom: 2px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -819,18 +831,18 @@ body {
 }
 
 .wd-slide-title {
-  font-size: clamp(18px, 4.8vw, 32px);
+  font-size: clamp(20px, 4.5vw, 34px);
   font-weight: 800;
   line-height: 1.15;
   color: #101410;
   letter-spacing: -0.02em;
-  margin: 0 0 4px;
+  margin: 0 0 2px;
 }
 
 .wd-slide-desc {
-  font-size: clamp(12px, 3.2vw, 15px);
+  font-size: clamp(12.5px, 2.8vw, 15px);
   color: #667067;
-  line-height: 1.4;
+  line-height: 1.38;
   margin: 0;
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -838,45 +850,35 @@ body {
   overflow: hidden;
 }
 
+/* SLIDE PHONE FRAME - REUSABLE MobileDeviceFrame CONSTRAINTS */
 .wd-slide-phone-wrap {
   width: 100%;
+  max-width: 720px;
   display: flex;
   justify-content: center;
   align-items: center;
   flex: 1 1 auto;
   min-height: 0;
   position: relative;
-  margin-top: 4px;
-}
-
-/* SLIDE PHONE FRAME - LOCKED DEVICE FRAME TOKEN */
-.wd-slide-phone-wrap {
-  width: 100%;
-  max-width: 600px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex: 1 1 auto;
-  min-height: 0;
-  position: relative;
+  margin-top: 2px;
 }
 
 .wd-slide-phone {
   position: relative;
   aspect-ratio: 9 / 19.5;
-  height: clamp(340px, 62svh, 580px);
-  max-height: 65svh;
+  height: clamp(380px, 68svh, 680px);
+  max-height: 70svh;
   width: auto;
   align-self: center;
   flex-shrink: 1;
   background: #0B100C;
-  border-radius: clamp(32px, 4vw, 44px);
-  padding: clamp(7px, 1vw, 10px);
+  border-radius: clamp(34px, 4.5vw, 48px);
+  padding: clamp(8px, 1.2vw, 12px);
   box-shadow:
-    0 30px 70px -15px rgba(0, 0, 0, 0.4),
-    0 16px 36px -8px rgba(20, 90, 50, 0.28),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.2);
-  border: 2.5px solid rgba(255, 255, 255, 0.15);
+    0 35px 85px -15px rgba(0, 0, 0, 0.45),
+    0 20px 45px -10px rgba(20, 90, 50, 0.32),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.22);
+  border: 2.5px solid rgba(255, 255, 255, 0.18);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -891,7 +893,7 @@ body {
 .wd-slide-phone::before {
   content: "";
   position: absolute;
-  top: clamp(10px, 1.4vw, 14px);
+  top: clamp(10px, 1.4vw, 15px);
   left: 50%;
   transform: translateX(-50%);
   width: 28%;
@@ -899,7 +901,7 @@ body {
   background: #000000;
   border-radius: 20px;
   z-index: 12;
-  box-shadow: inset 0 0 2px rgba(255, 255, 255, 0.1);
+  box-shadow: inset 0 0 2px rgba(255, 255, 255, 0.12);
 }
 
 /* Premium Glass Reflection Overlay */
@@ -908,13 +910,13 @@ body {
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.02) 40%, transparent 65%);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0.03) 40%, transparent 65%);
   pointer-events: none;
   z-index: 10;
 }
 
 .wd-slide-img {
-  border-radius: clamp(24px, 3.2vw, 32px);
+  border-radius: clamp(26px, 3.5vw, 36px);
   object-fit: cover;
   width: 100%;
   height: 100%;
@@ -922,20 +924,18 @@ body {
   display: block;
 }
 
-/* MODERN FLOATING 3D FEATURE ICON OVERLAY */
+/* FLOATING 3D FEATURE ICONS AROUND PHONE */
 .wd-feature-icon-badge {
   position: absolute;
-  top: clamp(0px, 3%, 20px);
-  right: clamp(2%, 8%, 18%);
-  width: clamp(52px, 6.5vw, 68px);
-  height: clamp(52px, 6.5vw, 68px);
-  border-radius: clamp(16px, 2vw, 22px);
+  width: clamp(48px, 6vw, 68px);
+  height: clamp(48px, 6vw, 68px);
+  border-radius: clamp(14px, 1.8vw, 22px);
   background: linear-gradient(135deg, #145A32 0%, #2E7D32 55%, #6B8E23 100%);
-  border: 1px solid rgba(255, 255, 255, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.4);
   box-shadow:
     0 16px 32px rgba(20, 90, 50, 0.38),
     0 6px 12px rgba(0, 0, 0, 0.12),
-    inset 0 1px 1px rgba(255, 255, 255, 0.5),
+    inset 0 1px 1px rgba(255, 255, 255, 0.6),
     inset 0 -2px 6px rgba(10, 40, 22, 0.4);
   display: flex;
   align-items: center;
@@ -944,16 +944,6 @@ body {
   pointer-events: none;
   transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   flex-shrink: 0;
-  transform: rotate(-6deg);
-}
-
-.wd-slide[data-slide-index="1"] .wd-feature-icon-badge,
-.wd-slide[data-slide-index="3"] .wd-feature-icon-badge,
-.wd-slide[data-slide-index="5"] .wd-feature-icon-badge,
-.wd-slide[data-slide-index="7"] .wd-feature-icon-badge,
-.wd-slide[data-slide-index="9"] .wd-feature-icon-badge,
-.wd-slide[data-slide-index="11"] .wd-feature-icon-badge {
-  transform: rotate(7deg);
 }
 
 .wd-feature-icon-badge::after {
@@ -963,16 +953,35 @@ body {
   left: 0;
   right: 0;
   height: 50%;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0) 100%);
-  border-radius: clamp(15px, 1.9vw, 21px) clamp(15px, 1.9vw, 21px) 0 0;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.28) 0%, rgba(255, 255, 255, 0) 100%);
+  border-radius: clamp(13px, 1.7vw, 21px) clamp(13px, 1.7vw, 21px) 0 0;
   pointer-events: none;
 }
 
 .wd-feature-icon-badge svg {
-  width: clamp(28px, 3.8vw, 36px);
-  height: clamp(28px, 3.8vw, 36px);
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+  width: clamp(24px, 3.5vw, 34px);
+  height: clamp(24px, 3.5vw, 34px);
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.25));
   color: #FFFFFF;
+}
+
+/* 3 Position Variants around Phone Container */
+.wd-icon-tr {
+  top: clamp(10px, 6%, 40px);
+  right: clamp(2%, 8%, 18%);
+  transform: rotate(-6deg);
+}
+
+.wd-icon-ml {
+  top: 45%;
+  left: clamp(2%, 6%, 16%);
+  transform: translateY(-50%) rotate(5deg);
+}
+
+.wd-icon-br {
+  bottom: clamp(10px, 8%, 50px);
+  right: clamp(2%, 10%, 20%);
+  transform: rotate(-5deg);
 }
 
 /* BOTTOM-RIGHT VERTICAL INDICATOR */
@@ -1127,13 +1136,150 @@ body {
   line-height: 1.6;
 }
 
-/* BLOG SECTION */
+/* BLOG SECTION & CUSTOM WORKDAILY BLOG VIEW */
 .wd-blog-section {
   padding: 100px 0 120px;
   background-color: #FFFFFF;
   border-top: 1px solid var(--color-border);
 }
 
+/* CATEGORY FILTERS */
+.wd-blog-categories-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+}
+
+.wd-category-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 20px;
+  border-radius: var(--radius-full);
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  text-decoration: none;
+}
+
+.wd-category-chip:hover {
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+  transform: translateY(-1px);
+}
+
+.wd-category-chip.active {
+  background: linear-gradient(135deg, #145A32 0%, #2E7D32 100%);
+  color: #FFFFFF;
+  border-color: transparent;
+  box-shadow: 0 4px 14px rgba(20, 90, 50, 0.25);
+}
+
+/* FEATURED ARTICLE */
+.wd-featured-article {
+  background: linear-gradient(135deg, #F8FAF7 0%, #EEF4EF 100%);
+  border: 1px solid rgba(20, 90, 50, 0.15);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  margin-bottom: 48px;
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  align-items: center;
+  box-shadow: var(--shadow-md);
+  transition: all var(--transition-normal);
+}
+
+.wd-featured-article:hover {
+  transform: translateY(-4px);
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow-lg);
+}
+
+.wd-featured-img-wrap {
+  width: 100%;
+  height: 100%;
+  min-height: 320px;
+  overflow: hidden;
+  position: relative;
+  background-color: #E2E6DF;
+}
+
+.wd-featured-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--transition-slow);
+}
+
+.wd-featured-article:hover .wd-featured-img-wrap img {
+  transform: scale(1.04);
+}
+
+.wd-featured-badge {
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  padding: 6px 14px;
+  background: rgba(20, 90, 50, 0.9);
+  backdrop-filter: blur(8px);
+  color: #FFFFFF;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border-radius: var(--radius-full);
+}
+
+.wd-featured-content {
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.wd-featured-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+  font-size: 13px;
+  color: var(--color-text-muted);
+}
+
+.wd-featured-title {
+  font-size: clamp(24px, 2.5vw, 34px);
+  font-weight: 800;
+  line-height: 1.25;
+  color: var(--color-text);
+  margin-bottom: 14px;
+  letter-spacing: -0.01em;
+}
+
+.wd-featured-title a {
+  color: var(--color-text);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.wd-featured-title a:hover {
+  color: var(--color-primary);
+}
+
+.wd-featured-desc {
+  font-size: 15.5px;
+  color: var(--color-text-muted);
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+/* BLOG GRID */
 .wd-blog-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -1212,7 +1358,7 @@ body {
   color: #FFFFFF;
 }
 
-.wd-blog-date {
+.wd-blog-date, .wd-reading-time {
   font-size: 12px;
   color: var(--color-text-muted);
 }
@@ -1242,6 +1388,15 @@ body {
   flex-grow: 1;
 }
 
+.wd-blog-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: auto;
+  padding-top: 12px;
+  border-top: 1px solid rgba(0,0,0,0.05);
+}
+
 .wd-blog-read-more {
   display: inline-flex;
   align-items: center;
@@ -1256,16 +1411,187 @@ body {
   gap: 10px;
 }
 
-/* SINGLE POST PAGE */
-.wd-single-post {
+/* CUSTOM WORKDAILY VIDEO PLAYER */
+.wd-video-player-wrapper {
+  position: relative;
+  width: 100%;
   max-width: 800px;
+  margin: 32px auto;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: #0B100C;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  user-select: none;
+}
+
+.wd-video-player-wrapper video {
+  width: 100%;
+  height: auto;
+  display: block;
+  background: #000;
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+}
+
+/* Custom Play Overlay Button */
+.wd-video-big-play-btn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(1);
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #145A32 0%, #2E7D32 50%, #6B8E23 100%);
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.5);
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: all var(--transition-fast);
+}
+
+.wd-video-player-wrapper:hover .wd-video-big-play-btn {
+  transform: translate(-50%, -50%) scale(1.08);
+}
+
+.wd-video-player-wrapper.playing .wd-video-big-play-btn {
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, -50%) scale(0.8);
+}
+
+/* Custom Control Bar */
+.wd-video-control-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(11, 16, 12, 0.88);
+  backdrop-filter: blur(16px);
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  z-index: 10;
+  transition: opacity 0.3s ease;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.wd-video-player-wrapper.playing.user-idle .wd-video-control-bar {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.wd-video-btn {
+  background: transparent;
+  border: none;
+  color: #FFFFFF;
+  cursor: pointer;
+  padding: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  transition: background var(--transition-fast);
+}
+
+.wd-video-btn:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: var(--color-light-accent);
+}
+
+/* Progress Slider */
+.wd-video-progress-container {
+  flex-grow: 1;
+  position: relative;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.wd-video-progress-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #2E7D32 0%, #9ACD32 100%);
+  border-radius: 3px;
+  position: relative;
+}
+
+.wd-video-progress-handle {
+  position: absolute;
+  right: -6px;
+  top: 50%;
+  transform: translateY(-50%) scale(0);
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  transition: transform 0.15s ease;
+}
+
+.wd-video-progress-container:hover .wd-video-progress-handle {
+  transform: translateY(-50%) scale(1);
+}
+
+.wd-video-time-display {
+  font-size: 12px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.85);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.wd-video-volume-wrap {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.wd-video-volume-slider {
+  width: 60px;
+  height: 4px;
+  accent-color: var(--color-light-accent);
+  cursor: pointer;
+}
+
+/* EDITORIAL SINGLE ARTICLE VIEW */
+.wd-single-post {
+  max-width: 780px;
   margin: 0 auto;
-  padding: 40px 0;
+  padding: 20px 0 60px;
+}
+
+.wd-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--color-primary);
+  text-decoration: none;
+  margin-bottom: 28px;
+  padding: 8px 16px;
+  background: var(--color-bg);
+  border-radius: var(--radius-full);
+  border: 1px solid var(--color-border);
+  transition: all var(--transition-fast);
+}
+
+.wd-back-link:hover {
+  background: var(--color-surface);
+  transform: translateX(-3px);
+  border-color: var(--color-primary);
 }
 
 .wd-post-header {
   text-align: center;
-  margin-bottom: 40px;
+  margin-bottom: 32px;
 }
 
 .wd-post-labels {
@@ -1276,11 +1602,12 @@ body {
 }
 
 .wd-post-title {
-  font-size: clamp(32px, 4vw, 52px);
+  font-size: clamp(30px, 4vw, 48px);
   font-weight: 800;
   color: var(--color-text);
-  line-height: 1.15;
+  line-height: 1.18;
   margin-bottom: 16px;
+  letter-spacing: -0.02em;
 }
 
 .wd-post-byline {
@@ -1289,11 +1616,20 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 10px;
 }
 
 .wd-dot-sep {
   opacity: 0.4;
+}
+
+.wd-post-hero-image {
+  width: 100%;
+  max-height: 480px;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+  margin-bottom: 40px;
+  box-shadow: var(--shadow-md);
 }
 
 .wd-post-body {
@@ -1307,11 +1643,32 @@ body {
   margin-bottom: 24px;
 }
 
+.wd-post-body h2, .wd-post-body h3 {
+  font-weight: 800;
+  color: var(--color-text);
+  margin: 36px 0 16px;
+}
+
 .wd-post-body img {
   max-width: 100%;
   height: auto;
   border-radius: var(--radius-md);
-  margin: 24px 0;
+  margin: 28px 0;
+  box-shadow: var(--shadow-sm);
+}
+
+/* RELATED ARTICLES SECTION */
+.wd-related-articles-wrap {
+  margin-top: 60px;
+  padding-top: 40px;
+  border-top: 1px solid var(--color-border);
+}
+
+.wd-related-heading {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--color-text);
+  margin-bottom: 28px;
 }
 
 .wd-comments-area {
@@ -1417,6 +1774,25 @@ body {
   z-index: 0;
 }
 
+.wd-footer-standalone-icon {
+  margin-bottom: 4px;
+  display: flex;
+  justify-content: center;
+}
+
+.wd-standalone-icon-badge {
+  width: 50px;
+  height: 50px;
+  border-radius: var(--radius-md);
+  background: linear-gradient(135deg, #145A32 0%, #2E7D32 50%, #6B8E23 100%);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #FFFFFF;
+  box-shadow: 0 10px 24px rgba(20, 90, 50, 0.28), inset 0 1px 1px rgba(255, 255, 255, 0.4);
+}
+
 .wd-btn-download-icon {
   display: inline-flex;
   align-items: center;
@@ -1428,7 +1804,7 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.35);
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.18), inset 0 1px 1px rgba(255, 255, 255, 0.4);
   color: #FFFFFF;
-  margin-left: 2px;
+  margin-left: 4px;
   flex-shrink: 0;
   transition: transform var(--transition-fast);
 }
@@ -1439,19 +1815,21 @@ body {
 
 .wd-footer-curve-wrap {
   width: 100%;
-  height: clamp(40px, 6vw, 70px);
+  height: clamp(50px, 8vw, 100px);
   overflow: hidden;
   line-height: 0;
-  margin-bottom: 24px;
+  margin-bottom: 28px;
   position: relative;
-  z-index: 1;
+  z-index: 2;
   background: transparent;
+  margin-top: -1px; /* seamless connection with CTA section above */
 }
 
 .wd-footer-curve-svg {
   width: 100%;
   height: 100%;
   display: block;
+  filter: drop-shadow(0 12px 18px rgba(20, 90, 50, 0.18));
 }
 
 .wd-footer-container {
@@ -1605,7 +1983,7 @@ body {
   }
 
   @media (max-width: 576px) {
-    .wd-header .wd-header-actions .wd-btn-sm span {
+    .wd-header .wd-header-actions .wd-btn-sm .wd-btn-text {
       display: none;
     }
     .wd-header .wd-header-actions .wd-btn-sm {
@@ -1863,9 +2241,9 @@ body {
       </nav>
 
       <div class="wd-header-actions">
-        <a href="#showcase" class="wd-btn wd-btn-primary wd-btn-sm">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-          <span>Download Now</span>
+        <a href="#showcase" class="wd-btn wd-btn-primary wd-btn-sm" aria-label="Download Now" title="Download Now">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          <span class="wd-btn-text">Download Now</span>
         </a>
         <button class="wd-menu-toggle" id="wd-menu-toggle" aria-label="Toggle navigation menu">
           <svg class="wd-icon-menu" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -2117,6 +2495,15 @@ body {
         <p class="wd-section-subtitle">Articles on workforce efficiency, contractor best practices, and daily management tech.</p>
       </div>
 
+      <!-- Category Navigation Chips -->
+      <nav class="wd-blog-categories-wrap" aria-label="Blog Categories">
+        <button class="wd-category-chip active" data-category="all">All</button>
+        <button class="wd-category-chip" data-category="update">Update</button>
+        <button class="wd-category-chip" data-category="news">News</button>
+        <button class="wd-category-chip" data-category="article">Article</button>
+        <button class="wd-category-chip" data-category="feedback">Feedback</button>
+      </nav>
+
       <main class="wd-main-content">
         <!-- Native Blogger Main Section -->
         <b:section class='main' id='main' showelement='yes'>
@@ -2125,9 +2512,12 @@ body {
 
               <!-- Multiple Items / Post Listing View -->
               <b:if cond='data:view.isMultipleItems'>
-                <div class="wd-blog-grid">
+                <!-- Dynamic Featured Post Header container injected via JS or rendered from first post -->
+                <div id="wd-featured-post-slot"></div>
+
+                <div class="wd-blog-grid" id="wd-blog-grid">
                   <b:loop values='data:posts' var='post'>
-                    <article class="wd-blog-card">
+                    <article class="wd-blog-card" data-post-labels='<b:if cond="data:post.labels"><b:loop values="data:post.labels" var="label"><data:label.name/> </b:loop></b:if>'>
                       <b:if cond='data:post.firstImageUrl'>
                         <div class="wd-blog-thumb">
                           <img expr:src='data:post.firstImageUrl' expr:alt='data:post.title' loading='lazy'/>
@@ -2143,6 +2533,8 @@ body {
                             <b:loop values='data:post.labels' var='label'>
                               <a expr:href='data:label.url' class="wd-label-pill"><data:label.name/></a>
                             </b:loop>
+                          <b:else/>
+                            <span class="wd-label-pill">Article</span>
                           </b:if>
                           <span class="wd-blog-date"><data:post.timestamp/></span>
                         </div>
@@ -2152,10 +2544,13 @@ body {
                         <p class="wd-blog-snippet">
                           <data:post.snippet/>
                         </p>
-                        <a expr:href='data:post.url' class="wd-blog-read-more">
-                          <span>Read Article</span>
-                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                        </a>
+                        <div class="wd-blog-card-footer">
+                          <a expr:href='data:post.url' class="wd-blog-read-more">
+                            <span>Read Article</span>
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                          </a>
+                          <span class="wd-reading-time">5 min read</span>
+                        </div>
                       </div>
                     </article>
                   </b:loop>
@@ -2166,6 +2561,11 @@ body {
               <b:if cond='data:view.isPost'>
                 <b:loop values='data:posts' var='post'>
                   <article class="wd-single-post">
+                    <a href="#blog" class="wd-back-link" id="wd-back-to-blog">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                      <span>Back to Blog</span>
+                    </a>
+
                     <header class="wd-post-header">
                       <b:if cond='data:post.labels'>
                         <div class="wd-post-labels">
@@ -2173,17 +2573,33 @@ body {
                             <a expr:href='data:label.url' class="wd-label-pill"><data:label.name/></a>
                           </b:loop>
                         </div>
+                      <b:else/>
+                        <div class="wd-post-labels">
+                          <span class="wd-label-pill">Article</span>
+                        </div>
                       </b:if>
                       <h1 class="wd-post-title"><data:post.title/></h1>
                       <div class="wd-post-byline">
                         <span>By <data:post.author/></span>
                         <span class="wd-dot-sep">&#8226;</span>
                         <span><data:post.timestamp/></span>
+                        <span class="wd-dot-sep">&#8226;</span>
+                        <span>5 min read</span>
                       </div>
                     </header>
 
+                    <b:if cond='data:post.firstImageUrl'>
+                      <img expr:src='data:post.firstImageUrl' expr:alt='data:post.title' class="wd-post-hero-image"/>
+                    </b:if>
+
                     <div class="wd-post-body">
                       <data:post.body/>
+                    </div>
+
+                    <!-- Related Articles Section Container -->
+                    <div class="wd-related-articles-wrap" id="wd-related-articles-container">
+                      <h3 class="wd-related-heading">Related Articles</h3>
+                      <div class="wd-blog-grid" id="wd-related-grid"></div>
                     </div>
 
                     <!-- Comments Area -->
@@ -2269,19 +2685,35 @@ body {
     <div class="wd-footer-curve-wrap">
       <svg class="wd-footer-curve-svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
         <defs>
-          <linearGradient id="wdCurveFillGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+          <linearGradient id="wdCurveFillGradient" x1="0%" y1="0%" x2="100%" y2="100%">
             <stop offset="0%" stop-color="#145A32"/>
-            <stop offset="60%" stop-color="#2E7D32"/>
+            <stop offset="50%" stop-color="#2E7D32"/>
             <stop offset="100%" stop-color="#1E6C3B"/>
+          </linearGradient>
+          <linearGradient id="wdCurveEdgeGlow" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="rgba(255, 255, 255, 0.35)"/>
+            <stop offset="50%" stop-color="rgba(154, 205, 50, 0.5)"/>
+            <stop offset="100%" stop-color="rgba(255, 255, 255, 0.35)"/>
           </linearGradient>
         </defs>
         <path d="M 0,0 Q 600,120 1200,0 L 1200,0 L 0,0 Z" fill="url(#wdCurveFillGradient)"/>
-        <path d="M 0,0 Q 600,120 1200,0" fill="none" stroke="rgba(255, 255, 255, 0.25)" stroke-width="2.5" stroke-linecap="round"/>
+        <path d="M 0,0 Q 600,120 1200,0" fill="none" stroke="url(#wdCurveEdgeGlow)" stroke-width="2.5" stroke-linecap="round"/>
       </svg>
     </div>
     <div class="wd-container wd-footer-container">
+      <!-- Standalone Download Icon Badge Above Footer CTA Button -->
+      <div class="wd-footer-standalone-icon" aria-hidden="true">
+        <div class="wd-standalone-icon-badge">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="7 10 12 15 17 10"/>
+            <line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+        </div>
+      </div>
+
       <div class="wd-footer-cta-wrap">
-        <a href="#showcase" class="wd-btn wd-btn-primary wd-btn-lg wd-footer-cta-btn">
+        <a href="#showcase" class="wd-btn wd-btn-primary wd-btn-lg wd-footer-cta-btn" aria-label="Download Now">
           <span>Download Now</span>
           <span class="wd-btn-download-icon" aria-hidden="true">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -2470,7 +2902,326 @@ body {
     initMobileMenu();
     initShowcase();
     initKeyboardNav();
+    initBlogSystem();
+    initCustomVideoPlayer();
   });
+
+  /* CUSTOM WORKDAILY VIDEO PLAYER INTEGRATION & DETECTOR */
+  function initCustomVideoPlayer() {
+    // Scan article content for <video> tags or Blogger embeds to upgrade into WorkDaily Custom Player
+    const articleVideos = document.querySelectorAll(".wd-post-body video, .wd-post-body iframe[src*='youtube'], .wd-post-body iframe[src*='vimeo']");
+    articleVideos.forEach(function(vid) {
+      if (vid.tagName.toLowerCase() === "video") {
+        upgradeToCustomVideoPlayer(vid);
+      }
+    });
+
+    // Also look for demo video containers in sample articles or create one if demo present
+    const demoVideoElements = document.querySelectorAll("video.wd-custom-video-target");
+    demoVideoElements.forEach(upgradeToCustomVideoPlayer);
+  }
+
+  function upgradeToCustomVideoPlayer(videoEl) {
+    if (!videoEl || videoEl.parentElement.classList.contains("wd-video-player-wrapper")) return;
+
+    // Create WorkDaily Custom Player DOM Structure
+    const wrapper = document.createElement("div");
+    wrapper.className = "wd-video-player-wrapper";
+
+    videoEl.parentNode.insertBefore(wrapper, videoEl);
+    wrapper.appendChild(videoEl);
+
+    // Remove native controls
+    videoEl.controls = false;
+
+    // Add Big Play Button
+    const bigPlayBtn = document.createElement("button");
+    bigPlayBtn.className = "wd-video-big-play-btn";
+    bigPlayBtn.setAttribute("aria-label", "Play Video");
+    bigPlayBtn.innerHTML = `<svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>`;
+    wrapper.appendChild(bigPlayBtn);
+
+    // Add Control Bar
+    const controlBar = document.createElement("div");
+    controlBar.className = "wd-video-control-bar";
+    controlBar.innerHTML = `
+      <button class="wd-video-btn wd-v-play" aria-label="Play/Pause">
+        <svg class="icon-play" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        <svg class="icon-pause" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="display:none;"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+      </button>
+      <div class="wd-video-progress-container">
+        <div class="wd-video-progress-fill">
+          <div class="wd-video-progress-handle"></div>
+        </div>
+      </div>
+      <span class="wd-video-time-display">00:00 / 00:00</span>
+      <div class="wd-video-volume-wrap">
+        <button class="wd-video-btn wd-v-mute" aria-label="Mute/Unmute">
+          <svg class="icon-vol-on" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+          <svg class="icon-vol-off" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><line x1="1" y1="1" x2="23" y2="23"/><path d="M9 9L5 13H1v4h4l5 4V9z"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+        </button>
+        <input type="range" class="wd-video-volume-slider" min="0" max="1" step="0.05" value="1"/>
+      </div>
+      <button class="wd-video-btn wd-v-fullscreen" aria-label="Toggle Fullscreen">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
+      </button>
+    `;
+    wrapper.appendChild(controlBar);
+
+    // Event Bindings
+    const playBtn = controlBar.querySelector(".wd-v-play");
+    const iconPlay = playBtn.querySelector(".icon-play");
+    const iconPause = playBtn.querySelector(".icon-pause");
+    const progressContainer = controlBar.querySelector(".wd-video-progress-container");
+    const progressFill = controlBar.querySelector(".wd-video-progress-fill");
+    const timeDisplay = controlBar.querySelector(".wd-video-time-display");
+    const muteBtn = controlBar.querySelector(".wd-v-mute");
+    const iconVolOn = muteBtn.querySelector(".icon-vol-on");
+    const iconVolOff = muteBtn.querySelector(".icon-vol-off");
+    const volumeSlider = controlBar.querySelector(".wd-video-volume-slider");
+    const fullscreenBtn = controlBar.querySelector(".wd-v-fullscreen");
+
+    function togglePlay() {
+      if (videoEl.paused) {
+        videoEl.play();
+      } else {
+        videoEl.pause();
+      }
+    }
+
+    bigPlayBtn.addEventListener("click", togglePlay);
+    playBtn.addEventListener("click", togglePlay);
+    videoEl.addEventListener("click", togglePlay);
+
+    videoEl.addEventListener("play", function() {
+      wrapper.classList.add("playing");
+      iconPlay.style.display = "none";
+      iconPause.style.display = "block";
+    });
+
+    videoEl.addEventListener("pause", function() {
+      wrapper.classList.remove("playing");
+      iconPlay.style.display = "block";
+      iconPause.style.display = "none";
+    });
+
+    videoEl.addEventListener("timeupdate", function() {
+      if (videoEl.duration) {
+        const pct = (videoEl.currentTime / videoEl.duration) * 100;
+        progressFill.style.width = pct + "%";
+        timeDisplay.textContent = `${formatTime(videoEl.currentTime)} / ${formatTime(videoEl.duration)}`;
+      }
+    });
+
+    progressContainer.addEventListener("click", function(e) {
+      const rect = progressContainer.getBoundingClientRect();
+      const pos = (e.clientX - rect.left) / rect.width;
+      videoEl.currentTime = pos * videoEl.duration;
+    });
+
+    muteBtn.addEventListener("click", function() {
+      videoEl.muted = !videoEl.muted;
+      if (videoEl.muted) {
+        iconVolOn.style.display = "none";
+        iconVolOff.style.display = "block";
+      } else {
+        iconVolOn.style.display = "block";
+        iconVolOff.style.display = "none";
+      }
+    });
+
+    volumeSlider.addEventListener("input", function() {
+      videoEl.volume = volumeSlider.value;
+      videoEl.muted = (volumeSlider.value == 0);
+    });
+
+    fullscreenBtn.addEventListener("click", function() {
+      if (!document.fullscreenElement) {
+        wrapper.requestFullscreen().catch(err => console.log(err));
+      } else {
+        document.exitFullscreen();
+      }
+    });
+
+    function formatTime(seconds) {
+      const mins = Math.floor(seconds / 60);
+      const secs = Math.floor(seconds % 60);
+      return `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+    }
+  }
+
+  /* BLOG SYSTEM, CATEGORY FILTERING & FEATURED POST */
+  function initBlogSystem() {
+    const categoryChips = document.querySelectorAll(".wd-category-chip");
+    const blogCards = document.querySelectorAll("#wd-blog-grid .wd-blog-card");
+    const featuredSlot = document.getElementById("wd-featured-post-slot");
+
+    // Populate Mock Posts if empty (for local testing environment without live Blogger database)
+    const blogGrid = document.getElementById("wd-blog-grid");
+    if (blogGrid && blogGrid.children.length === 0) {
+      renderSampleBlogData(blogGrid);
+    }
+
+    // Initialize Featured Post at top of Blog View
+    buildFeaturedPost();
+
+    // Category Filter Click Handlers
+    categoryChips.forEach(function(chip) {
+      chip.addEventListener("click", function() {
+        categoryChips.forEach(c => c.classList.remove("active"));
+        chip.classList.add("active");
+
+        const selectedCat = chip.getAttribute("data-category").toLowerCase();
+        filterBlogPosts(selectedCat);
+      });
+    });
+
+    function filterBlogPosts(category) {
+      const cards = document.querySelectorAll("#wd-blog-grid .wd-blog-card");
+      cards.forEach(function(card) {
+        const labelsAttr = (card.getAttribute("data-post-labels") || "").toLowerCase();
+        if (category === "all" || labelsAttr.includes(category)) {
+          card.style.display = "flex";
+        } else {
+          card.style.display = "none";
+        }
+      });
+    }
+
+    function buildFeaturedPost() {
+      if (!featuredSlot) return;
+      const firstCard = document.querySelector("#wd-blog-grid .wd-blog-card");
+      if (!firstCard) return;
+
+      const titleEl = firstCard.querySelector(".wd-blog-card-title a");
+      const title = titleEl ? titleEl.textContent : "Introducing WorkDaily 2.0";
+      const link = titleEl ? titleEl.getAttribute("href") : "#";
+      const snippetEl = firstCard.querySelector(".wd-blog-snippet");
+      const snippet = snippetEl ? snippetEl.textContent : "Discover our latest workforce tracking updates, contractor payout tools, and real-time attendance management.";
+      const imgEl = firstCard.querySelector(".wd-blog-thumb img");
+      const imgSrc = imgEl ? imgEl.getAttribute("src") : "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=800&q=80";
+
+      featuredSlot.innerHTML = `
+        <div class="wd-featured-article">
+          <div class="wd-featured-img-wrap">
+            <span class="wd-featured-badge">FEATURED</span>
+            <img src="${imgSrc}" alt="${title}" loading="lazy"/>
+          </div>
+          <div class="wd-featured-content">
+            <div class="wd-featured-meta">
+              <span class="wd-label-pill">UPDATE</span>
+              <span>•</span>
+              <span>Today</span>
+              <span>•</span>
+              <span>5 min read</span>
+            </div>
+            <h3 class="wd-featured-title">
+              <a href="${link}">${title}</a>
+            </h3>
+            <p class="wd-featured-desc">${snippet}</p>
+            <a href="${link}" class="wd-btn wd-btn-primary wd-btn-sm" style="align-self: flex-start;">
+              <span>Read Full Article</span>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderSampleBlogData(container) {
+      const samplePosts = [
+        {
+          title: "How WorkDaily Streamlines Daily Contractor Wage Settlements",
+          category: "Update",
+          snippet: "Eliminate paper registers and ledger entry errors with automated one-tap daily payouts.",
+          date: "May 12, 2026",
+          img: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=800&q=80"
+        },
+        {
+          title: "Top 5 Strategies for Managing Construction Site Workforce Efficiently",
+          category: "Article",
+          snippet: "Learn how modern site managers keep teams on schedule and monitor site progress effortlessly.",
+          date: "May 08, 2026",
+          img: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=800&q=80"
+        },
+        {
+          title: "WorkDaily v2.4 Release Notes: Enhanced Real-Time Attendance & Alerts",
+          category: "News",
+          snippet: "Discover brand new features including instant site alerts, geotagged check-ins, and budget reports.",
+          date: "Apr 28, 2026",
+          img: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80"
+        },
+        {
+          title: "Contractor Feedback Spotlight: Scaling Site Productivity by 40%",
+          category: "Feedback",
+          snippet: "See how leading infrastructure contractors cut administrative overhead using WorkDaily.",
+          date: "Apr 15, 2026",
+          img: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80"
+        },
+        {
+          title: "The Future of Digital Workforce Accounting in Modern Operations",
+          category: "Article",
+          snippet: "Why moving from spreadsheet logs to cloud-synced daily workspaces is essential.",
+          date: "Apr 02, 2026",
+          img: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=800&q=80"
+        },
+        {
+          title: "Security & Cloud Privacy Practices Behind WorkDaily Data Infrastructure",
+          category: "News",
+          snippet: "An in-depth look at end-to-end encryption and compliance standards for your site records.",
+          date: "Mar 20, 2026",
+          img: "https://images.unsplash.com/photo-1512428559087-560fa5ceab42?auto=format&fit=crop&w=800&q=80"
+        }
+      ];
+
+      samplePosts.forEach(function(p) {
+        const card = document.createElement("article");
+        card.className = "wd-blog-card";
+        card.setAttribute("data-post-labels", p.category.toLowerCase());
+        card.innerHTML = `
+          <div class="wd-blog-thumb">
+            <img src="${p.img}" alt="${p.title}" loading="lazy"/>
+          </div>
+          <div class="wd-blog-card-body">
+            <div class="wd-blog-meta">
+              <span class="wd-label-pill">${p.category}</span>
+              <span class="wd-blog-date">${p.date}</span>
+            </div>
+            <h3 class="wd-blog-card-title">
+              <a href="#blog">${p.title}</a>
+            </h3>
+            <p class="wd-blog-snippet">${p.snippet}</p>
+            <div class="wd-blog-card-footer">
+              <a href="#blog" class="wd-blog-read-more">
+                <span>Read Article</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </a>
+              <span class="wd-reading-time">5 min read</span>
+            </div>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    // Related Articles Rendering for Single Post View
+    const relatedGrid = document.getElementById("wd-related-grid");
+    if (relatedGrid) {
+      renderRelatedArticles(relatedGrid);
+    }
+
+    function renderRelatedArticles(gridEl) {
+      const cards = document.querySelectorAll("#wd-blog-grid .wd-blog-card");
+      let count = 0;
+      cards.forEach(function(c) {
+        if (count < 3) {
+          const clone = c.cloneNode(true);
+          gridEl.appendChild(clone);
+          count++;
+        }
+      });
+    }
+  }
 
   /* HEADER SCROLL BEHAVIOR */
   function initHeader() {
@@ -2515,23 +3266,83 @@ body {
     });
   }
 
-  /* FEATURE-SPECIFIC VECTOR SVG ICONS FOR ALL 12 SCREENS */
-  function getFeatureIconSvg(index) {
-    const icons = [
-      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>', // 01 Dashboard
-      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>', // 02 Work
-      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/><polyline points="12 11 12 17 15 14"/></svg>', // 03 Project
-      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>', // 04 Workforce
-      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><path d="M9 16l2 2 4-4"/></svg>', // 05 Attendance
-      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>', // 06 Contractor
-      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/><circle cx="12" cy="15" r="1"/></svg>', // 07 Payments
-      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>', // 08 History
-      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>', // 09 Analytics
-      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>', // 10 Notifications
-      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>', // 11 Search
-      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>' // 12 Workspace
+  /* FEATURE-SPECIFIC VECTOR SVG ICONS FOR ALL 12 SCREENS (SETS OF 3 PER SLIDE) */
+  function getFeatureIconSvgs(index) {
+    const iconSets = [
+      // 01 Dashboard
+      [
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>',
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>',
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>'
+      ],
+      // 02 Work
+      [
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>',
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>',
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>'
+      ],
+      // 03 Project
+      [
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>',
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>',
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>'
+      ],
+      // 04 Workforce
+      [
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>',
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="7" r="4"/><path d="M5.5 21a8.38 8.38 0 0 1 13 0"/></svg>',
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>'
+      ],
+      // 05 Attendance
+      [
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><path d="M9 16l2 2 4-4"/></svg>',
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>',
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>'
+      ],
+      // 06 Contractor
+      [
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>',
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>',
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>'
+      ],
+      // 07 Payments
+      [
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/><circle cx="12" cy="15" r="1"/></svg>',
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>',
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>'
+      ],
+      // 08 History
+      [
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>',
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>',
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8v13H3V8"/><path d="M1 3h22v5H1z"/><path d="M10 12h4"/></svg>'
+      ],
+      // 09 Analytics
+      [
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>',
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>',
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg>'
+      ],
+      // 10 Notifications
+      [
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>',
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>',
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>'
+      ],
+      // 11 Search
+      [
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>',
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>',
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>'
+      ],
+      // 12 Workspace
+      [
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>',
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="9" y1="3" x2="9" y2="21"/></svg>',
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>'
+      ]
     ];
-    return icons[index] || icons[0];
+    return iconSets[index] || iconSets[0];
   }
 
   /* SHOWCASE EXPERIENCE & VERTICAL INDICATOR */
@@ -2546,7 +3357,7 @@ body {
 
     totalNumEl.textContent = String(workDailyScreens.length).padStart(2, '0');
 
-    // Render Showcase Slides - Premium Layout System with Feature Icons Directly Above Mobile Phone
+    // Render Showcase Slides - Premium Layout System with 3 Floating Feature Icons around Mobile Phone
     workDailyScreens.forEach(function(item, index) {
       const slide = document.createElement("div");
       slide.className = "wd-slide";
@@ -2554,10 +3365,13 @@ body {
       slide.setAttribute("data-slide-index", index);
 
       const loadingAttr = index === 0 ? "eager" : "lazy";
+      const icons = getFeatureIconSvgs(index);
 
       slide.innerHTML = `
         <div class="wd-slide-bg-glow" style="--slide-accent: ${item.accentColor};"></div>
         <div class="wd-slide-bg-decor" aria-hidden="true">
+          <div class="wd-decor-grid"></div>
+          <div class="wd-decor-ring"></div>
           <div class="wd-decor-blob-1"></div>
           <div class="wd-decor-blob-2"></div>
         </div>
@@ -2568,8 +3382,14 @@ body {
             <p class="wd-slide-desc">${item.description}</p>
           </div>
           <div class="wd-slide-phone-wrap">
-            <div class="wd-feature-icon-badge" aria-hidden="true">
-              ${getFeatureIconSvg(index)}
+            <div class="wd-feature-icon-badge wd-icon-tr" aria-hidden="true">
+              ${icons[0]}
+            </div>
+            <div class="wd-feature-icon-badge wd-icon-ml" aria-hidden="true">
+              ${icons[1]}
+            </div>
+            <div class="wd-feature-icon-badge wd-icon-br" aria-hidden="true">
+              ${icons[2]}
             </div>
             <div class="wd-slide-phone">
               <img src="${item.image}" alt="WorkDaily - ${item.title}" class="wd-slide-img" loading="${loadingAttr}" decoding="async" />
