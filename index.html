@@ -2517,7 +2517,7 @@ body {
 
                 <div class="wd-blog-grid" id="wd-blog-grid">
                   <b:loop values='data:posts' var='post'>
-                    <article class="wd-blog-card" data-post-labels='<b:if cond="data:post.labels"><b:loop values="data:post.labels" var="label"><data:label.name/> </b:loop></b:if>'>
+                    <article class="wd-blog-card">
                       <b:if cond='data:post.firstImageUrl'>
                         <div class="wd-blog-thumb">
                           <img expr:src='data:post.firstImageUrl' expr:alt='data:post.title' loading='lazy'/>
@@ -3080,7 +3080,16 @@ body {
       const cards = document.querySelectorAll("#wd-blog-grid .wd-blog-card");
       cards.forEach(function(card) {
         const labelsAttr = (card.getAttribute("data-post-labels") || "").toLowerCase();
-        if (category === "all" || labelsAttr.includes(category)) {
+        const pills = card.querySelectorAll(".wd-label-pill");
+        let matches = (category === "all" || labelsAttr.includes(category));
+
+        pills.forEach(function(pill) {
+          if (pill.textContent.toLowerCase().includes(category)) {
+            matches = true;
+          }
+        });
+
+        if (matches) {
           card.style.display = "flex";
         } else {
           card.style.display = "none";
