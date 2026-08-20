@@ -1417,23 +1417,24 @@ body {
   z-index: 0;
 }
 
-.wd-footer-circle-badge {
-  width: 72px;
-  height: 72px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #145A32 0%, #2E7D32 50%, #6B8E23 100%);
-  display: flex;
+.wd-btn-download-icon {
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  margin: 0 auto 20px;
-  box-shadow: 0 10px 28px rgba(20, 90, 50, 0.25), inset 0 1px 1px rgba(255, 255, 255, 0.35);
-  border: 2px solid rgba(255, 255, 255, 0.6);
-  position: relative;
-  z-index: 1;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #2E7D32 0%, #6B8E23 100%);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.18), inset 0 1px 1px rgba(255, 255, 255, 0.4);
+  color: #FFFFFF;
+  margin-left: 2px;
+  flex-shrink: 0;
+  transition: transform var(--transition-fast);
 }
 
-.wd-footer-circle-badge svg {
-  color: #FFFFFF;
+.wd-footer-cta-btn:hover .wd-btn-download-icon {
+  transform: translateY(1px);
 }
 
 .wd-footer-curve-wrap {
@@ -2268,27 +2269,27 @@ body {
     <div class="wd-footer-curve-wrap">
       <svg class="wd-footer-curve-svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
         <defs>
-          <linearGradient id="wdCurveGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stop-color="#101511"/>
-            <stop offset="50%" stop-color="#145A32"/>
-            <stop offset="100%" stop-color="#2E7D32"/>
+          <linearGradient id="wdCurveFillGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#145A32"/>
+            <stop offset="60%" stop-color="#2E7D32"/>
+            <stop offset="100%" stop-color="#1E6C3B"/>
           </linearGradient>
         </defs>
-        <path d="M 0,0 Q 600,120 1200,0 L 1200,120 L 0,120 Z" fill="#F7F8F5"/>
-        <path d="M 0,0 Q 600,120 1200,0" fill="none" stroke="url(#wdCurveGradient)" stroke-width="3.5" stroke-linecap="round"/>
+        <path d="M 0,0 Q 600,120 1200,0 L 1200,0 L 0,0 Z" fill="url(#wdCurveFillGradient)"/>
+        <path d="M 0,0 Q 600,120 1200,0" fill="none" stroke="rgba(255, 255, 255, 0.25)" stroke-width="2.5" stroke-linecap="round"/>
       </svg>
     </div>
     <div class="wd-container wd-footer-container">
-      <div class="wd-footer-circle-badge" aria-hidden="true">
-        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-          <polyline points="7 10 12 15 17 10"/>
-          <line x1="12" y1="15" x2="12" y2="3"/>
-        </svg>
-      </div>
       <div class="wd-footer-cta-wrap">
         <a href="#showcase" class="wd-btn wd-btn-primary wd-btn-lg wd-footer-cta-btn">
           <span>Download Now</span>
+          <span class="wd-btn-download-icon" aria-hidden="true">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="7 10 12 15 17 10"/>
+              <line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+          </span>
         </a>
       </div>
 
