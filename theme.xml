@@ -1182,101 +1182,194 @@ body {
   box-shadow: 0 4px 14px rgba(20, 90, 50, 0.25);
 }
 
-/* FEATURED ARTICLE */
+/* FEATURED ARTICLE - FULL BACKGROUND REDESIGN */
 .wd-featured-article {
-  background: linear-gradient(135deg, #F8FAF7 0%, #EEF4EF 100%);
-  border: 1px solid rgba(20, 90, 50, 0.15);
+  position: relative;
+  width: 100%;
+  min-height: 440px;
   border-radius: var(--radius-lg);
   overflow: hidden;
   margin-bottom: 48px;
-  display: grid;
-  grid-template-columns: 1.1fr 0.9fr;
-  align-items: center;
+  background-color: #145A32;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
   box-shadow: var(--shadow-md);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   transition: all var(--transition-normal);
+  cursor: pointer;
 }
 
 .wd-featured-article:hover {
   transform: translateY(-4px);
-  border-color: var(--color-primary);
   box-shadow: var(--shadow-lg);
+  border-color: rgba(154, 205, 50, 0.4);
 }
 
-.wd-featured-img-wrap {
-  width: 100%;
-  height: 100%;
-  min-height: 320px;
-  overflow: hidden;
-  position: relative;
-  background-color: #E2E6DF;
-}
-
-.wd-featured-img-wrap img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform var(--transition-slow);
-}
-
-.wd-featured-article:hover .wd-featured-img-wrap img {
-  transform: scale(1.04);
+.wd-featured-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(16, 20, 16, 0.25) 0%,
+    rgba(16, 20, 16, 0.65) 45%,
+    rgba(10, 30, 18, 0.92) 100%
+  );
+  z-index: 1;
+  pointer-events: none;
 }
 
 .wd-featured-badge {
   position: absolute;
-  top: 18px;
-  left: 18px;
-  padding: 6px 14px;
-  background: rgba(20, 90, 50, 0.9);
-  backdrop-filter: blur(8px);
+  top: 24px;
+  left: 24px;
+  z-index: 2;
+  padding: 6px 16px;
+  background: rgba(20, 90, 50, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   color: #FFFFFF;
   font-size: 11px;
   font-weight: 800;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   border-radius: var(--radius-full);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
 .wd-featured-content {
-  padding: 40px;
+  position: relative;
+  z-index: 2;
+  padding: 44px 40px;
+  max-width: 820px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  align-items: flex-start;
+  gap: 14px;
+  background: rgba(20, 28, 22, 0.35);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  color: #FFFFFF;
 }
 
 .wd-featured-meta {
   display: flex;
   align-items: center;
-  gap: 12px;
-  margin-bottom: 14px;
-  font-size: 13px;
-  color: var(--color-text-muted);
+  gap: 10px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+  flex-wrap: wrap;
+}
+
+.wd-featured-category-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  background: rgba(154, 205, 50, 0.22);
+  border: 1px solid rgba(154, 205, 50, 0.4);
+  color: var(--color-light-accent);
+  border-radius: var(--radius-full);
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.wd-featured-sep {
+  opacity: 0.6;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.wd-featured-date, .wd-featured-reading-time {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 13.5px;
 }
 
 .wd-featured-title {
-  font-size: clamp(24px, 2.5vw, 34px);
+  font-size: clamp(24px, 2.8vw, 36px);
   font-weight: 800;
-  line-height: 1.25;
-  color: var(--color-text);
-  margin-bottom: 14px;
-  letter-spacing: -0.01em;
+  line-height: 1.22;
+  color: #FFFFFF;
+  letter-spacing: -0.015em;
+  margin: 0;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
 }
 
 .wd-featured-title a {
-  color: var(--color-text);
+  color: #FFFFFF;
   text-decoration: none;
   transition: color var(--transition-fast);
 }
 
 .wd-featured-title a:hover {
-  color: var(--color-primary);
+  color: var(--color-light-accent);
 }
 
 .wd-featured-desc {
   font-size: 15.5px;
-  color: var(--color-text-muted);
+  color: rgba(255, 255, 255, 0.88);
   line-height: 1.6;
-  margin-bottom: 24px;
+  margin: 0 0 8px 0;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.wd-btn-glass {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: #FFFFFF;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+  padding: 12px 26px;
+  font-size: 14.5px;
+  font-weight: 700;
+  border-radius: var(--radius-full);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  transition: all var(--transition-fast);
+}
+
+.wd-btn-glass:hover {
+  background: rgba(255, 255, 255, 0.28);
+  border-color: #FFFFFF;
+  color: #FFFFFF;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+@media (max-width: 767px) {
+  .wd-featured-article {
+    min-height: 380px;
+  }
+  .wd-featured-badge {
+    top: 16px;
+    left: 16px;
+    padding: 5px 12px;
+    font-size: 10px;
+  }
+  .wd-featured-content {
+    padding: 24px 20px;
+  }
+  .wd-featured-title {
+    font-size: 22px;
+  }
+  .wd-featured-desc {
+    font-size: 14px;
+    -webkit-line-clamp: 2;
+  }
 }
 
 /* BLOG GRID */
@@ -2732,7 +2825,7 @@ body {
                         <span class="wd-dot-sep">&#8226;</span>
                         <span id="wd-post-date-span">May 12, 2026</span>
                         <span class="wd-dot-sep">&#8226;</span>
-                        <span>5 min read</span>
+                        <span id="wd-post-reading-span">1 min read</span>
                       </div>
                     </header>
 
@@ -3161,174 +3254,21 @@ body {
   }
 
   /* WORKDAILY BLOG STORE & POST NORMALIZER */
-  const SAMPLE_POSTS_DATA = [
-    {
-      id: "wage-settlements",
-      slug: "contractor-wage-settlements",
-      title: "How WorkDaily Streamlines Daily Contractor Wage Settlements",
-      category: "Update",
-      labels: ["Update", "Contractors"],
-      publishedAt: "May 12, 2026",
-      author: "Alex Morgan",
-      image: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=800&q=80",
-      excerpt: "Eliminate paper registers and ledger entry errors with automated one-tap daily payouts and workforce tracking.",
-      content: `
-        <p>Managing daily wages across multiple job sites has traditionally been a tedious process rife with accounting discrepancies, lost paper logs, and delayed payouts. With modern site operations expanding rapidly, contractors need real-time tools that handle workforce attendance and immediate payment settlements accurately.</p>
-
-        <h2>The Challenge of Manual Ledger Systems</h2>
-        <p>In traditional site management, worker attendance is recorded manually on paper logs. At the end of the day or week, supervisors calculate hours worked, overtime allowances, and partial cash advances manually. This manual workflow creates several pain points:</p>
-        <ul>
-          <li><strong>Data Inaccuracy:</strong> Human errors during paper ledger transcription lead to overpayments or disputes.</li>
-          <li><strong>Delayed Settlements:</strong> Payroll reconciliation takes hours or days, causing frustration among daily wage workers.</li>
-          <li><strong>Lack of Site Visibility:</strong> Business owners cannot track pending payment liabilities across multiple sites in real time.</li>
-        </ul>
-
-        <h2>Automated Daily Payouts with WorkDaily</h2>
-        <p>WorkDaily replaces fragmented paper records with a centralized digital workspace designed specifically for field supervisors and contractors.</p>
-
-        <blockquote>
-          "By digitizing our daily worker registers and wage settlements, WorkDaily cut our administrative processing time by 80% and eliminated payout disputes completely."
-          <footer>— Chief Operations Officer, Apex Construction</footer>
-        </blockquote>
-
-        <h3>Key Features for Payout Efficiency</h3>
-        <p>Our latest updates include instant site alerts, geotagged worker check-ins, and automated daily wage calculators that dynamically compute payouts based on site check-in timestamps.</p>
-
-        <p>Watch our video demonstration below to see how easy it is to issue digital payout receipts directly to workers:</p>
-
-        <video class="wd-custom-video-target" poster="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=800&q=80">
-          <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4" type="video/mp4" />
-          Your browser does not support HTML video.
-        </video>
-
-        <h2>Conclusion</h2>
-        <p>Streamlining daily contractor wage settlements is no longer a luxury—it is a competitive necessity. Upgrade your site operations today with WorkDaily and experience hassle-free workforce payment management.</p>
-      `
-    },
-    {
-      id: "construction-site-efficiency",
-      slug: "managing-construction-site-workforce",
-      title: "Top 5 Strategies for Managing Construction Site Workforce Efficiently",
-      category: "Article",
-      labels: ["Article", "Workforce"],
-      publishedAt: "May 08, 2026",
-      author: "Sarah Jenkins",
-      image: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=800&q=80",
-      excerpt: "Learn how modern site managers keep teams on schedule and monitor site progress effortlessly.",
-      content: `
-        <p>Efficiency on a construction site depends on how seamlessly workforce coordination, material availability, and task tracking align. Here are 5 battle-tested strategies to boost productivity on your sites.</p>
-
-        <h2>1. One-Tap Attendance Check-Ins</h2>
-        <p>Eliminate line bottlenecks at site gates every morning. Modern mobile check-in systems allow workers or crew leaders to register site presence in under 2 seconds.</p>
-
-        <h2>2. Real-Time Task Milestones</h2>
-        <p>Divide daily site targets into clear micro-tasks. When supervisors mark tasks complete on their smartphones, overall project completion meters update automatically for management.</p>
-
-        <h2>3. Centralized Skill & Crew Mapping</h2>
-        <p>Keep detailed digital profiles for masons, electricians, carpenters, and general laborers to deploy the right skills to the right tasks instantly.</p>
-
-        <img src="https://images.unsplash.com/photo-1541888946425-d0fbb186a5b7?auto=format&fit=crop&w=800&q=80" alt="Construction team meeting" />
-
-        <h2>4. Instant Expense and Receipt Logging</h2>
-        <p>Snap photo receipts of petty cash expenditures right at the site store so accounts are reconciled continuously without end-of-month surprises.</p>
-
-        <h2>5. Automated Workforce Reports</h2>
-        <p>Generate daily PDF summaries highlighting workforce counts, total hours logged, and budget utilization with a single tap.</p>
-      `
-    },
-    {
-      id: "v2-4-release-notes",
-      slug: "workdaily-v2-4-release-notes",
-      title: "WorkDaily v2.4 Release Notes: Enhanced Real-Time Attendance & Alerts",
-      category: "News",
-      labels: ["News", "Update"],
-      publishedAt: "Apr 28, 2026",
-      author: "WorkDaily Product Team",
-      image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80",
-      excerpt: "Discover brand new features including instant site alerts, geotagged check-ins, and budget forecasting reports.",
-      content: `
-        <p>We are thrilled to announce <strong>WorkDaily v2.4</strong>! This release brings powerful performance improvements, redesigned dashboard analytics, and enhanced worker safety alerts.</p>
-
-        <h2>What's New in v2.4</h2>
-        <ul>
-          <li><strong>Geotagged Check-ins:</strong> Ensure workers check in within designated GPS site boundaries.</li>
-          <li><strong>Instant Hazard & Delay Alerts:</strong> Broadcast urgent site updates to all contractors in real time.</li>
-          <li><strong>Customizable Pay Rates:</strong> Support piece-rate, hourly, and daily fixed wage models seamlessly.</li>
-          <li><strong>Dark Mode Optimization:</strong> Reduced battery drain for field supervisors using devices under harsh outdoor sun.</li>
-        </ul>
-
-        <p>Update your application today or download the latest APK directly from our showcase portal!</p>
-      `
-    },
-    {
-      id: "contractor-spotlight",
-      slug: "contractor-feedback-spotlight",
-      title: "Contractor Feedback Spotlight: Scaling Site Productivity by 40%",
-      category: "Feedback",
-      labels: ["Feedback", "Article"],
-      publishedAt: "Apr 15, 2026",
-      author: "David Chen",
-      image: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80",
-      excerpt: "See how leading infrastructure contractors cut administrative overhead using WorkDaily.",
-      content: `
-        <p>In this customer spotlight, we chat with Apex Infrastructure, a regional contractor managing over 15 active commercial job sites with over 400 active site workers daily.</p>
-
-        <h2>The Transition to WorkDaily</h2>
-        <p>"Before WorkDaily, our site managers spent 2 hours every evening compiling paper attendance logs and reconciling contractor payment requests. Today, everything syncs live to our central hub," explains Lead Engineer Marcus Rivera.</p>
-
-        <h2>Key Benefits Measured</h2>
-        <ul>
-          <li>40% reduction in daily administrative labor</li>
-          <li>Zero lost invoices or unverified payout receipts</li>
-          <li>Instant attendance audit reports for client review</li>
-        </ul>
-      `
-    },
-    {
-      id: "future-of-digital-workforce",
-      slug: "future-of-digital-workforce-accounting",
-      title: "The Future of Digital Workforce Accounting in Modern Operations",
-      category: "Article",
-      labels: ["Article", "Insights"],
-      publishedAt: "Apr 02, 2026",
-      author: "Elena Rostova",
-      image: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=800&q=80",
-      excerpt: "Why moving from spreadsheet logs to cloud-synced daily workspaces is essential for growing firms.",
-      content: `
-        <p>As construction, logistics, and field management industries modernize, reliance on outdated spreadsheet files and paper ledgers presents severe growth bottlenecks.</p>
-
-        <h2>Why Spreadsheets Fall Short</h2>
-        <p>Spreadsheets lack real-time synchronization, mobile-first touch controls, and automated audit trails. When multiple site supervisors edit disconnected files, data collision and loss become inevitable.</p>
-
-        <h2>The Cloud-Synced Workspace Advantage</h2>
-        <p>Cloud-native solutions ensure that site entries made offline sync automatically once network connectivity is restored, maintaining continuous records across all operations.</p>
-      `
-    },
-    {
-      id: "security-and-cloud-privacy",
-      slug: "security-cloud-privacy-practices",
-      title: "Security & Cloud Privacy Practices Behind WorkDaily Data Infrastructure",
-      category: "News",
-      labels: ["News", "Security"],
-      publishedAt: "Mar 20, 2026",
-      author: "WorkDaily Security Team",
-      image: "https://images.unsplash.com/photo-1512428559087-560fa5ceab42?auto=format&fit=crop&w=800&q=80",
-      excerpt: "An in-depth look at end-to-end encryption and compliance standards safeguarding your site records.",
-      content: `
-        <p>At WorkDaily, safeguarding your financial transactions, worker records, and proprietary site logs is our top priority.</p>
-
-        <h2>Bank-Grade Encryption</h2>
-        <p>All data transmitted between your mobile devices and our cloud servers is encrypted using TLS 1.3 encryption. At-rest databases utilize AES-256 encryption.</p>
-
-        <h2>Granular Role Permissions</h2>
-        <p>Configure precise access levels for general contractors, site supervisors, auditors, and account managers so staff see only what they need to fulfill their roles.</p>
-      `
-    }
-  ];
-
   window.WorkDailyBlogStore = (function() {
     let postsMap = new Map();
     let postsList = [];
+    let fetchError = null;
+    let loading = false;
+
+    function calculateReadingTime(htmlContent) {
+      if (!htmlContent) return "1 min read";
+      const tmp = document.createElement("div");
+      tmp.innerHTML = htmlContent;
+      const text = tmp.textContent || tmp.innerText || "";
+      const words = text.trim().split(/\s+/).filter(Boolean).length;
+      const minutes = Math.max(1, Math.round(words / 200));
+      return `${minutes} min read`;
+    }
 
     function extractSlugFromUrl(url) {
       if (!url) return "";
@@ -3360,18 +3300,52 @@ body {
       return img ? img.getAttribute("src") : null;
     }
 
+    function optimizeBloggerImageUrl(url) {
+      if (!url) return null;
+      return url.replace(/\/s72-c\//, "/s1600/")
+                .replace(/\/s72-w\d+-h\d+-c\//, "/s1600/")
+                .replace(/\/w\d+-h\d+-[^/]+\//, "/s1600/");
+    }
+
+    function normalizeCategoryLabel(label) {
+      if (!label) return "Article";
+      const clean = String(label).trim();
+      const lower = clean.toLowerCase();
+      if (lower === "update" || lower === "updates") return "Update";
+      if (lower === "news") return "News";
+      if (lower === "article" || lower === "articles" || lower === "blog") return "Article";
+      if (lower === "feedback" || lower === "feedbacks") return "Feedback";
+      return clean.charAt(0).toUpperCase() + clean.slice(1);
+    }
+
+    function formatDate(rawDate) {
+      if (!rawDate) return "";
+      let val = rawDate;
+      if (typeof val === "object" && val !== null && val.$t) val = val.$t;
+      try {
+        const d = new Date(val);
+        if (!isNaN(d.getTime())) {
+          return d.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+        }
+      } catch (e) {}
+      return String(val);
+    }
+
     function normalizePost(rawPost, index) {
       let rawId = rawPost.id;
-      if (typeof rawId === "object" && rawId !== null && rawId.$t) {
-        rawId = rawId.$t;
-      }
+      if (typeof rawId === "object" && rawId !== null && rawId.$t) rawId = rawId.$t;
       if (typeof rawId === "string" && rawId.includes("post-")) {
         const parts = rawId.split("post-");
         rawId = parts[parts.length - 1];
       }
 
-      const url = rawPost.url || (rawPost.link ? (rawPost.link.find(l => l.rel === "alternate") || {}).href : "") || "";
-      const slug = rawPost.slug || extractSlugFromUrl(url) || ("article-" + ((index !== undefined ? index : 0) + 1));
+      let permalink = rawPost.permalink || rawPost.url || "";
+      if (!permalink && rawPost.link && Array.isArray(rawPost.link)) {
+        const altLink = rawPost.link.find(l => l.rel === "alternate");
+        if (altLink) permalink = altLink.href;
+      }
+
+      const slug = rawPost.slug || extractSlugFromUrl(permalink) || ("article-" + ((index !== undefined ? index : 0) + 1));
       const id = String(rawId || slug || ("post-" + ((index !== undefined ? index : 0) + 1)));
 
       let title = rawPost.title;
@@ -3384,22 +3358,29 @@ body {
       if (typeof snippet === "object" && snippet !== null && snippet.$t) snippet = snippet.$t;
 
       const fullContent = content || snippet || "<p>No content available for this article.</p>";
-      const excerpt = rawPost.excerpt || snippet || createExcerpt(fullContent);
+      const excerpt = rawPost.excerpt || createExcerpt(snippet || fullContent);
 
-      let image = rawPost.image || rawPost.firstImageUrl || rawPost.img || extractFirstImageFromHtml(fullContent) || "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=800&q=80";
+      let rawThumb = rawPost.thumbnail || rawPost.image || rawPost.firstImageUrl || rawPost.img;
+      if (!rawThumb && rawPost.media$thumbnail && rawPost.media$thumbnail.url) {
+        rawThumb = rawPost.media$thumbnail.url;
+      }
+      if (!rawThumb) {
+        rawThumb = extractFirstImageFromHtml(fullContent);
+      }
+      const thumbnail = optimizeBloggerImageUrl(rawThumb) || "";
 
-      let category = "Article";
-      let labels = [];
+      let rawLabels = [];
       if (Array.isArray(rawPost.labels)) {
-        labels = rawPost.labels.map(l => (typeof l === "object" ? l.name : String(l)));
+        rawLabels = rawPost.labels.map(l => (typeof l === "object" ? (l.name || l.term) : String(l)));
       } else if (rawPost.category) {
-        labels = [String(rawPost.category)];
+        rawLabels = [String(rawPost.category)];
       } else if (Array.isArray(rawPost.categories)) {
-        labels = rawPost.categories.map(c => c.term || c.label || String(c)).filter(Boolean);
+        rawLabels = rawPost.categories.map(c => c.term || c.label || String(c)).filter(Boolean);
       }
-      if (labels.length > 0) {
-        category = labels[0];
-      }
+
+      const categories = rawLabels.map(normalizeCategoryLabel);
+      const category = categories.length > 0 ? categories[0] : "Article";
+      const isFeatured = rawLabels.some(l => String(l).toLowerCase() === "featured") || (rawPost.isFeatured === true);
 
       let author = "WorkDaily Team";
       if (rawPost.author) {
@@ -3407,41 +3388,40 @@ body {
         else if (typeof rawPost.author === "object" && rawPost.author.name) {
           author = typeof rawPost.author.name === "object" ? rawPost.author.name.$t : rawPost.author.name;
         } else if (Array.isArray(rawPost.author) && rawPost.author[0]) {
-          author = rawPost.author[0].name ? (rawPost.author[0].name.$t || rawPost.author[0].name) : "WorkDaily Team";
+          const a = rawPost.author[0];
+          author = a.name ? (a.name.$t || a.name) : "WorkDaily Team";
         }
       }
 
-      let publishedAt = rawPost.publishedAt || rawPost.published || rawPost.date || rawPost.timestamp;
-      if (typeof publishedAt === "object" && publishedAt !== null && publishedAt.$t) publishedAt = publishedAt.$t;
-      if (!publishedAt) {
-        publishedAt = "May 12, 2026";
-      } else {
-        try {
-          const d = new Date(publishedAt);
-          if (!isNaN(d.getTime())) {
-            publishedAt = d.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
-          }
-        } catch (e) {}
-      }
+      const publishedAt = formatDate(rawPost.publishedAt || rawPost.published || rawPost.date || rawPost.timestamp);
+      const updatedAt = formatDate(rawPost.updatedAt || rawPost.updated || publishedAt);
+      const readingTime = calculateReadingTime(fullContent);
 
       return {
         id,
-        title,
         slug,
+        title,
         excerpt,
         content: fullContent,
-        image,
+        thumbnail,
+        image: thumbnail,
         category,
-        labels,
+        categories,
+        labels: categories,
         author,
         publishedAt,
-        url: url || ("#article/" + id)
+        updatedAt,
+        permalink: permalink || ("#article/" + id),
+        url: permalink || ("#article/" + id),
+        readingTime,
+        isFeatured
       };
     }
 
     function setPosts(rawPosts) {
       postsMap.clear();
       postsList = [];
+      fetchError = null;
       if (Array.isArray(rawPosts)) {
         rawPosts.forEach((p, idx) => {
           const normalized = normalizePost(p, idx);
@@ -3474,8 +3454,93 @@ body {
       return [...postsList];
     }
 
+    function getPostsByCategory(cat) {
+      if (!cat || cat.toLowerCase() === "all") return [...postsList];
+      const targetCat = cat.toLowerCase();
+      return postsList.filter(p => {
+        return p.category.toLowerCase() === targetCat || p.categories.some(c => c.toLowerCase() === targetCat);
+      });
+    }
+
+    function getFeaturedPost() {
+      if (postsList.length === 0) return null;
+      const featured = postsList.find(p => p.isFeatured);
+      if (featured) return featured;
+      return postsList[0];
+    }
+
+    function parsePostsFromDOM() {
+      const cards = document.querySelectorAll("#wd-blog-grid .wd-blog-card[data-post-id]");
+      const result = [];
+      cards.forEach(card => {
+        const id = card.getAttribute("data-post-id");
+        const url = card.getAttribute("data-post-url") || card.querySelector("a")?.getAttribute("href") || "";
+        const title = card.querySelector(".wd-blog-card-title")?.textContent.trim() || "";
+        const excerpt = card.querySelector(".wd-blog-snippet")?.textContent.trim() || "";
+        const img = card.querySelector(".wd-blog-thumb img")?.getAttribute("src") || "";
+        const date = card.querySelector(".wd-blog-date")?.textContent.trim() || "";
+        const labelPills = card.querySelectorAll(".wd-label-pill");
+        const labels = Array.from(labelPills).map(p => p.textContent.trim());
+
+        if (id || title) {
+          result.push({
+            id,
+            url,
+            title,
+            excerpt,
+            content: excerpt,
+            image: img,
+            publishedAt: date,
+            labels
+          });
+        }
+      });
+      return result;
+    }
+
+    async function fetchPosts() {
+      loading = true;
+      fetchError = null;
+      try {
+        if (window.__BLOGGER_POSTS__ && Array.isArray(window.__BLOGGER_POSTS__)) {
+          setPosts(window.__BLOGGER_POSTS__);
+          loading = false;
+          return { success: true, posts: postsList };
+        }
+
+        const feedUrl = (window.location.origin || '') + '/feeds/posts/default?alt=json&max-results=150';
+        const res = await fetch(feedUrl, { headers: { 'Accept': 'application/json' } });
+        if (res.ok) {
+          const data = await res.json();
+          const entries = (data && data.feed && data.feed.entry) ? data.feed.entry : [];
+          setPosts(entries);
+          loading = false;
+          return { success: true, posts: postsList };
+        } else {
+          const domPosts = parsePostsFromDOM();
+          if (domPosts.length > 0) {
+            setPosts(domPosts);
+            loading = false;
+            return { success: true, posts: postsList };
+          }
+          throw new Error('HTTP ' + res.status);
+        }
+      } catch (err) {
+        const domPosts = parsePostsFromDOM();
+        if (domPosts.length > 0) {
+          setPosts(domPosts);
+          loading = false;
+          return { success: true, posts: postsList };
+        }
+        fetchError = err;
+        setPosts([]);
+        loading = false;
+        return { success: false, error: err };
+      }
+    }
+
     function init() {
-      setPosts(SAMPLE_POSTS_DATA);
+      return fetchPosts();
     }
 
     return {
@@ -3484,6 +3549,12 @@ body {
       addPost,
       getPost,
       getAllPosts,
+      getPostsByCategory,
+      getFeaturedPost,
+      fetchPosts,
+      hasError: () => fetchError !== null,
+      getError: () => fetchError,
+      isLoading: () => loading,
       init
     };
   })();
@@ -3674,6 +3745,11 @@ body {
           dateSpan.textContent = post.publishedAt || "May 12, 2026";
         }
 
+        const readingSpan = document.getElementById("wd-post-reading-span");
+        if (readingSpan) {
+          readingSpan.textContent = post.readingTime || "1 min read";
+        }
+
         const heroWrap = document.getElementById("wd-post-hero-wrap");
         const heroImg = document.getElementById("wd-post-hero-img");
         if (heroWrap && heroImg) {
@@ -3718,14 +3794,11 @@ body {
   };
 
   /* BLOG SYSTEM & CLICK HANDLERS */
-  function initBlogSystem() {
-    window.WorkDailyBlogStore.init();
-
-    renderBlogGrid();
-    buildFeaturedPost();
-
+  async function initBlogSystem() {
     const categoryChips = document.querySelectorAll(".wd-category-chip");
     categoryChips.forEach(function(chip) {
+      if (chip.dataset.bound) return;
+      chip.dataset.bound = "true";
       chip.addEventListener("click", function(e) {
         e.preventDefault();
         categoryChips.forEach(c => c.classList.remove("active"));
@@ -3738,21 +3811,80 @@ body {
     });
 
     document.querySelectorAll("#wd-back-to-blog, #wd-article-error-back-btn, #wd-article-404-back-btn").forEach(function(btn) {
+      if (btn.dataset.bound) return;
+      btn.dataset.bound = "true";
       btn.addEventListener("click", function(e) {
         e.preventDefault();
         window.WorkDailyRouter.navigateToBlog();
       });
     });
 
-    const retryBtn = document.getElementById("wd-article-retry-btn");
-    if (retryBtn) {
-      retryBtn.addEventListener("click", function(e) {
+    const articleRetryBtn = document.getElementById("wd-article-retry-btn");
+    if (articleRetryBtn && !articleRetryBtn.dataset.bound) {
+      articleRetryBtn.dataset.bound = "true";
+      articleRetryBtn.addEventListener("click", function(e) {
         e.preventDefault();
         window.WorkDailyRouter.handleUrlChange();
       });
     }
 
+    await window.WorkDailyBlogStore.init();
+
+    updateBlogView();
+
     window.WorkDailyRouter.init();
+  }
+
+  function updateBlogView() {
+    const featuredSlot = document.getElementById("wd-featured-post-slot");
+    const grid = document.getElementById("wd-blog-grid");
+    if (!grid) return;
+
+    if (window.WorkDailyBlogStore.hasError()) {
+      if (featuredSlot) featuredSlot.innerHTML = "";
+      grid.innerHTML = `
+        <div class="wd-article-state-card" style="grid-column: 1 / -1; width: 100%;">
+          <div class="wd-state-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          </div>
+          <h3 class="wd-state-title">Unable to load posts.</h3>
+          <p class="wd-state-desc">There was a technical issue fetching posts from Blogger. Please check your connection and try again.</p>
+          <div class="wd-state-actions">
+            <button class="wd-btn wd-btn-primary wd-btn-sm" id="wd-blog-retry-btn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 4v6h-6"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+              <span>Retry</span>
+            </button>
+          </div>
+        </div>
+      `;
+      const retryBtn = document.getElementById("wd-blog-retry-btn");
+      if (retryBtn) {
+        retryBtn.addEventListener("click", function(e) {
+          e.preventDefault();
+          initBlogSystem();
+        });
+      }
+      return;
+    }
+
+    const allPosts = window.WorkDailyBlogStore.getAllPosts();
+    if (!allPosts || allPosts.length === 0) {
+      if (featuredSlot) featuredSlot.innerHTML = "";
+      grid.innerHTML = `
+        <div class="wd-article-state-card" style="grid-column: 1 / -1; width: 100%;">
+          <div class="wd-state-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="9" x2="15" y2="9"/><line x1="9" y1="13" x2="15" y2="13"/></svg>
+          </div>
+          <h3 class="wd-state-title">No articles available yet.</h3>
+          <p class="wd-state-desc">Check back soon for new WorkDaily updates.</p>
+        </div>
+      `;
+      return;
+    }
+
+    buildFeaturedPost();
+    renderBlogGrid();
+    filterBlogPosts(window.WorkDailyRouter.getActiveCategory());
   }
 
   window.renderBlogGrid = function() {
@@ -3760,23 +3892,31 @@ body {
     if (!grid) return;
 
     const posts = window.WorkDailyBlogStore.getAllPosts();
-    if (posts.length === 0) return;
+    if (!posts || posts.length === 0) {
+      return;
+    }
 
     grid.innerHTML = "";
     posts.forEach(function(post) {
       const card = document.createElement("article");
       card.className = "wd-blog-card";
       card.setAttribute("data-post-id", post.id);
-      card.setAttribute("data-post-category", post.category.toLowerCase());
+      card.setAttribute("data-post-category", (post.category || "article").toLowerCase());
+      card.setAttribute("data-post-labels", (post.categories || []).map(c => c.toLowerCase()).join(","));
+
+      const thumbUrl = post.thumbnail || post.image;
+      const thumbHtml = thumbUrl ?
+        `<img src="${thumbUrl}" alt="${post.title}" loading="lazy" onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\\'wd-blog-thumb-placeholder\\'><svg width=\\'40\\' height=\\'40\\' viewBox=\\'0 0 24 24\\' fill=\\'none\\' stroke=\\'#2E7D32\\' stroke-width=\\'1.5\\'><rect x=\\'3\\' y=\\'3\\' width=\\'18\\' height=\\'18\\' rx=\\'2\\'/><circle cx=\\'8.5\\' cy=\\'8.5\\' r=\\'1.5\\'/><polyline points=\\'21 15 16 10 5 21\\'/></svg></div>'"/>` :
+        `<div class="wd-blog-thumb-placeholder"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#2E7D32" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div>`;
 
       card.innerHTML = `
         <div class="wd-blog-thumb">
-          <img src="${post.image}" alt="${post.title}" loading="lazy"/>
+          ${thumbHtml}
         </div>
         <div class="wd-blog-card-body">
           <div class="wd-blog-meta">
-            <span class="wd-label-pill">${post.category}</span>
-            <span class="wd-blog-date">${post.publishedAt}</span>
+            <span class="wd-label-pill">${post.category || "Article"}</span>
+            <span class="wd-blog-date">${post.publishedAt || ""}</span>
           </div>
           <h3 class="wd-blog-card-title">
             <a href="#article/${encodeURIComponent(post.id)}">${post.title}</a>
@@ -3787,7 +3927,7 @@ body {
               <span>Read Article</span>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </a>
-            <span class="wd-reading-time">5 min read</span>
+            <span class="wd-reading-time">${post.readingTime || "1 min read"}</span>
           </div>
         </div>
       `;
@@ -3806,29 +3946,32 @@ body {
     const featuredSlot = document.getElementById("wd-featured-post-slot");
     if (!featuredSlot) return;
 
-    const posts = window.WorkDailyBlogStore.getAllPosts();
-    if (posts.length === 0) return;
+    const featured = window.WorkDailyBlogStore.getFeaturedPost();
+    if (!featured) {
+      featuredSlot.innerHTML = "";
+      return;
+    }
 
-    const featured = posts[0];
+    const thumbUrl = featured.thumbnail || featured.image;
+    const bgImageStyle = thumbUrl ? `style="background-image: url('${thumbUrl.replace(/'/g, "\\'")}');"` : '';
+
     featuredSlot.innerHTML = `
-      <div class="wd-featured-article" data-post-id="${featured.id}">
-        <div class="wd-featured-img-wrap">
-          <span class="wd-featured-badge">FEATURED</span>
-          <img src="${featured.image}" alt="${featured.title}" loading="lazy"/>
-        </div>
+      <div class="wd-featured-article" data-post-id="${featured.id}" ${bgImageStyle}>
+        <div class="wd-featured-overlay"></div>
+        <span class="wd-featured-badge">FEATURED</span>
         <div class="wd-featured-content">
           <div class="wd-featured-meta">
-            <span class="wd-label-pill">${featured.category}</span>
-            <span>•</span>
-            <span>${featured.publishedAt}</span>
-            <span>•</span>
-            <span>5 min read</span>
+            <span class="wd-featured-category-pill">${featured.category || 'Update'}</span>
+            <span class="wd-featured-sep">•</span>
+            <span class="wd-featured-date">${featured.publishedAt || ''}</span>
+            <span class="wd-featured-sep">•</span>
+            <span class="wd-featured-reading-time">${featured.readingTime || '1 min read'}</span>
           </div>
           <h3 class="wd-featured-title">
             <a href="#article/${encodeURIComponent(featured.id)}">${featured.title}</a>
           </h3>
           <p class="wd-featured-desc">${featured.excerpt}</p>
-          <a href="#article/${encodeURIComponent(featured.id)}" class="wd-btn wd-btn-primary wd-btn-sm wd-featured-read-btn" style="align-self: flex-start;">
+          <a href="#article/${encodeURIComponent(featured.id)}" class="wd-btn wd-btn-glass wd-featured-read-btn">
             <span>Read Full Article</span>
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           </a>
@@ -3859,14 +4002,19 @@ body {
       card.className = "wd-blog-card";
       card.setAttribute("data-post-id", post.id);
 
+      const thumbUrl = post.thumbnail || post.image;
+      const thumbHtml = thumbUrl ?
+        `<img src="${thumbUrl}" alt="${post.title}" loading="lazy" onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\\'wd-blog-thumb-placeholder\\'><svg width=\\'40\\' height=\\'40\\' viewBox=\\'0 0 24 24\\' fill=\\'none\\' stroke=\\'#2E7D32\\' stroke-width=\\'1.5\\'><rect x=\\'3\\' y=\\'3\\' width=\\'18\\' height=\\'18\\' rx=\\'2\\'/><circle cx=\\'8.5\\' cy=\\'8.5\\' r=\\'1.5\\'/><polyline points=\\'21 15 16 10 5 21\\'/></svg></div>'"/>` :
+        `<div class="wd-blog-thumb-placeholder"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#2E7D32" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div>`;
+
       card.innerHTML = `
         <div class="wd-blog-thumb">
-          <img src="${post.image}" alt="${post.title}" loading="lazy"/>
+          ${thumbHtml}
         </div>
         <div class="wd-blog-card-body">
           <div class="wd-blog-meta">
-            <span class="wd-label-pill">${post.category}</span>
-            <span class="wd-blog-date">${post.publishedAt}</span>
+            <span class="wd-label-pill">${post.category || "Article"}</span>
+            <span class="wd-blog-date">${post.publishedAt || ""}</span>
           </div>
           <h3 class="wd-blog-card-title">
             <a href="#article/${encodeURIComponent(post.id)}">${post.title}</a>
@@ -3877,7 +4025,7 @@ body {
               <span>Read Article</span>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </a>
-            <span class="wd-reading-time">5 min read</span>
+            <span class="wd-reading-time">${post.readingTime || "1 min read"}</span>
           </div>
         </div>
       `;
@@ -3893,8 +4041,18 @@ body {
   };
 
   window.filterBlogPosts = function(category) {
-    const cards = document.querySelectorAll("#wd-blog-grid .wd-blog-card");
+    const grid = document.getElementById("wd-blog-grid");
+    if (!grid) return;
+
+    if (window.WorkDailyBlogStore.hasError() || window.WorkDailyBlogStore.getAllPosts().length === 0) {
+      return;
+    }
+
+    renderBlogGrid();
+
     const catLower = (category || "all").toLowerCase();
+    const cards = grid.querySelectorAll(".wd-blog-card");
+    let visibleCount = 0;
 
     cards.forEach(function(card) {
       const cardCat = (card.getAttribute("data-post-category") || "").toLowerCase();
@@ -3909,8 +4067,30 @@ body {
         }
       });
 
-      card.style.display = matches ? "flex" : "none";
+      if (matches) {
+        card.style.display = "flex";
+        visibleCount++;
+      } else {
+        card.style.display = "none";
+      }
     });
+
+    let existingEmptyCard = grid.querySelector(".wd-category-empty-card");
+    if (visibleCount === 0) {
+      if (!existingEmptyCard) {
+        const emptyDiv = document.createElement("div");
+        emptyDiv.className = "wd-article-state-card wd-category-empty-card";
+        emptyDiv.style.gridColumn = "1 / -1";
+        emptyDiv.style.width = "100%";
+        emptyDiv.innerHTML = `
+          <h3 class="wd-state-title">No posts in this category yet.</h3>
+          <p class="wd-state-desc">Select another category above to view WorkDaily articles.</p>
+        `;
+        grid.appendChild(emptyDiv);
+      }
+    } else if (existingEmptyCard) {
+      existingEmptyCard.remove();
+    }
   };
 
 
