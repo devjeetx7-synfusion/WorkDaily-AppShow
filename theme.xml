@@ -2213,7 +2213,94 @@ body {
     scroll-behavior: auto !important;
   }
 }
-  ]]></b:skin>
+
+/* SKELETON LOADING STATE */
+.wd-skeleton-box {
+  background: linear-gradient(90deg, #EAECE8 25%, #F4F6F2 50%, #EAECE8 75%);
+  background-size: 200% 100%;
+  animation: wdSkeletonLoading 1.5s infinite;
+  border-radius: var(--radius-sm);
+}
+
+@keyframes wdSkeletonLoading {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.wd-skeleton-title {
+  height: 38px;
+  width: 75%;
+  margin: 0 auto 20px;
+  border-radius: var(--radius-md);
+}
+
+.wd-skeleton-byline {
+  height: 20px;
+  width: 40%;
+  margin: 0 auto 32px;
+  border-radius: var(--radius-sm);
+}
+
+.wd-skeleton-hero {
+  height: 320px;
+  width: 100%;
+  border-radius: var(--radius-lg);
+  margin-bottom: 40px;
+}
+
+.wd-skeleton-paragraph {
+  height: 18px;
+  width: 100%;
+  margin-bottom: 12px;
+}
+
+/* ERROR & NOT FOUND STATES */
+.wd-article-state-card {
+  text-align: center;
+  padding: 60px 24px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  max-width: 600px;
+  margin: 40px auto;
+}
+
+.wd-state-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: rgba(20, 90, 50, 0.08);
+  color: var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+}
+
+.wd-state-title {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--color-text);
+  margin-bottom: 12px;
+}
+
+.wd-state-desc {
+  font-size: 15px;
+  color: var(--color-text-muted);
+  margin-bottom: 28px;
+  line-height: 1.6;
+}
+
+.wd-state-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+]]></b:skin>
 </head>
 <body>
 
@@ -2333,7 +2420,7 @@ body {
         <div class="wd-phone-frame-wrapper wd-hero-phone">
           <div class="wd-phone-ambient-glow"></div>
           <div class="wd-floating-badge wd-float-top-left">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 10 0 1 10 0"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
             <span>LIVE DASHBOARD</span>
           </div>
           <div class="wd-floating-badge wd-float-bottom-right">
@@ -2505,19 +2592,19 @@ body {
       </nav>
 
       <main class="wd-main-content">
-        <!-- Native Blogger Main Section -->
+        <!-- Native Blogger Main Section with Hybrid SPA Container Views -->
         <b:section class='main' id='main' showelement='yes'>
           <b:widget id='Blog1' locked='true' title='Blog Posts' type='Blog'>
             <b:includable id='main' var='top'>
 
-              <!-- Multiple Items / Post Listing View -->
-              <b:if cond='data:view.isMultipleItems'>
-                <!-- Dynamic Featured Post Header container injected via JS or rendered from first post -->
+              <!-- 1. BLOG LIST VIEW CONTAINER -->
+              <div id="wd-blog-list-view">
+                <!-- Dynamic Featured Post Header container -->
                 <div id="wd-featured-post-slot"></div>
 
                 <div class="wd-blog-grid" id="wd-blog-grid">
                   <b:loop values='data:posts' var='post'>
-                    <article class="wd-blog-card">
+                    <article class="wd-blog-card" expr:data-post-id='data:post.id' expr:data-post-url='data:post.url'>
                       <b:if cond='data:post.firstImageUrl'>
                         <div class="wd-blog-thumb">
                           <img expr:src='data:post.firstImageUrl' expr:alt='data:post.title' loading='lazy'/>
@@ -2555,11 +2642,80 @@ body {
                     </article>
                   </b:loop>
                 </div>
-              </b:if>
 
-              <!-- Single Item / Individual Post View -->
-              <b:if cond='data:view.isPost'>
-                <b:loop values='data:posts' var='post'>
+                <!-- Pagination Navigation -->
+                <b:if cond='data:newerPageUrl or data:olderPageUrl'>
+                  <div class="wd-pagination">
+                    <b:if cond='data:newerPageUrl'>
+                      <a expr:href='data:newerPageUrl' class="wd-btn wd-btn-secondary wd-btn-sm">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                        <span>Newer Posts</span>
+                      </a>
+                    </b:if>
+                    <b:if cond='data:olderPageUrl'>
+                      <a expr:href='data:olderPageUrl' class="wd-btn wd-btn-secondary wd-btn-sm">
+                        <span>Older Posts</span>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                      </a>
+                    </b:if>
+                  </div>
+                </b:if>
+              </div>
+
+              <!-- 2. ARTICLE DETAIL VIEW CONTAINER -->
+              <div id="wd-article-detail-view" style="display: none;">
+
+                <!-- Loading State Skeleton -->
+                <div id="wd-article-loading" style="display: none;">
+                  <div class="wd-single-post">
+                    <div class="wd-skeleton-box wd-skeleton-title"></div>
+                    <div class="wd-skeleton-box wd-skeleton-byline"></div>
+                    <div class="wd-skeleton-box wd-skeleton-hero"></div>
+                    <div class="wd-skeleton-box wd-skeleton-paragraph"></div>
+                    <div class="wd-skeleton-box wd-skeleton-paragraph"></div>
+                    <div class="wd-skeleton-box wd-skeleton-paragraph" style="width: 80%;"></div>
+                  </div>
+                </div>
+
+                <!-- Error State -->
+                <div id="wd-article-error" style="display: none;">
+                  <div class="wd-article-state-card">
+                    <div class="wd-state-icon">
+                      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                    </div>
+                    <h3 class="wd-state-title">Unable to Load Article</h3>
+                    <p class="wd-state-desc">There was a technical issue fetching this article. Please check your connection and try again.</p>
+                    <div class="wd-state-actions">
+                      <button class="wd-btn wd-btn-primary wd-btn-sm" id="wd-article-retry-btn">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 4v6h-6"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+                        <span>Retry</span>
+                      </button>
+                      <button class="wd-btn wd-btn-secondary wd-btn-sm" id="wd-article-error-back-btn">
+                        <span>Back to Blog</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- 404 Not Found State -->
+                <div id="wd-article-not-found" style="display: none;">
+                  <div class="wd-article-state-card">
+                    <div class="wd-state-icon">
+                      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M16 16s-1.5-2-4-2-4 2-4 2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+                    </div>
+                    <h3 class="wd-state-title">Article Not Found</h3>
+                    <p class="wd-state-desc">The article you are looking for may have been removed, renamed, or is currently unavailable.</p>
+                    <div class="wd-state-actions">
+                      <button class="wd-btn wd-btn-primary wd-btn-sm" id="wd-article-404-back-btn">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                        <span>Back to Blog</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Active Article Content View -->
+                <div id="wd-article-content" style="display: none;">
                   <article class="wd-single-post">
                     <a href="#blog" class="wd-back-link" id="wd-back-to-blog">
                       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
@@ -2567,33 +2723,25 @@ body {
                     </a>
 
                     <header class="wd-post-header">
-                      <b:if cond='data:post.labels'>
-                        <div class="wd-post-labels">
-                          <b:loop values='data:post.labels' var='label'>
-                            <a expr:href='data:label.url' class="wd-label-pill"><data:label.name/></a>
-                          </b:loop>
-                        </div>
-                      <b:else/>
-                        <div class="wd-post-labels">
-                          <span class="wd-label-pill">Article</span>
-                        </div>
-                      </b:if>
-                      <h1 class="wd-post-title"><data:post.title/></h1>
+                      <div class="wd-post-labels" id="wd-post-labels-container">
+                        <span class="wd-label-pill">Article</span>
+                      </div>
+                      <h1 class="wd-post-title" id="wd-post-title-heading">Article Title</h1>
                       <div class="wd-post-byline">
-                        <span>By <data:post.author/></span>
+                        <span id="wd-post-author-span">By WorkDaily Team</span>
                         <span class="wd-dot-sep">&#8226;</span>
-                        <span><data:post.timestamp/></span>
+                        <span id="wd-post-date-span">May 12, 2026</span>
                         <span class="wd-dot-sep">&#8226;</span>
                         <span>5 min read</span>
                       </div>
                     </header>
 
-                    <b:if cond='data:post.firstImageUrl'>
-                      <img expr:src='data:post.firstImageUrl' expr:alt='data:post.title' class="wd-post-hero-image"/>
-                    </b:if>
+                    <div id="wd-post-hero-wrap">
+                      <img id="wd-post-hero-img" src="" alt="Article Hero" class="wd-post-hero-image"/>
+                    </div>
 
-                    <div class="wd-post-body">
-                      <data:post.body/>
+                    <div class="wd-post-body" id="wd-article-body">
+                      <!-- Rendered Article HTML Body -->
                     </div>
 
                     <!-- Related Articles Section Container -->
@@ -2603,59 +2751,21 @@ body {
                     </div>
 
                     <!-- Comments Area -->
-                    <div class="wd-comments-area">
+                    <div class="wd-comments-area" id="wd-comments-area">
                       <h3 class="wd-comments-heading">Discussion</h3>
-                    <b:include data='post' name='comments'/>
+                      <b:if cond='data:view.isPost'>
+                        <b:loop values='data:posts' var='post'>
+                          <b:include data='post' name='comments'/>
+                        </b:loop>
+                      </b:if>
                     </div>
                   </article>
-                </b:loop>
-              </b:if>
-
-              <!-- Pagination Navigation -->
-              <b:if cond='data:newerPageUrl or data:olderPageUrl'>
-                <div class="wd-pagination">
-                  <b:if cond='data:newerPageUrl'>
-                    <a expr:href='data:newerPageUrl' class="wd-btn wd-btn-secondary wd-btn-sm">
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-                      <span>Newer Posts</span>
-                    </a>
-                  </b:if>
-                  <b:if cond='data:olderPageUrl'>
-                    <a expr:href='data:olderPageUrl' class="wd-btn wd-btn-secondary wd-btn-sm">
-                      <span>Older Posts</span>
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                    </a>
-                  </b:if>
                 </div>
-              </b:if>
+
+              </div>
 
           </b:includable>
 
-          <b:includable id='threadedComments' var='post'>
-            <div class='comments' id='comments'>
-              <b:if cond='data:post.allowComments'>
-                <h4><data:post.commentLabel/></h4>
-                <b:include data='post' name='commentForm'/>
-              </b:if>
-            </div>
-          </b:includable>
-
-          <b:includable id='comments' var='post'>
-            <div class='comments' id='comments'>
-              <b:if cond='data:post.allowComments'>
-                <h4><data:post.commentLabel/></h4>
-                <b:include data='post' name='commentForm'/>
-              </b:if>
-            </div>
-          </b:includable>
-
-          <b:includable id='commentForm' var='post'>
-            <div class='comment-form'>
-              <b:if cond='data:post.embedCommentForm'>
-                <b:include data='post' name='commentDeleteLink'/>
-              </b:if>
-            </div>
-            </b:includable>
           </b:widget>
         </b:section>
       </main>
@@ -3050,187 +3160,759 @@ body {
     }
   }
 
-  /* BLOG SYSTEM, CATEGORY FILTERING & FEATURED POST */
-  function initBlogSystem() {
-    const categoryChips = document.querySelectorAll(".wd-category-chip");
-    const blogCards = document.querySelectorAll("#wd-blog-grid .wd-blog-card");
-    const featuredSlot = document.getElementById("wd-featured-post-slot");
+  /* WORKDAILY BLOG STORE & POST NORMALIZER */
+  const SAMPLE_POSTS_DATA = [
+    {
+      id: "wage-settlements",
+      slug: "contractor-wage-settlements",
+      title: "How WorkDaily Streamlines Daily Contractor Wage Settlements",
+      category: "Update",
+      labels: ["Update", "Contractors"],
+      publishedAt: "May 12, 2026",
+      author: "Alex Morgan",
+      image: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=800&q=80",
+      excerpt: "Eliminate paper registers and ledger entry errors with automated one-tap daily payouts and workforce tracking.",
+      content: `
+        <p>Managing daily wages across multiple job sites has traditionally been a tedious process rife with accounting discrepancies, lost paper logs, and delayed payouts. With modern site operations expanding rapidly, contractors need real-time tools that handle workforce attendance and immediate payment settlements accurately.</p>
 
-    // Populate Mock Posts if empty (for local testing environment without live Blogger database)
-    const blogGrid = document.getElementById("wd-blog-grid");
-    if (blogGrid && blogGrid.children.length === 0) {
-      renderSampleBlogData(blogGrid);
+        <h2>The Challenge of Manual Ledger Systems</h2>
+        <p>In traditional site management, worker attendance is recorded manually on paper logs. At the end of the day or week, supervisors calculate hours worked, overtime allowances, and partial cash advances manually. This manual workflow creates several pain points:</p>
+        <ul>
+          <li><strong>Data Inaccuracy:</strong> Human errors during paper ledger transcription lead to overpayments or disputes.</li>
+          <li><strong>Delayed Settlements:</strong> Payroll reconciliation takes hours or days, causing frustration among daily wage workers.</li>
+          <li><strong>Lack of Site Visibility:</strong> Business owners cannot track pending payment liabilities across multiple sites in real time.</li>
+        </ul>
+
+        <h2>Automated Daily Payouts with WorkDaily</h2>
+        <p>WorkDaily replaces fragmented paper records with a centralized digital workspace designed specifically for field supervisors and contractors.</p>
+
+        <blockquote>
+          "By digitizing our daily worker registers and wage settlements, WorkDaily cut our administrative processing time by 80% and eliminated payout disputes completely."
+          <footer>— Chief Operations Officer, Apex Construction</footer>
+        </blockquote>
+
+        <h3>Key Features for Payout Efficiency</h3>
+        <p>Our latest updates include instant site alerts, geotagged worker check-ins, and automated daily wage calculators that dynamically compute payouts based on site check-in timestamps.</p>
+
+        <p>Watch our video demonstration below to see how easy it is to issue digital payout receipts directly to workers:</p>
+
+        <video class="wd-custom-video-target" poster="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=800&q=80">
+          <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4" type="video/mp4" />
+          Your browser does not support HTML video.
+        </video>
+
+        <h2>Conclusion</h2>
+        <p>Streamlining daily contractor wage settlements is no longer a luxury—it is a competitive necessity. Upgrade your site operations today with WorkDaily and experience hassle-free workforce payment management.</p>
+      `
+    },
+    {
+      id: "construction-site-efficiency",
+      slug: "managing-construction-site-workforce",
+      title: "Top 5 Strategies for Managing Construction Site Workforce Efficiently",
+      category: "Article",
+      labels: ["Article", "Workforce"],
+      publishedAt: "May 08, 2026",
+      author: "Sarah Jenkins",
+      image: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=800&q=80",
+      excerpt: "Learn how modern site managers keep teams on schedule and monitor site progress effortlessly.",
+      content: `
+        <p>Efficiency on a construction site depends on how seamlessly workforce coordination, material availability, and task tracking align. Here are 5 battle-tested strategies to boost productivity on your sites.</p>
+
+        <h2>1. One-Tap Attendance Check-Ins</h2>
+        <p>Eliminate line bottlenecks at site gates every morning. Modern mobile check-in systems allow workers or crew leaders to register site presence in under 2 seconds.</p>
+
+        <h2>2. Real-Time Task Milestones</h2>
+        <p>Divide daily site targets into clear micro-tasks. When supervisors mark tasks complete on their smartphones, overall project completion meters update automatically for management.</p>
+
+        <h2>3. Centralized Skill & Crew Mapping</h2>
+        <p>Keep detailed digital profiles for masons, electricians, carpenters, and general laborers to deploy the right skills to the right tasks instantly.</p>
+
+        <img src="https://images.unsplash.com/photo-1541888946425-d0fbb186a5b7?auto=format&fit=crop&w=800&q=80" alt="Construction team meeting" />
+
+        <h2>4. Instant Expense and Receipt Logging</h2>
+        <p>Snap photo receipts of petty cash expenditures right at the site store so accounts are reconciled continuously without end-of-month surprises.</p>
+
+        <h2>5. Automated Workforce Reports</h2>
+        <p>Generate daily PDF summaries highlighting workforce counts, total hours logged, and budget utilization with a single tap.</p>
+      `
+    },
+    {
+      id: "v2-4-release-notes",
+      slug: "workdaily-v2-4-release-notes",
+      title: "WorkDaily v2.4 Release Notes: Enhanced Real-Time Attendance & Alerts",
+      category: "News",
+      labels: ["News", "Update"],
+      publishedAt: "Apr 28, 2026",
+      author: "WorkDaily Product Team",
+      image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80",
+      excerpt: "Discover brand new features including instant site alerts, geotagged check-ins, and budget forecasting reports.",
+      content: `
+        <p>We are thrilled to announce <strong>WorkDaily v2.4</strong>! This release brings powerful performance improvements, redesigned dashboard analytics, and enhanced worker safety alerts.</p>
+
+        <h2>What's New in v2.4</h2>
+        <ul>
+          <li><strong>Geotagged Check-ins:</strong> Ensure workers check in within designated GPS site boundaries.</li>
+          <li><strong>Instant Hazard & Delay Alerts:</strong> Broadcast urgent site updates to all contractors in real time.</li>
+          <li><strong>Customizable Pay Rates:</strong> Support piece-rate, hourly, and daily fixed wage models seamlessly.</li>
+          <li><strong>Dark Mode Optimization:</strong> Reduced battery drain for field supervisors using devices under harsh outdoor sun.</li>
+        </ul>
+
+        <p>Update your application today or download the latest APK directly from our showcase portal!</p>
+      `
+    },
+    {
+      id: "contractor-spotlight",
+      slug: "contractor-feedback-spotlight",
+      title: "Contractor Feedback Spotlight: Scaling Site Productivity by 40%",
+      category: "Feedback",
+      labels: ["Feedback", "Article"],
+      publishedAt: "Apr 15, 2026",
+      author: "David Chen",
+      image: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80",
+      excerpt: "See how leading infrastructure contractors cut administrative overhead using WorkDaily.",
+      content: `
+        <p>In this customer spotlight, we chat with Apex Infrastructure, a regional contractor managing over 15 active commercial job sites with over 400 active site workers daily.</p>
+
+        <h2>The Transition to WorkDaily</h2>
+        <p>"Before WorkDaily, our site managers spent 2 hours every evening compiling paper attendance logs and reconciling contractor payment requests. Today, everything syncs live to our central hub," explains Lead Engineer Marcus Rivera.</p>
+
+        <h2>Key Benefits Measured</h2>
+        <ul>
+          <li>40% reduction in daily administrative labor</li>
+          <li>Zero lost invoices or unverified payout receipts</li>
+          <li>Instant attendance audit reports for client review</li>
+        </ul>
+      `
+    },
+    {
+      id: "future-of-digital-workforce",
+      slug: "future-of-digital-workforce-accounting",
+      title: "The Future of Digital Workforce Accounting in Modern Operations",
+      category: "Article",
+      labels: ["Article", "Insights"],
+      publishedAt: "Apr 02, 2026",
+      author: "Elena Rostova",
+      image: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=800&q=80",
+      excerpt: "Why moving from spreadsheet logs to cloud-synced daily workspaces is essential for growing firms.",
+      content: `
+        <p>As construction, logistics, and field management industries modernize, reliance on outdated spreadsheet files and paper ledgers presents severe growth bottlenecks.</p>
+
+        <h2>Why Spreadsheets Fall Short</h2>
+        <p>Spreadsheets lack real-time synchronization, mobile-first touch controls, and automated audit trails. When multiple site supervisors edit disconnected files, data collision and loss become inevitable.</p>
+
+        <h2>The Cloud-Synced Workspace Advantage</h2>
+        <p>Cloud-native solutions ensure that site entries made offline sync automatically once network connectivity is restored, maintaining continuous records across all operations.</p>
+      `
+    },
+    {
+      id: "security-and-cloud-privacy",
+      slug: "security-cloud-privacy-practices",
+      title: "Security & Cloud Privacy Practices Behind WorkDaily Data Infrastructure",
+      category: "News",
+      labels: ["News", "Security"],
+      publishedAt: "Mar 20, 2026",
+      author: "WorkDaily Security Team",
+      image: "https://images.unsplash.com/photo-1512428559087-560fa5ceab42?auto=format&fit=crop&w=800&q=80",
+      excerpt: "An in-depth look at end-to-end encryption and compliance standards safeguarding your site records.",
+      content: `
+        <p>At WorkDaily, safeguarding your financial transactions, worker records, and proprietary site logs is our top priority.</p>
+
+        <h2>Bank-Grade Encryption</h2>
+        <p>All data transmitted between your mobile devices and our cloud servers is encrypted using TLS 1.3 encryption. At-rest databases utilize AES-256 encryption.</p>
+
+        <h2>Granular Role Permissions</h2>
+        <p>Configure precise access levels for general contractors, site supervisors, auditors, and account managers so staff see only what they need to fulfill their roles.</p>
+      `
+    }
+  ];
+
+  window.WorkDailyBlogStore = (function() {
+    let postsMap = new Map();
+    let postsList = [];
+
+    function extractSlugFromUrl(url) {
+      if (!url) return "";
+      try {
+        const cleanUrl = url.split("?")[0].split("#")[0];
+        const parts = cleanUrl.split("/").filter(Boolean);
+        const lastPart = parts[parts.length - 1] || "";
+        return lastPart.replace(/\.html$/, "");
+      } catch (e) {
+        return "";
+      }
     }
 
-    // Initialize Featured Post at top of Blog View
+    function createExcerpt(htmlContent, maxLength = 160) {
+      if (!htmlContent) return "";
+      const tmp = document.createElement("div");
+      tmp.innerHTML = htmlContent;
+      const text = tmp.textContent || tmp.innerText || "";
+      const trimmed = text.trim().replace(/\s+/g, " ");
+      if (trimmed.length <= maxLength) return trimmed;
+      return trimmed.substring(0, maxLength).trim() + "...";
+    }
+
+    function extractFirstImageFromHtml(htmlContent) {
+      if (!htmlContent) return null;
+      const tmp = document.createElement("div");
+      tmp.innerHTML = htmlContent;
+      const img = tmp.querySelector("img");
+      return img ? img.getAttribute("src") : null;
+    }
+
+    function normalizePost(rawPost, index) {
+      let rawId = rawPost.id;
+      if (typeof rawId === "object" && rawId !== null && rawId.$t) {
+        rawId = rawId.$t;
+      }
+      if (typeof rawId === "string" && rawId.includes("post-")) {
+        const parts = rawId.split("post-");
+        rawId = parts[parts.length - 1];
+      }
+
+      const url = rawPost.url || (rawPost.link ? (rawPost.link.find(l => l.rel === "alternate") || {}).href : "") || "";
+      const slug = rawPost.slug || extractSlugFromUrl(url) || ("article-" + ((index !== undefined ? index : 0) + 1));
+      const id = String(rawId || slug || ("post-" + ((index !== undefined ? index : 0) + 1)));
+
+      let title = rawPost.title;
+      if (typeof title === "object" && title !== null && title.$t) title = title.$t;
+      title = (title && String(title).trim()) ? String(title).trim() : "Untitled Article";
+
+      let content = rawPost.content || rawPost.body;
+      if (typeof content === "object" && content !== null && content.$t) content = content.$t;
+      let snippet = rawPost.snippet || rawPost.summary;
+      if (typeof snippet === "object" && snippet !== null && snippet.$t) snippet = snippet.$t;
+
+      const fullContent = content || snippet || "<p>No content available for this article.</p>";
+      const excerpt = rawPost.excerpt || snippet || createExcerpt(fullContent);
+
+      let image = rawPost.image || rawPost.firstImageUrl || rawPost.img || extractFirstImageFromHtml(fullContent) || "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=800&q=80";
+
+      let category = "Article";
+      let labels = [];
+      if (Array.isArray(rawPost.labels)) {
+        labels = rawPost.labels.map(l => (typeof l === "object" ? l.name : String(l)));
+      } else if (rawPost.category) {
+        labels = [String(rawPost.category)];
+      } else if (Array.isArray(rawPost.categories)) {
+        labels = rawPost.categories.map(c => c.term || c.label || String(c)).filter(Boolean);
+      }
+      if (labels.length > 0) {
+        category = labels[0];
+      }
+
+      let author = "WorkDaily Team";
+      if (rawPost.author) {
+        if (typeof rawPost.author === "string") author = rawPost.author;
+        else if (typeof rawPost.author === "object" && rawPost.author.name) {
+          author = typeof rawPost.author.name === "object" ? rawPost.author.name.$t : rawPost.author.name;
+        } else if (Array.isArray(rawPost.author) && rawPost.author[0]) {
+          author = rawPost.author[0].name ? (rawPost.author[0].name.$t || rawPost.author[0].name) : "WorkDaily Team";
+        }
+      }
+
+      let publishedAt = rawPost.publishedAt || rawPost.published || rawPost.date || rawPost.timestamp;
+      if (typeof publishedAt === "object" && publishedAt !== null && publishedAt.$t) publishedAt = publishedAt.$t;
+      if (!publishedAt) {
+        publishedAt = "May 12, 2026";
+      } else {
+        try {
+          const d = new Date(publishedAt);
+          if (!isNaN(d.getTime())) {
+            publishedAt = d.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+          }
+        } catch (e) {}
+      }
+
+      return {
+        id,
+        title,
+        slug,
+        excerpt,
+        content: fullContent,
+        image,
+        category,
+        labels,
+        author,
+        publishedAt,
+        url: url || ("#article/" + id)
+      };
+    }
+
+    function setPosts(rawPosts) {
+      postsMap.clear();
+      postsList = [];
+      if (Array.isArray(rawPosts)) {
+        rawPosts.forEach((p, idx) => {
+          const normalized = normalizePost(p, idx);
+          postsList.push(normalized);
+          postsMap.set(normalized.id, normalized);
+          if (normalized.slug) {
+            postsMap.set(normalized.slug, normalized);
+          }
+        });
+      }
+    }
+
+    function addPost(rawPost) {
+      const normalized = normalizePost(rawPost, postsList.length);
+      postsList.push(normalized);
+      postsMap.set(normalized.id, normalized);
+      if (normalized.slug) {
+        postsMap.set(normalized.slug, normalized);
+      }
+      return normalized;
+    }
+
+    function getPost(idOrSlug) {
+      if (!idOrSlug) return null;
+      const key = String(idOrSlug).trim();
+      return postsMap.get(key) || postsList.find(p => p.id === key || p.slug === key) || null;
+    }
+
+    function getAllPosts() {
+      return [...postsList];
+    }
+
+    function init() {
+      setPosts(SAMPLE_POSTS_DATA);
+    }
+
+    return {
+      normalizePost,
+      setPosts,
+      addPost,
+      getPost,
+      getAllPosts,
+      init
+    };
+  })();
+
+  /* WORKDAILY URL ROUTER & HISTORY SYSTEM */
+  window.WorkDailyRouter = (function() {
+    let currentRoute = { view: "blog", postId: null };
+    let activeCategory = "all";
+
+    function parseCurrentRoute() {
+      const hash = window.location.hash || "";
+      const search = window.location.search || "";
+      const pathname = window.location.pathname || "";
+
+      // 1. Hash Routing (#article/id or #post/id)
+      if (hash.startsWith("#article/") || hash.startsWith("#post/")) {
+        const parts = hash.split("/");
+        const id = parts.slice(1).join("/").trim();
+        if (id) {
+          return { view: "article", postId: decodeURIComponent(id) };
+        }
+      }
+
+      // 2. Query Routing (?post=id or ?p=id or ?article=id)
+      if (search) {
+        const params = new URLSearchParams(search);
+        const qPost = params.get("post") || params.get("p") || params.get("article");
+        if (qPost) {
+          return { view: "article", postId: decodeURIComponent(qPost.trim()) };
+        }
+      }
+
+      // 3. Path Routing (/blog/article/id or /2026/05/slug.html)
+      if (pathname.includes("/article/")) {
+        const parts = pathname.split("/article/");
+        const id = parts[1].replace(/\/$/, "").trim();
+        if (id) {
+          return { view: "article", postId: decodeURIComponent(id) };
+        }
+      } else if (pathname.endsWith(".html") && !pathname.includes("index.html")) {
+        const parts = pathname.split("/").filter(Boolean);
+        const filename = parts[parts.length - 1] || "";
+        const slug = filename.replace(/\.html$/, "").trim();
+        if (slug) {
+          return { view: "article", postId: decodeURIComponent(slug) };
+        }
+      }
+
+      // Default Blog View
+      return { view: "blog", postId: null };
+    }
+
+    function setActiveCategory(cat) {
+      if (cat) activeCategory = String(cat).toLowerCase();
+    }
+
+    function getActiveCategory() {
+      return activeCategory;
+    }
+
+    function navigateTo(routeObj, pushState = true) {
+      currentRoute = routeObj;
+
+      if (pushState) {
+        if (routeObj.view === "article" && routeObj.postId) {
+          const targetHash = "#article/" + encodeURIComponent(routeObj.postId);
+          if (window.location.hash !== targetHash) {
+            history.pushState({ view: "article", postId: routeObj.postId }, "", targetHash);
+          }
+        } else {
+          const targetHash = "#blog";
+          if (window.location.hash && window.location.hash !== "#blog" && window.location.hash !== "#") {
+            history.pushState({ view: "blog" }, "", targetHash);
+          }
+        }
+      }
+
+      renderRoute();
+    }
+
+    function openArticle(postId) {
+      navigateTo({ view: "article", postId: String(postId) }, true);
+    }
+
+    function navigateToBlog() {
+      navigateTo({ view: "blog", postId: null }, true);
+    }
+
+    function renderRoute() {
+      const blogListView = document.getElementById("wd-blog-list-view");
+      const articleDetailView = document.getElementById("wd-article-detail-view");
+
+      if (currentRoute.view === "article" && currentRoute.postId) {
+        if (blogListView) blogListView.style.display = "none";
+        if (articleDetailView) articleDetailView.style.display = "block";
+
+        if (typeof window.renderArticleView === "function") {
+          window.renderArticleView(currentRoute.postId);
+        }
+
+        const blogSection = document.getElementById("blog");
+        if (blogSection) {
+          const header = document.getElementById("wd-header");
+          const headerHeight = header ? header.offsetHeight : 80;
+          const top = blogSection.offsetTop - headerHeight;
+          window.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
+        }
+      } else {
+        if (articleDetailView) articleDetailView.style.display = "none";
+        if (blogListView) blogListView.style.display = "block";
+
+        if (typeof window.filterBlogPosts === "function") {
+          window.filterBlogPosts(activeCategory);
+        }
+      }
+    }
+
+    function handleUrlChange() {
+      const route = parseCurrentRoute();
+      currentRoute = route;
+      renderRoute();
+    }
+
+    function init() {
+      window.addEventListener("hashchange", handleUrlChange);
+      window.addEventListener("popstate", handleUrlChange);
+      handleUrlChange();
+    }
+
+    return {
+      parseCurrentRoute,
+      navigateTo,
+      openArticle,
+      navigateToBlog,
+      renderRoute,
+      handleUrlChange,
+      setActiveCategory,
+      getActiveCategory,
+      init,
+      get currentRoute() { return currentRoute; }
+    };
+  })();
+
+  /* RENDER ARTICLE VIEW & STATES */
+  let currentArticleRequestId = 0;
+
+  window.renderArticleView = function(postId) {
+    const loadingEl = document.getElementById("wd-article-loading");
+    const errorEl = document.getElementById("wd-article-error");
+    const notFoundEl = document.getElementById("wd-article-not-found");
+    const contentEl = document.getElementById("wd-article-content");
+
+    if (!loadingEl || !contentEl) return;
+
+    const requestId = ++currentArticleRequestId;
+
+    loadingEl.style.display = "block";
+    if (errorEl) errorEl.style.display = "none";
+    if (notFoundEl) notFoundEl.style.display = "none";
+    contentEl.style.display = "none";
+
+    setTimeout(function() {
+      if (requestId !== currentArticleRequestId) return;
+
+      const post = window.WorkDailyBlogStore.getPost(postId);
+
+      loadingEl.style.display = "none";
+
+      if (post) {
+        const labelsContainer = document.getElementById("wd-post-labels-container");
+        if (labelsContainer) {
+          const categoryName = post.category || "Article";
+          labelsContainer.innerHTML = `<span class="wd-label-pill">${categoryName}</span>`;
+        }
+
+        const titleHeading = document.getElementById("wd-post-title-heading");
+        if (titleHeading) {
+          titleHeading.textContent = post.title || "Untitled Article";
+        }
+
+        const authorSpan = document.getElementById("wd-post-author-span");
+        if (authorSpan) {
+          authorSpan.textContent = `By ${post.author || "WorkDaily Team"}`;
+        }
+
+        const dateSpan = document.getElementById("wd-post-date-span");
+        if (dateSpan) {
+          dateSpan.textContent = post.publishedAt || "May 12, 2026";
+        }
+
+        const heroWrap = document.getElementById("wd-post-hero-wrap");
+        const heroImg = document.getElementById("wd-post-hero-img");
+        if (heroWrap && heroImg) {
+          if (post.image) {
+            heroImg.src = post.image;
+            heroImg.alt = post.title;
+            heroWrap.style.display = "block";
+          } else {
+            heroWrap.style.display = "none";
+          }
+        }
+
+        const bodyEl = document.getElementById("wd-article-body");
+        if (bodyEl) {
+          bodyEl.innerHTML = post.content || "<p>No article content available.</p>";
+          if (typeof initCustomVideoPlayer === "function") {
+            initCustomVideoPlayer();
+          }
+        }
+
+        if (typeof renderRelatedArticles === "function") {
+          renderRelatedArticles(post.id);
+        }
+
+        contentEl.style.display = "block";
+      } else {
+        if (notFoundEl) notFoundEl.style.display = "block";
+      }
+    }, 100);
+  };
+
+  window.showArticleError = function() {
+    const loadingEl = document.getElementById("wd-article-loading");
+    const errorEl = document.getElementById("wd-article-error");
+    const notFoundEl = document.getElementById("wd-article-not-found");
+    const contentEl = document.getElementById("wd-article-content");
+
+    if (loadingEl) loadingEl.style.display = "none";
+    if (contentEl) contentEl.style.display = "none";
+    if (notFoundEl) notFoundEl.style.display = "none";
+    if (errorEl) errorEl.style.display = "block";
+  };
+
+  /* BLOG SYSTEM & CLICK HANDLERS */
+  function initBlogSystem() {
+    window.WorkDailyBlogStore.init();
+
+    renderBlogGrid();
     buildFeaturedPost();
 
-    // Category Filter Click Handlers
+    const categoryChips = document.querySelectorAll(".wd-category-chip");
     categoryChips.forEach(function(chip) {
-      chip.addEventListener("click", function() {
+      chip.addEventListener("click", function(e) {
+        e.preventDefault();
         categoryChips.forEach(c => c.classList.remove("active"));
         chip.classList.add("active");
 
-        const selectedCat = chip.getAttribute("data-category").toLowerCase();
+        const selectedCat = (chip.getAttribute("data-category") || "all").toLowerCase();
+        window.WorkDailyRouter.setActiveCategory(selectedCat);
         filterBlogPosts(selectedCat);
       });
     });
 
-    function filterBlogPosts(category) {
-      const cards = document.querySelectorAll("#wd-blog-grid .wd-blog-card");
-      cards.forEach(function(card) {
-        const labelsAttr = (card.getAttribute("data-post-labels") || "").toLowerCase();
-        const pills = card.querySelectorAll(".wd-label-pill");
-        let matches = (category === "all" || labelsAttr.includes(category));
+    document.querySelectorAll("#wd-back-to-blog, #wd-article-error-back-btn, #wd-article-404-back-btn").forEach(function(btn) {
+      btn.addEventListener("click", function(e) {
+        e.preventDefault();
+        window.WorkDailyRouter.navigateToBlog();
+      });
+    });
 
-        pills.forEach(function(pill) {
-          if (pill.textContent.toLowerCase().includes(category)) {
-            matches = true;
-          }
-        });
-
-        if (matches) {
-          card.style.display = "flex";
-        } else {
-          card.style.display = "none";
-        }
+    const retryBtn = document.getElementById("wd-article-retry-btn");
+    if (retryBtn) {
+      retryBtn.addEventListener("click", function(e) {
+        e.preventDefault();
+        window.WorkDailyRouter.handleUrlChange();
       });
     }
 
-    function buildFeaturedPost() {
-      if (!featuredSlot) return;
-      const firstCard = document.querySelector("#wd-blog-grid .wd-blog-card");
-      if (!firstCard) return;
+    window.WorkDailyRouter.init();
+  }
 
-      const titleEl = firstCard.querySelector(".wd-blog-card-title a");
-      const title = titleEl ? titleEl.textContent : "Introducing WorkDaily 2.0";
-      const link = titleEl ? titleEl.getAttribute("href") : "#";
-      const snippetEl = firstCard.querySelector(".wd-blog-snippet");
-      const snippet = snippetEl ? snippetEl.textContent : "Discover our latest workforce tracking updates, contractor payout tools, and real-time attendance management.";
-      const imgEl = firstCard.querySelector(".wd-blog-thumb img");
-      const imgSrc = imgEl ? imgEl.getAttribute("src") : "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=800&q=80";
+  window.renderBlogGrid = function() {
+    const grid = document.getElementById("wd-blog-grid");
+    if (!grid) return;
 
-      featuredSlot.innerHTML = `
-        <div class="wd-featured-article">
-          <div class="wd-featured-img-wrap">
-            <span class="wd-featured-badge">FEATURED</span>
-            <img src="${imgSrc}" alt="${title}" loading="lazy"/>
+    const posts = window.WorkDailyBlogStore.getAllPosts();
+    if (posts.length === 0) return;
+
+    grid.innerHTML = "";
+    posts.forEach(function(post) {
+      const card = document.createElement("article");
+      card.className = "wd-blog-card";
+      card.setAttribute("data-post-id", post.id);
+      card.setAttribute("data-post-category", post.category.toLowerCase());
+
+      card.innerHTML = `
+        <div class="wd-blog-thumb">
+          <img src="${post.image}" alt="${post.title}" loading="lazy"/>
+        </div>
+        <div class="wd-blog-card-body">
+          <div class="wd-blog-meta">
+            <span class="wd-label-pill">${post.category}</span>
+            <span class="wd-blog-date">${post.publishedAt}</span>
           </div>
-          <div class="wd-featured-content">
-            <div class="wd-featured-meta">
-              <span class="wd-label-pill">UPDATE</span>
-              <span>•</span>
-              <span>Today</span>
-              <span>•</span>
-              <span>5 min read</span>
-            </div>
-            <h3 class="wd-featured-title">
-              <a href="${link}">${title}</a>
-            </h3>
-            <p class="wd-featured-desc">${snippet}</p>
-            <a href="${link}" class="wd-btn wd-btn-primary wd-btn-sm" style="align-self: flex-start;">
-              <span>Read Full Article</span>
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          <h3 class="wd-blog-card-title">
+            <a href="#article/${encodeURIComponent(post.id)}">${post.title}</a>
+          </h3>
+          <p class="wd-blog-snippet">${post.excerpt}</p>
+          <div class="wd-blog-card-footer">
+            <a href="#article/${encodeURIComponent(post.id)}" class="wd-blog-read-more">
+              <span>Read Article</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </a>
+            <span class="wd-reading-time">5 min read</span>
           </div>
         </div>
       `;
-    }
 
-    function renderSampleBlogData(container) {
-      const samplePosts = [
-        {
-          title: "How WorkDaily Streamlines Daily Contractor Wage Settlements",
-          category: "Update",
-          snippet: "Eliminate paper registers and ledger entry errors with automated one-tap daily payouts.",
-          date: "May 12, 2026",
-          img: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=800&q=80"
-        },
-        {
-          title: "Top 5 Strategies for Managing Construction Site Workforce Efficiently",
-          category: "Article",
-          snippet: "Learn how modern site managers keep teams on schedule and monitor site progress effortlessly.",
-          date: "May 08, 2026",
-          img: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=800&q=80"
-        },
-        {
-          title: "WorkDaily v2.4 Release Notes: Enhanced Real-Time Attendance & Alerts",
-          category: "News",
-          snippet: "Discover brand new features including instant site alerts, geotagged check-ins, and budget reports.",
-          date: "Apr 28, 2026",
-          img: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80"
-        },
-        {
-          title: "Contractor Feedback Spotlight: Scaling Site Productivity by 40%",
-          category: "Feedback",
-          snippet: "See how leading infrastructure contractors cut administrative overhead using WorkDaily.",
-          date: "Apr 15, 2026",
-          img: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80"
-        },
-        {
-          title: "The Future of Digital Workforce Accounting in Modern Operations",
-          category: "Article",
-          snippet: "Why moving from spreadsheet logs to cloud-synced daily workspaces is essential.",
-          date: "Apr 02, 2026",
-          img: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=800&q=80"
-        },
-        {
-          title: "Security & Cloud Privacy Practices Behind WorkDaily Data Infrastructure",
-          category: "News",
-          snippet: "An in-depth look at end-to-end encryption and compliance standards for your site records.",
-          date: "Mar 20, 2026",
-          img: "https://images.unsplash.com/photo-1512428559087-560fa5ceab42?auto=format&fit=crop&w=800&q=80"
-        }
-      ];
+      card.addEventListener("click", function(e) {
+        if (e.metaKey || e.ctrlKey || e.shiftKey) return;
+        e.preventDefault();
+        window.WorkDailyRouter.openArticle(post.id);
+      });
 
-      samplePosts.forEach(function(p) {
-        const card = document.createElement("article");
-        card.className = "wd-blog-card";
-        card.setAttribute("data-post-labels", p.category.toLowerCase());
-        card.innerHTML = `
-          <div class="wd-blog-thumb">
-            <img src="${p.img}" alt="${p.title}" loading="lazy"/>
+      grid.appendChild(card);
+    });
+  };
+
+  window.buildFeaturedPost = function() {
+    const featuredSlot = document.getElementById("wd-featured-post-slot");
+    if (!featuredSlot) return;
+
+    const posts = window.WorkDailyBlogStore.getAllPosts();
+    if (posts.length === 0) return;
+
+    const featured = posts[0];
+    featuredSlot.innerHTML = `
+      <div class="wd-featured-article" data-post-id="${featured.id}">
+        <div class="wd-featured-img-wrap">
+          <span class="wd-featured-badge">FEATURED</span>
+          <img src="${featured.image}" alt="${featured.title}" loading="lazy"/>
+        </div>
+        <div class="wd-featured-content">
+          <div class="wd-featured-meta">
+            <span class="wd-label-pill">${featured.category}</span>
+            <span>•</span>
+            <span>${featured.publishedAt}</span>
+            <span>•</span>
+            <span>5 min read</span>
           </div>
-          <div class="wd-blog-card-body">
-            <div class="wd-blog-meta">
-              <span class="wd-label-pill">${p.category}</span>
-              <span class="wd-blog-date">${p.date}</span>
-            </div>
-            <h3 class="wd-blog-card-title">
-              <a href="#blog">${p.title}</a>
-            </h3>
-            <p class="wd-blog-snippet">${p.snippet}</p>
-            <div class="wd-blog-card-footer">
-              <a href="#blog" class="wd-blog-read-more">
-                <span>Read Article</span>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-              </a>
-              <span class="wd-reading-time">5 min read</span>
-            </div>
-          </div>
-        `;
-        container.appendChild(card);
+          <h3 class="wd-featured-title">
+            <a href="#article/${encodeURIComponent(featured.id)}">${featured.title}</a>
+          </h3>
+          <p class="wd-featured-desc">${featured.excerpt}</p>
+          <a href="#article/${encodeURIComponent(featured.id)}" class="wd-btn wd-btn-primary wd-btn-sm wd-featured-read-btn" style="align-self: flex-start;">
+            <span>Read Full Article</span>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+    `;
+
+    const featuredCard = featuredSlot.querySelector(".wd-featured-article");
+    if (featuredCard) {
+      featuredCard.addEventListener("click", function(e) {
+        if (e.metaKey || e.ctrlKey || e.shiftKey) return;
+        e.preventDefault();
+        window.WorkDailyRouter.openArticle(featured.id);
       });
     }
+  };
 
-    // Related Articles Rendering for Single Post View
+  window.renderRelatedArticles = function(currentPostId) {
     const relatedGrid = document.getElementById("wd-related-grid");
-    if (relatedGrid) {
-      renderRelatedArticles(relatedGrid);
-    }
+    if (!relatedGrid) return;
 
-    function renderRelatedArticles(gridEl) {
-      const cards = document.querySelectorAll("#wd-blog-grid .wd-blog-card");
-      let count = 0;
-      cards.forEach(function(c) {
-        if (count < 3) {
-          const clone = c.cloneNode(true);
-          gridEl.appendChild(clone);
-          count++;
+    const allPosts = window.WorkDailyBlogStore.getAllPosts();
+    const relatedPosts = allPosts.filter(p => p.id !== currentPostId && p.slug !== currentPostId).slice(0, 3);
+
+    relatedGrid.innerHTML = "";
+    relatedPosts.forEach(function(post) {
+      const card = document.createElement("article");
+      card.className = "wd-blog-card";
+      card.setAttribute("data-post-id", post.id);
+
+      card.innerHTML = `
+        <div class="wd-blog-thumb">
+          <img src="${post.image}" alt="${post.title}" loading="lazy"/>
+        </div>
+        <div class="wd-blog-card-body">
+          <div class="wd-blog-meta">
+            <span class="wd-label-pill">${post.category}</span>
+            <span class="wd-blog-date">${post.publishedAt}</span>
+          </div>
+          <h3 class="wd-blog-card-title">
+            <a href="#article/${encodeURIComponent(post.id)}">${post.title}</a>
+          </h3>
+          <p class="wd-blog-snippet">${post.excerpt}</p>
+          <div class="wd-blog-card-footer">
+            <a href="#article/${encodeURIComponent(post.id)}" class="wd-blog-read-more">
+              <span>Read Article</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+            <span class="wd-reading-time">5 min read</span>
+          </div>
+        </div>
+      `;
+
+      card.addEventListener("click", function(e) {
+        if (e.metaKey || e.ctrlKey || e.shiftKey) return;
+        e.preventDefault();
+        window.WorkDailyRouter.openArticle(post.id);
+      });
+
+      relatedGrid.appendChild(card);
+    });
+  };
+
+  window.filterBlogPosts = function(category) {
+    const cards = document.querySelectorAll("#wd-blog-grid .wd-blog-card");
+    const catLower = (category || "all").toLowerCase();
+
+    cards.forEach(function(card) {
+      const cardCat = (card.getAttribute("data-post-category") || "").toLowerCase();
+      const labelsAttr = (card.getAttribute("data-post-labels") || "").toLowerCase();
+      const pills = card.querySelectorAll(".wd-label-pill");
+
+      let matches = (catLower === "all" || cardCat.includes(catLower) || labelsAttr.includes(catLower));
+
+      pills.forEach(function(pill) {
+        if (pill.textContent.toLowerCase().includes(catLower)) {
+          matches = true;
         }
       });
-    }
-  }
+
+      card.style.display = matches ? "flex" : "none";
+    });
+  };
+
 
   /* HEADER SCROLL BEHAVIOR */
   function initHeader() {
@@ -3288,7 +3970,7 @@ body {
       [
         '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>',
         '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>',
-        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>'
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 10 0 1 10 0"/><polyline points="22 4 12 14.01 9 11.01"/></svg>'
       ],
       // 03 Project
       [
@@ -3305,7 +3987,7 @@ body {
       // 05 Attendance
       [
         '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><path d="M9 16l2 2 4-4"/></svg>',
-        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>',
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 10 0 1 10 0"/><polyline points="22 4 12 14.01 9 11.01"/></svg>',
         '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>'
       ],
       // 06 Contractor
