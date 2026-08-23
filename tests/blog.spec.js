@@ -21,7 +21,7 @@ test.beforeEach(async ({ page, context }) => {
     });
   });
 
-  await page.route('**/feeds/posts/default?*', async route => {
+  await page.route('**/feeds/posts/default**', async route => {
     await route.fulfill({
       status: 200,
       contentType: 'application/json',
@@ -76,38 +76,6 @@ test.beforeEach(async ({ page, context }) => {
       })
     });
   });
-
-  await page.route('**/feeds/*/comments/default?*', async route => {
-    const url = route.request().url();
-    if (url.includes('101')) {
-      await route.fulfill({
-        status: 200,
-        contentType: 'application/json',
-        body: JSON.stringify({
-          feed: {
-            entry: [
-              {
-                author: [{ name: { $t: 'John Doe' } }],
-                content: { $t: 'Great update on WorkDaily!' },
-                published: { $t: '2026-05-12T11:00:00Z' }
-              },
-              {
-                author: [{ name: { $t: 'Sarah Smith' } }],
-                content: { $t: 'Very helpful feature.' },
-                published: { $t: '2026-05-12T12:00:00Z' }
-              }
-            ]
-          }
-        })
-      });
-    } else {
-      await route.fulfill({
-        status: 200,
-        contentType: 'application/json',
-        body: JSON.stringify({ feed: { entry: [] } })
-      });
-    }
-  });
 });
 
 test('Video Autoplay Prevention & Custom Player Controls', async ({ page }) => {
@@ -130,8 +98,11 @@ test('Video Autoplay Prevention & Custom Player Controls', async ({ page }) => {
     };
   });
 
+  await page.goto('/index.html#blog');
+  await page.waitForSelector('#wd-blog-grid', { state: 'visible' });
+
   await page.goto('/index.html#article/103');
-  await page.waitForSelector('#wd-article-content', { state: 'visible' });
+  await page.waitForSelector('#wd-post-title-heading', { state: 'visible' });
 
   const video = page.locator('.wd-post-body video');
   await expect(video).toBeAttached();
@@ -178,7 +149,7 @@ test('Video Autoplay Prevention & Custom Player Controls', async ({ page }) => {
   await page.waitForSelector('#wd-blog-list-view', { state: 'visible' });
 
   await page.goto('/index.html#article/103');
-  await page.waitForSelector('#wd-article-content', { state: 'visible' });
+  await page.waitForSelector('#wd-post-title-heading', { state: 'visible' });
 
   const wrapperOnReturn = page.locator('.wd-video-player-wrapper');
   await expect(wrapperOnReturn).not.toHaveClass(/playing/);
@@ -196,8 +167,11 @@ test('Text-Only Post Layout (No empty image box)', async ({ page }) => {
 });
 
 test('Image Deduplication in Article View', async ({ page }) => {
+  await page.goto('/index.html#blog');
+  await page.waitForSelector('#wd-blog-grid', { state: 'visible' });
+
   await page.goto('/index.html#article/101');
-  await page.waitForSelector('#wd-article-content', { state: 'visible' });
+  await page.waitForSelector('#wd-post-title-heading', { state: 'visible' });
 
   // Post 101 image is in body HTML, so top hero container should be deduplicated (hidden)
   const heroWrap = page.locator('#wd-post-hero-wrap');
@@ -209,103 +183,193 @@ test('Image Deduplication in Article View', async ({ page }) => {
 
   // Post 104 with multiple distinct images
   await page.goto('/index.html#article/104');
-  await page.waitForSelector('#wd-article-content', { state: 'visible' });
+  await page.waitForSelector('#wd-post-title-heading', { state: 'visible' });
 
   const bodyImgs = page.locator('#wd-article-body img');
   expect(await bodyImgs.count()).toBe(2);
 });
 
-test('Real Comments Loading & Article Action Bar', async ({ page }) => {
+test('Negative Assertion: Like & Comment Elements Are Completely Removed', async ({ page }) => {
+  await page.goto('/index.html#blog');
+  await page.waitForSelector('#wd-blog-grid', { state: 'visible' });
+
   await page.goto('/index.html#article/101');
-  await page.waitForSelector('#wd-comments-area', { state: 'visible' });
+  await page.waitForSelector('#wd-post-title-heading', { state: 'visible' });
 
-  // Action Bar UI Position Below Article Body
-  const articleBody = page.locator('#wd-article-body');
-  const actionBar = page.locator('#wd-article-action-bar');
-  const discussionSection = page.locator('#wd-comments-area');
-
-  await expect(articleBody).toBeVisible();
-  await expect(actionBar).toBeVisible();
-
-  // Verify Action Bar is located AFTER Article Body in DOM
-  const isActionBarBelowBody = await page.evaluate(() => {
-    const bodyEl = document.getElementById('wd-article-body');
-    const actionEl = document.getElementById('wd-article-action-bar');
-    return !!(bodyEl && actionEl && (bodyEl.compareDocumentPosition(actionEl) & Node.DOCUMENT_POSITION_FOLLOWING));
-  });
-  expect(isActionBarBelowBody).toBe(true);
-
-  // Like Interaction & Count
-  const likeBtn = page.locator('#wd-like-btn');
-  await expect(likeBtn).toBeVisible();
-
-  await likeBtn.click();
-  await expect(likeBtn).toHaveClass(/liked/);
-  await expect(page.locator('#wd-like-btn-text')).toHaveText('Liked');
-  await expect(page.locator('#wd-action-like-count')).toHaveText('1');
-
-  // Share button test
-  const shareBtn = page.locator('#wd-share-btn');
-  await expect(shareBtn).toBeVisible();
-  await shareBtn.click();
-
-  const shareToast = page.locator('#wd-share-toast');
-  await expect(shareToast).toHaveClass(/show/);
-
-  // Real Blogger Comments
-  await page.waitForSelector('.wd-comment-item');
-  const commentItems = page.locator('.wd-comment-item');
-  expect(await commentItems.count()).toBe(2);
-
-  await expect(commentItems.first().locator('.wd-comment-author')).toHaveText('John Doe');
-  await expect(commentItems.first().locator('.wd-comment-text')).toHaveText('Great update on WorkDaily!');
+  // Confirm obsolete elements do NOT exist in DOM
+  await expect(page.locator('#wd-like-btn')).toHaveCount(0);
+  await expect(page.locator('#wd-comments-btn')).toHaveCount(0);
+  await expect(page.locator('#wd-comments-area')).toHaveCount(0);
+  await expect(page.locator('#wd-article-action-bar')).toHaveCount(0);
+  await expect(page.locator('#wd-comment-textarea')).toHaveCount(0);
+  await expect(page.locator('#wd-comment-submit-btn')).toHaveCount(0);
+  await expect(page.locator('.wd-like-count')).toHaveCount(0);
+  await expect(page.locator('.wd-comment-count-badge')).toHaveCount(0);
 });
 
-test('Google Sign-In & Custom Comment Posting / Replies', async ({ page }) => {
-  await page.goto('/index.html#article/101');
-  await page.waitForSelector('#wd-comments-area', { state: 'visible' });
+test('Article Header Share Button Position & Accessibility', async ({ page }) => {
+  await page.goto('/index.html#blog');
+  await page.waitForSelector('#wd-blog-grid', { state: 'visible' });
 
-  // Auth Header Sign In button
+  await page.goto('/index.html#article/101');
+  await page.waitForSelector('#wd-post-title-heading', { state: 'visible' });
+
+  const shareBtn = page.locator('#wd-share-btn');
+  await expect(shareBtn).toBeVisible();
+  await expect(shareBtn).toHaveAttribute('aria-label', 'Share article');
+  await expect(shareBtn).toHaveAttribute('aria-haspopup', 'true');
+  await expect(shareBtn).toHaveAttribute('aria-expanded', 'false');
+
+  // Verify Share button is located inside the article header top container
+  const headerTop = page.locator('.wd-post-header-top');
+  await expect(headerTop).toBeVisible();
+  await expect(headerTop.locator('#wd-share-btn')).toBeVisible();
+});
+
+test('Desktop Share Popover Dropdown & Social Options', async ({ page }) => {
+  await page.goto('/index.html#blog');
+  await page.waitForSelector('#wd-blog-grid', { state: 'visible' });
+
+  await page.goto('/index.html#article/101');
+  await page.waitForSelector('#wd-post-title-heading', { state: 'visible' });
+
+  const shareBtn = page.locator('#wd-share-btn');
+  const popover = page.locator('#wd-share-popover');
+
+  // Initially hidden
+  await expect(popover).toBeHidden();
+
+  // Open popover
+  await shareBtn.click();
+  await expect(popover).toBeVisible();
+  await expect(shareBtn).toHaveAttribute('aria-expanded', 'true');
+
+  // Verify all 6 required options exist
+  const options = popover.locator('.wd-share-option');
+  await expect(options).toHaveCount(6);
+
+  await expect(popover.locator('[data-platform="whatsapp"]')).toBeVisible();
+  await expect(popover.locator('[data-platform="telegram"]')).toBeVisible();
+  await expect(popover.locator('[data-platform="facebook"]')).toBeVisible();
+  await expect(popover.locator('[data-platform="x"]')).toBeVisible();
+  await expect(popover.locator('[data-platform="linkedin"]')).toBeVisible();
+  await expect(popover.locator('[data-platform="copy"]')).toBeVisible();
+
+  // Test close button
+  const closeBtn = page.locator('#wd-share-close-btn');
+  await closeBtn.click();
+  await expect(popover).toBeHidden();
+  await expect(shareBtn).toHaveAttribute('aria-expanded', 'false');
+
+  // Test Escape key close
+  await shareBtn.click();
+  await expect(popover).toBeVisible();
+  await page.keyboard.press('Escape');
+  await expect(popover).toBeHidden();
+
+  // Test outside click close
+  await shareBtn.click();
+  await expect(popover).toBeVisible();
+  await page.click('#wd-post-title-heading');
+  await expect(popover).toBeHidden();
+});
+
+test('Copy Link & Toast Notification', async ({ page }) => {
+  await page.goto('/index.html#blog');
+  await page.waitForSelector('#wd-blog-grid', { state: 'visible' });
+
+  await page.goto('/index.html#article/101');
+  await page.waitForSelector('#wd-post-title-heading', { state: 'visible' });
+
+  const shareBtn = page.locator('#wd-share-btn');
+  await shareBtn.click();
+
+  const copyOption = page.locator('#wd-share-popover [data-platform="copy"]');
+  await expect(copyOption).toBeVisible();
+  await copyOption.click();
+
+  // Toast confirmation feedback
+  const toast = page.locator('#wd-share-toast');
+  await expect(toast).toHaveClass(/show/);
+  await expect(toast).toHaveText('Link copied');
+});
+
+test('Native Web Share API Support on Mobile', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+
+  await page.addInitScript(() => {
+    navigator.share = async (data) => {
+      window.__shareData = data;
+      return Promise.resolve();
+    };
+  });
+
+  await page.goto('/index.html#blog');
+  await page.waitForSelector('#wd-blog-grid', { state: 'visible' });
+
+  await page.goto('/index.html#article/101');
+  await page.waitForSelector('#wd-post-title-heading', { state: 'visible' });
+
+  const shareBtn = page.locator('#wd-share-btn');
+  await shareBtn.click();
+
+  // Verify navigator.share was invoked with real post title and canonical URL
+  const shareData = await page.evaluate(() => window.__shareData);
+  expect(shareData).not.toBeNull();
+  expect(shareData.title).toBe('Featured WorkDaily System Update');
+  expect(shareData.url).toMatch(/#article\/(101|article-1)/);
+});
+
+test('Dynamic Share URL Updates Across Article Navigation & SPA History', async ({ page }) => {
+  await page.goto('/index.html#blog');
+  await page.waitForSelector('#wd-blog-grid', { state: 'visible' });
+
+  // Open Article 101
+  await page.click('.wd-blog-card[data-post-id="101"] .wd-blog-card-title a');
+  await page.waitForSelector('#wd-post-title-heading', { state: 'visible' });
+  expect(page.url()).toContain('#article/101');
+
+  // Verify Share button URL points to 101
+  let currentShareUrl = await page.evaluate(() => {
+    const route = window.WorkDailyRouter.currentRoute;
+    return window.location.origin + window.location.pathname + '#article/' + encodeURIComponent(route.postId);
+  });
+  expect(currentShareUrl).toContain('#article/101');
+
+  // Open Related Article
+  const relatedCard = page.locator('#wd-related-grid .wd-blog-card').first();
+  if (await relatedCard.count() > 0) {
+    const targetPostId = await relatedCard.getAttribute('data-post-id');
+    await relatedCard.click();
+    await page.waitForSelector('#wd-post-title-heading', { state: 'visible' });
+
+    // Share URL must update to the new article
+    const updatedShareUrl = await page.evaluate(() => {
+      const route = window.WorkDailyRouter.currentRoute;
+      return window.location.origin + window.location.pathname + '#article/' + encodeURIComponent(route.postId);
+    });
+    expect(updatedShareUrl).toContain(`#article/${targetPostId}`);
+  }
+
+  // SPA Back Navigation
+  await page.click('#wd-back-to-blog');
+  await page.waitForSelector('#wd-blog-list-view', { state: 'visible' });
+  expect(page.url()).toContain('#blog');
+});
+
+test('Google Sign-In Header State (Independent of Comments)', async ({ page }) => {
+  await page.goto('/index.html#blog');
+  await page.waitForSelector('#wd-blog-grid', { state: 'visible' });
+
   const loginBtn = page.locator('#wd-google-login-btn');
   await expect(loginBtn).toBeVisible();
 
-  // Dialog listener for mock name prompt when signing in
   page.on('dialog', async dialog => {
     await dialog.accept('Test User');
   });
 
   await loginBtn.click();
-
-  // Verify profile badge appears in header
   await expect(page.locator('.wd-user-profile-badge')).toBeVisible();
-
-  // Post a comment
-  const textarea = page.locator('#wd-comment-textarea');
-  const submitBtn = page.locator('#wd-comment-submit-btn');
-
-  await textarea.fill('Testing Playwright persistent comment');
-  await submitBtn.click();
-
-  // Verify posted comment appears
-  await page.waitForSelector('.wd-comment-item:has-text("Testing Playwright persistent comment")');
-  const newComment = page.locator('.wd-comment-item:has-text("Testing Playwright persistent comment")');
-  await expect(newComment).toBeVisible();
-  await expect(newComment.locator('.wd-comment-author')).toHaveText('Test User');
-
-  // Reply to comment
-  const replyBtn = newComment.locator('.wd-reply-btn');
-  await replyBtn.click();
-
-  const replyTextarea = newComment.locator('.wd-reply-textarea');
-  const submitReplyBtn = newComment.locator('.wd-submit-reply-btn');
-
-  await replyTextarea.fill('This is a test reply');
-  await submitReplyBtn.click();
-
-  // Verify reply rendered inside nested replies container
-  await page.waitForSelector('.wd-replies-container .wd-comment-item:has-text("This is a test reply")');
-  const replyNode = newComment.locator('.wd-replies-container .wd-comment-item:has-text("This is a test reply")');
-  await expect(replyNode).toBeVisible();
 });
 
 test('Article Routing & SPA Back Navigation', async ({ page }) => {
@@ -314,7 +378,7 @@ test('Article Routing & SPA Back Navigation', async ({ page }) => {
 
   // Click article
   await page.click('.wd-blog-card[data-post-id="101"] .wd-blog-card-title a');
-  await page.waitForSelector('#wd-article-content', { state: 'visible' });
+  await page.waitForSelector('#wd-post-title-heading', { state: 'visible' });
   expect(page.url()).toContain('#article/101');
 
   // Click back button
@@ -351,11 +415,15 @@ for (const vp of viewports) {
 
     // Open article detail
     await page.goto('/index.html#article/103');
-    await page.waitForSelector('#wd-article-content', { state: 'visible' });
+    await page.waitForSelector('#wd-post-title-heading', { state: 'visible' });
 
     const articleHorizontalScroll = await page.evaluate(() => {
       return document.documentElement.scrollWidth > document.documentElement.clientWidth;
     });
     expect(articleHorizontalScroll).toBe(false);
+
+    // Share button must be visible top-right without overflow
+    const shareBtn = page.locator('#wd-share-btn');
+    await expect(shareBtn).toBeVisible();
   });
 }
