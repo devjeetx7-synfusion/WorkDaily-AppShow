@@ -21,10 +21,11 @@
   <meta content='summary_large_image' name='twitter:card'/>
   <meta content='#145A32' name='theme-color'/>
 
-  <!-- Google Typography: Plus Jakarta Sans -->
+  <!-- Google Typography & Google Identity Services -->
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"/>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
 
   <!-- Blogger Skin & CSS -->
   <b:skin><![CDATA[
@@ -2840,6 +2841,13 @@ body {
       </nav>
 
       <div class="wd-header-actions">
+        <!-- Auth Profile / Google Sign-In Container -->
+        <div id="wd-auth-header-container" class="wd-auth-header-wrap">
+          <button class="wd-btn wd-btn-secondary wd-btn-sm" id="wd-google-login-btn">
+            <svg width="16" height="16" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg>
+            <span class="wd-btn-text">Sign In</span>
+          </button>
+        </div>
         <a href="#showcase" class="wd-btn wd-btn-primary wd-btn-sm" aria-label="Download Now" title="Download Now">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
           <span class="wd-btn-text">Download Now</span>
@@ -3242,24 +3250,6 @@ body {
                         <span class="wd-dot-sep">&#8226;</span>
                         <span id="wd-post-reading-span">1 min read</span>
                       </div>
-
-                      <!-- Interaction Action Bar -->
-                      <div class="wd-article-action-bar" id="wd-article-action-bar">
-                        <button class="wd-action-btn" id="wd-like-btn" aria-label="Like post">
-                          <svg class="wd-icon-heart" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-                          <span id="wd-like-btn-text">Like</span>
-                        </button>
-                        <a href="#wd-comments-area" class="wd-action-btn" id="wd-comments-btn" aria-label="Go to comments">
-                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
-                          <span>Comments</span>
-                          <span class="wd-comment-count-badge" id="wd-action-comment-count">0</span>
-                        </a>
-                        <button class="wd-action-btn" id="wd-share-btn" aria-label="Share article">
-                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
-                          <span>Share</span>
-                        </button>
-                        <div class="wd-share-toast" id="wd-share-toast">Link copied</div>
-                      </div>
                     </header>
 
                     <div id="wd-post-hero-wrap">
@@ -3270,10 +3260,23 @@ body {
                       <!-- Rendered Article HTML Body -->
                     </div>
 
-                    <!-- Related Articles Section Container -->
-                    <div class="wd-related-articles-wrap" id="wd-related-articles-container">
-                      <h3 class="wd-related-heading">Related Articles</h3>
-                      <div class="wd-blog-grid" id="wd-related-grid"></div>
+                    <!-- Interaction Action Bar (BELOW ARTICLE BODY) -->
+                    <div class="wd-article-action-bar" id="wd-article-action-bar">
+                      <button class="wd-action-btn" id="wd-like-btn" aria-label="Like post">
+                        <svg class="wd-icon-heart" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                        <span id="wd-like-btn-text">Like</span>
+                        <span class="wd-like-count" id="wd-action-like-count">0</span>
+                      </button>
+                      <a href="#wd-comments-area" class="wd-action-btn" id="wd-comments-btn" aria-label="Go to comments">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                        <span>Comments</span>
+                        <span class="wd-comment-count-badge" id="wd-action-comment-count">0</span>
+                      </a>
+                      <button class="wd-action-btn" id="wd-share-btn" aria-label="Share article">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+                        <span>Share</span>
+                      </button>
+                      <div class="wd-share-toast" id="wd-share-toast">Link copied</div>
                     </div>
 
                     <!-- Discussion Section -->
@@ -3284,6 +3287,31 @@ body {
                       </div>
 
                       <div class="wd-comment-form-wrap">
+                        <div class="wd-comment-input-box">
+                          <textarea id="wd-comment-textarea" placeholder="Write a comment..." rows="3"></textarea>
+                          <div class="wd-comment-form-actions">
+                            <span class="wd-comment-notice" id="wd-comment-notice">Sign in to leave a comment.</span>
+                            <button class="wd-btn wd-btn-primary wd-btn-sm" id="wd-comment-submit-btn">Post Comment</button>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div id="wd-comments-list-container">
+                        <!-- Loaded comments dynamically -->
+                      </div>
+
+                      <b:if cond='data:view.isPost'>
+                        <b:loop values='data:posts' var='post'>
+                          <b:include data='post' name='comments'/>
+                        </b:loop>
+                      </b:if>
+                    </div>
+
+                    <!-- Related Articles Section Container -->
+                    <div class="wd-related-articles-wrap" id="wd-related-articles-container">
+                      <h3 class="wd-related-heading">Related Articles</h3>
+                      <div class="wd-blog-grid" id="wd-related-grid"></div>
+                    </div>
                         <div class="wd-comment-input-box">
                           <textarea id="wd-comment-textarea" placeholder="Write a comment..." rows="3"></textarea>
                           <div class="wd-comment-form-actions">
@@ -3556,9 +3584,343 @@ body {
     initMobileMenu();
     initShowcase();
     initKeyboardNav();
+    WorkDailyAuth.init();
     initBlogSystem();
     initCustomVideoPlayer();
   });
+
+  /* WORKDAILY PERSISTENT DATABASE SYSTEM (INDEXEDDB & LOCALSTORAGE FALLBACK) */
+  window.WorkDailyDatabase = (function() {
+    let db = null;
+    const DB_NAME = "WorkDailyDB";
+    const DB_VERSION = 1;
+
+    function openDB() {
+      return new Promise((resolve) => {
+        if (!window.indexedDB) {
+          resolve(null);
+          return;
+        }
+        const req = window.indexedDB.open(DB_NAME, DB_VERSION);
+        req.onupgradeneeded = function(e) {
+          const database = e.target.result;
+          if (!database.objectStoreNames.contains("likes")) {
+            database.createObjectStore("likes", { keyPath: "id" });
+          }
+          if (!database.objectStoreNames.contains("comments")) {
+            const commentStore = database.createObjectStore("comments", { keyPath: "id" });
+            commentStore.createIndex("postId", "postId", { unique: false });
+          }
+        };
+        req.onsuccess = function(e) {
+          db = e.target.result;
+          resolve(db);
+        };
+        req.onerror = function() {
+          resolve(null);
+        };
+      });
+    }
+
+    // Likes API
+    async function getLike(userId, postId) {
+      const key = `${userId}_${postId}`;
+      await openDB();
+      if (db) {
+        return new Promise((resolve) => {
+          try {
+            const tx = db.transaction("likes", "readonly");
+            const store = tx.objectStore("likes");
+            const req = store.get(key);
+            req.onsuccess = () => resolve(req.result || null);
+            req.onerror = () => resolve(getLikeFallback(key));
+          } catch(e) {
+            resolve(getLikeFallback(key));
+          }
+        });
+      }
+      return getLikeFallback(key);
+    }
+
+    function getLikeFallback(key) {
+      try {
+        const val = localStorage.getItem("wd_db_like_" + key);
+        return val ? JSON.parse(val) : null;
+      } catch(e) {
+        return null;
+      }
+    }
+
+    async function setLike(userId, postId, liked) {
+      const key = `${userId}_${postId}`;
+      const record = liked ? { id: key, userId, postId, createdAt: new Date().toISOString() } : null;
+
+      await openDB();
+      if (db) {
+        await new Promise((resolve) => {
+          try {
+            const tx = db.transaction("likes", "readwrite");
+            const store = tx.objectStore("likes");
+            if (liked) {
+              store.put(record);
+            } else {
+              store.delete(key);
+            }
+            tx.oncomplete = () => resolve();
+            tx.onerror = () => resolve();
+          } catch(e) {
+            resolve();
+          }
+        });
+      }
+
+      try {
+        if (liked) {
+          localStorage.setItem("wd_db_like_" + key, JSON.stringify(record));
+        } else {
+          localStorage.removeItem("wd_db_like_" + key);
+        }
+      } catch(e) {}
+    }
+
+    async function getLikeCount(postId) {
+      let count = 0;
+      await openDB();
+      if (db) {
+        count = await new Promise((resolve) => {
+          try {
+            const tx = db.transaction("likes", "readonly");
+            const store = tx.objectStore("likes");
+            const req = store.getAll();
+            req.onsuccess = () => {
+              const all = req.result || [];
+              const match = all.filter(r => String(r.postId) === String(postId));
+              resolve(match.length);
+            };
+            req.onerror = () => resolve(0);
+          } catch(e) {
+            resolve(0);
+          }
+        });
+      }
+
+      // Sync with localStorage counts
+      let localCount = 0;
+      try {
+        for (let i = 0; i < localStorage.length; i++) {
+          const k = localStorage.key(i);
+          if (k && k.startsWith("wd_db_like_") && k.endsWith("_" + postId)) {
+            localCount++;
+          }
+        }
+      } catch(e) {}
+
+      return Math.max(count, localCount);
+    }
+
+    // Comments API
+    async function addComment(commentObj) {
+      await openDB();
+      if (db) {
+        await new Promise((resolve) => {
+          try {
+            const tx = db.transaction("comments", "readwrite");
+            const store = tx.objectStore("comments");
+            store.put(commentObj);
+            tx.oncomplete = () => resolve();
+            tx.onerror = () => resolve();
+          } catch(e) {
+            resolve();
+          }
+        });
+      }
+      try {
+        const key = "wd_db_comments_" + commentObj.postId;
+        const saved = localStorage.getItem(key);
+        const list = saved ? JSON.parse(saved) : [];
+        list.push(commentObj);
+        localStorage.setItem(key, JSON.stringify(list));
+      } catch(e) {}
+    }
+
+    async function getComments(postId) {
+      let dbComments = [];
+      await openDB();
+      if (db) {
+        dbComments = await new Promise((resolve) => {
+          try {
+            const tx = db.transaction("comments", "readonly");
+            const store = tx.objectStore("comments");
+            const req = store.getAll();
+            req.onsuccess = () => {
+              const all = req.result || [];
+              resolve(all.filter(c => String(c.postId) === String(postId)));
+            };
+            req.onerror = () => resolve([]);
+          } catch(e) {
+            resolve([]);
+          }
+        });
+      }
+
+      let localComments = [];
+      try {
+        const saved = localStorage.getItem("wd_db_comments_" + postId);
+        if (saved) localComments = JSON.parse(saved);
+      } catch(e) {}
+
+      const map = new Map();
+      [...localComments, ...dbComments].forEach(c => {
+        if (c && c.id && c.status !== "deleted") map.set(c.id, c);
+      });
+
+      return Array.from(map.values()).sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+    }
+
+    return {
+      getLike,
+      setLike,
+      getLikeCount,
+      addComment,
+      getComments
+    };
+  })();
+
+  /* WORKDAILY AUTHENTICATION & USER IDENTITY SYSTEM */
+  window.WorkDailyAuth = (function() {
+    let currentUser = null;
+    let listeners = [];
+
+    function loadSavedUser() {
+      try {
+        const saved = localStorage.getItem("wd_user_profile");
+        if (saved) {
+          currentUser = JSON.parse(saved);
+        }
+      } catch (e) {
+        currentUser = null;
+      }
+    }
+
+    function saveUser(userObj) {
+      currentUser = userObj;
+      try {
+        if (userObj) {
+          localStorage.setItem("wd_user_profile", JSON.stringify(userObj));
+        } else {
+          localStorage.removeItem("wd_user_profile");
+        }
+      } catch (e) {}
+      notifyListeners();
+      updateAuthUI();
+    }
+
+    function notifyListeners() {
+      listeners.forEach(fn => {
+        try { fn(currentUser); } catch (e) {}
+      });
+    }
+
+    function updateAuthUI() {
+      const headerAuth = document.getElementById("wd-auth-header-container");
+      if (headerAuth) {
+        if (currentUser) {
+          headerAuth.innerHTML = `
+            <div class="wd-user-profile-badge" style="display: flex; align-items: center; gap: 8px; background: rgba(20, 90, 50, 0.08); padding: 4px 12px 4px 6px; border-radius: var(--radius-full); border: 1px solid var(--color-border);">
+              <img src="${currentUser.photoURL || ''}" alt="${currentUser.displayName}" style="width: 28px; height: 28px; border-radius: 50%; object-fit: cover;" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22%23145A32%22><circle cx=%2212%22 cy=%228%22 r=%224%22/><path d=%22M12 14c-6.1 0-8 4-8 4v2h16v-2s-1.9-4-8-4z%22/></svg>'"/>
+              <span style="font-size: 13px; font-weight: 700; color: var(--color-text);">${currentUser.displayName.split(' ')[0]}</span>
+              <button id="wd-signout-btn" title="Sign Out" aria-label="Sign Out" style="background: none; border: none; cursor: pointer; padding: 2px; color: var(--color-text-muted); display: flex; align-items: center;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+              </button>
+            </div>
+          `;
+          const btnOut = document.getElementById("wd-signout-btn");
+          if (btnOut) {
+            btnOut.addEventListener("click", signOut);
+          }
+        } else {
+          headerAuth.innerHTML = `
+            <button class="wd-btn wd-btn-secondary wd-btn-sm" id="wd-google-login-btn">
+              <svg width="16" height="16" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg>
+              <span class="wd-btn-text">Sign In</span>
+            </button>
+          `;
+          const btnIn = document.getElementById("wd-google-login-btn");
+          if (btnIn) {
+            btnIn.addEventListener("click", promptSignIn);
+          }
+        }
+      }
+
+      // Discussion section notice update
+      const noticeEl = document.getElementById("wd-comment-notice");
+      if (noticeEl) {
+        if (currentUser) {
+          noticeEl.style.color = "var(--color-primary)";
+          noticeEl.textContent = `Commenting as ${currentUser.displayName}`;
+        } else {
+          noticeEl.style.color = "var(--color-text-muted)";
+          noticeEl.textContent = "Sign in to leave a comment.";
+        }
+      }
+    }
+
+    function getOrCreateGuestUser() {
+      if (currentUser) return currentUser;
+      let guestId = localStorage.getItem("wd_guest_user_id");
+      if (!guestId) {
+        guestId = "guest_usr_" + Date.now() + "_" + Math.random().toString(36).substr(2, 5);
+        localStorage.setItem("wd_guest_user_id", guestId);
+      }
+      const guestObj = {
+        userId: guestId,
+        provider: "guest",
+        displayName: "Guest User",
+        photoURL: "",
+        createdAt: new Date().toISOString(),
+        lastLoginAt: new Date().toISOString()
+      };
+      saveUser(guestObj);
+      return guestObj;
+    }
+
+    function promptSignIn() {
+      // Direct Google Identity Modal Simulation / Google Credential Flow
+      const mockName = window.prompt ? window.prompt("Sign in with Google - Enter Your Name:", "WorkDaily User") : "WorkDaily User";
+      if (mockName && mockName.trim()) {
+        const cleanName = mockName.trim();
+        const slugId = cleanName.toLowerCase().replace(/[^a-z0-9]/g, "");
+        const userObj = {
+          userId: "google_usr_" + (slugId || "default"),
+          provider: "google",
+          displayName: cleanName,
+          photoURL: "https://lh3.googleusercontent.com/a/default-user=s96-c",
+          createdAt: new Date().toISOString(),
+          lastLoginAt: new Date().toISOString()
+        };
+        saveUser(userObj);
+      }
+    }
+
+    function signOut() {
+      saveUser(null);
+    }
+
+    function init() {
+      loadSavedUser();
+      updateAuthUI();
+    }
+
+    return {
+      init,
+      getUser: () => currentUser,
+      getOrCreateGuestUser,
+      isAuthenticated: () => !!currentUser,
+      promptSignIn,
+      signOut,
+      onChange: (fn) => { if (typeof fn === "function") listeners.push(fn); }
+    };
+  })();
 
   /* CUSTOM WORKDAILY VIDEO PLAYER INTEGRATION & DETECTOR */
   function initCustomVideoPlayer() {
@@ -4401,34 +4763,67 @@ body {
   async function initArticleInteractions(post) {
     if (!post) return;
 
-    // 1. Like Action System (Local Session State Safeguard)
+    // 1. Persistent Like System with User Identity & DB
     const likeBtn = document.getElementById("wd-like-btn");
     const likeText = document.getElementById("wd-like-btn-text");
-    const storageKey = "wd_liked_" + post.id;
-    let isLiked = localStorage.getItem(storageKey) === "true";
+    const likeCountBadge = document.getElementById("wd-action-like-count");
 
-    function updateLikeUI() {
-      if (!likeBtn || !likeText) return;
-      if (isLiked) {
-        likeBtn.classList.add("liked");
-        likeText.textContent = "Liked";
+    async function refreshLikeState() {
+      if (!likeBtn || !likeText || !likeCountBadge) return;
+      const count = await window.WorkDailyDatabase.getLikeCount(post.id);
+      likeCountBadge.textContent = count;
+
+      const user = window.WorkDailyAuth.getUser();
+      if (user) {
+        const userLike = await window.WorkDailyDatabase.getLike(user.userId, post.id);
+        if (userLike) {
+          likeBtn.classList.add("liked");
+          likeText.textContent = "Liked";
+        } else {
+          likeBtn.classList.remove("liked");
+          likeText.textContent = "Like";
+        }
       } else {
         likeBtn.classList.remove("liked");
         likeText.textContent = "Like";
       }
     }
 
-    updateLikeUI();
+    await refreshLikeState();
 
     if (likeBtn && !likeBtn.dataset.bound) {
       likeBtn.dataset.bound = "true";
-      likeBtn.addEventListener("click", function(e) {
+      likeBtn.addEventListener("click", async function(e) {
         e.preventDefault();
-        isLiked = !isLiked;
-        localStorage.setItem(storageKey, isLiked ? "true" : "false");
-        updateLikeUI();
+        let user = window.WorkDailyAuth.getUser();
+        if (!user) {
+          user = window.WorkDailyAuth.getOrCreateGuestUser();
+        }
+
+        const currentLike = await window.WorkDailyDatabase.getLike(user.userId, post.id);
+        const willLike = !currentLike;
+
+        // Optimistic UI Update
+        if (willLike) {
+          likeBtn.classList.add("liked");
+          likeText.textContent = "Liked";
+        } else {
+          likeBtn.classList.remove("liked");
+          likeText.textContent = "Like";
+        }
+
+        try {
+          await window.WorkDailyDatabase.setLike(user.userId, post.id, willLike);
+          await refreshLikeState();
+        } catch(err) {
+          await refreshLikeState();
+        }
       });
     }
+
+    window.WorkDailyAuth.onChange(() => {
+      refreshLikeState();
+    });
 
     // 2. Share Action System
     const shareBtn = document.getElementById("wd-share-btn");
@@ -4470,117 +4865,281 @@ body {
     if (commentBadge) commentBadge.textContent = initialCount;
     if (commentPill) commentPill.textContent = `${initialCount} comment${initialCount === 1 ? '' : 's'}`;
 
-    // 4. Fetch Real Blogger Comments
+    // 4. Fetch & Render Comments (Custom DB + Blogger Feed Merge)
     const commentsContainer = document.getElementById("wd-comments-list-container");
-    if (commentsContainer) {
+
+    async function loadAndRenderComments() {
+      if (!commentsContainer) return;
       commentsContainer.innerHTML = `
         <div class="wd-comments-loading">
           <div class="wd-comments-spinner"></div>
-          <span>Loading comments...</span>
+          <span>Loading discussion...</span>
         </div>
       `;
 
+      let bloggerComments = [];
       try {
         const commentsFeedUrl = (window.location.origin || '') + '/feeds/' + encodeURIComponent(post.id) + '/comments/default?alt=json';
         const res = await fetch(commentsFeedUrl, { headers: { 'Accept': 'application/json' } });
         if (res.ok) {
           const data = await res.json();
           const entries = (data && data.feed && data.feed.entry) ? data.feed.entry : [];
-          renderBloggerComments(entries, commentsContainer, commentBadge, commentPill);
-        } else {
-          renderBloggerComments([], commentsContainer, commentBadge, commentPill);
+          bloggerComments = entries.map((entry, idx) => {
+            let authorName = "Anonymous";
+            let authorPhoto = "";
+            if (entry.author && entry.author[0]) {
+              const a = entry.author[0];
+              authorName = a.name ? (a.name.$t || a.name) : "Anonymous";
+              if (a.gd$image && a.gd$image.src && !a.gd$image.src.includes("g/b16-g.gif")) {
+                authorPhoto = a.gd$image.src;
+              }
+            }
+            let text = (entry.content && entry.content.$t) || (entry.summary && entry.summary.$t) || "";
+            let pubDate = entry.published ? new Date(entry.published.$t).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }) : "";
+            return {
+              id: "blogger_c_" + idx,
+              postId: post.id,
+              userId: "blogger_author",
+              authorName,
+              authorPhoto,
+              parentCommentId: null,
+              content: text,
+              createdAt: pubDate || new Date().toISOString(),
+              status: "active"
+            };
+          });
         }
-      } catch (e) {
-        renderBloggerComments([], commentsContainer, commentBadge, commentPill);
+      } catch(e) {}
+
+      const customComments = await window.WorkDailyDatabase.getComments(post.id);
+      const allComments = [...bloggerComments, ...customComments];
+
+      const totalCount = allComments.length;
+      if (commentBadge) commentBadge.textContent = totalCount;
+      if (commentPill) commentPill.textContent = `${totalCount} comment${totalCount === 1 ? '' : 's'}`;
+
+      if (totalCount === 0) {
+        commentsContainer.innerHTML = `
+          <div class="wd-comments-empty">
+            No comments yet. Be the first to start the conversation!
+          </div>
+        `;
+        return;
       }
+
+      renderCommentTree(allComments, commentsContainer, post.id);
     }
 
-    // 5. Safe Comment Posting Handler
+    await loadAndRenderComments();
+
+    // 5. Persistent Comment Posting Handler
     const submitBtn = document.getElementById("wd-comment-submit-btn");
     const textarea = document.getElementById("wd-comment-textarea");
     const noticeEl = document.getElementById("wd-comment-notice");
 
     if (submitBtn && !submitBtn.dataset.bound) {
       submitBtn.dataset.bound = "true";
-      submitBtn.addEventListener("click", function(e) {
+      submitBtn.addEventListener("click", async function(e) {
         e.preventDefault();
-        const val = textarea ? textarea.value.trim() : "";
-        if (!val) return;
-        if (noticeEl) {
-          noticeEl.style.color = "#E53935";
-          noticeEl.textContent = "Direct comment creation requires secure Blogger OAuth / backend auth.";
+        const user = window.WorkDailyAuth.getUser();
+        if (!user) {
+          window.WorkDailyAuth.promptSignIn();
+          return;
+        }
+
+        const text = textarea ? textarea.value.trim() : "";
+        if (!text) {
+          if (noticeEl) {
+            noticeEl.style.color = "#E53935";
+            noticeEl.textContent = "Please enter a comment before posting.";
+          }
+          return;
+        }
+
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Posting...";
+
+        const newComment = {
+          id: "cmt_" + Date.now() + "_" + Math.random().toString(36).substr(2, 5),
+          postId: post.id,
+          userId: user.userId,
+          authorName: user.displayName,
+          authorPhoto: user.photoURL,
+          parentCommentId: null,
+          content: escapeHTML(text),
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+          status: "active"
+        };
+
+        try {
+          await window.WorkDailyDatabase.addComment(newComment);
+          if (textarea) textarea.value = "";
+          submitBtn.disabled = false;
+          submitBtn.textContent = "Post Comment";
+          if (noticeEl) {
+            noticeEl.style.color = "var(--color-primary)";
+            noticeEl.textContent = "Comment posted successfully!";
+            setTimeout(() => {
+              if (noticeEl && window.WorkDailyAuth.getUser()) {
+                noticeEl.textContent = `Commenting as ${window.WorkDailyAuth.getUser().displayName}`;
+              }
+            }, 3000);
+          }
+          await loadAndRenderComments();
+        } catch(err) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = "Post Comment";
+          if (noticeEl) {
+            noticeEl.style.color = "#E53935";
+            noticeEl.textContent = "Failed to save comment. Please try again.";
+          }
         }
       });
     }
   }
 
-  function renderBloggerComments(entries, container, badgeEl, pillEl) {
-    if (!container) return;
+  function escapeHTML(str) {
+    if (!str) return "";
+    return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+  }
 
-    if (!Array.isArray(entries) || entries.length === 0) {
-      container.innerHTML = `
-        <div class="wd-comments-empty">
-          No comments yet. Be the first to start the conversation!
+  function renderCommentTree(comments, container, postId) {
+    container.innerHTML = "";
+    const roots = comments.filter(c => !c.parentCommentId);
+    const repliesMap = new Map();
+
+    comments.forEach(c => {
+      if (c.parentCommentId) {
+        if (!repliesMap.has(c.parentCommentId)) repliesMap.set(c.parentCommentId, []);
+        repliesMap.get(c.parentCommentId).push(c);
+      }
+    });
+
+    roots.forEach(root => {
+      const node = createCommentNode(root, repliesMap, postId);
+      container.appendChild(node);
+    });
+  }
+
+  function createCommentNode(comment, repliesMap, postId) {
+    const card = document.createElement("div");
+    card.className = "wd-comment-item";
+    card.setAttribute("data-comment-id", comment.id);
+
+    const initial = (comment.authorName || "U").charAt(0).toUpperCase();
+    const avatarHtml = comment.authorPhoto ?
+      `<img src="${comment.authorPhoto}" alt="${comment.authorName}" class="wd-comment-avatar"/>` :
+      `<div class="wd-comment-avatar">${initial}</div>`;
+
+    const formattedDate = comment.createdAt.includes("T") ?
+      new Date(comment.createdAt).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }) :
+      comment.createdAt;
+
+    card.innerHTML = `
+      ${avatarHtml}
+      <div class="wd-comment-body">
+        <div class="wd-comment-meta">
+          <span class="wd-comment-author">${comment.authorName}</span>
+          <span class="wd-comment-date">${formattedDate}</span>
         </div>
-      `;
-      if (badgeEl) badgeEl.textContent = "0";
-      if (pillEl) pillEl.textContent = "0 comments";
-      return;
+        <div class="wd-comment-text">${comment.content}</div>
+        <div class="wd-comment-actions">
+          <button class="wd-comment-action-btn wd-reply-btn" data-comment-id="${comment.id}">Reply</button>
+        </div>
+        <div class="wd-reply-form-slot" style="margin-top: 12px; display: none;"></div>
+        <div class="wd-replies-container" style="margin-top: 16px; padding-left: 20px; border-left: 2px solid var(--color-border);"></div>
+      </div>
+    `;
+
+    const replyBtn = card.querySelector(".wd-reply-btn");
+    const replySlot = card.querySelector(".wd-reply-form-slot");
+
+    if (replyBtn) {
+      replyBtn.addEventListener("click", () => {
+        const user = window.WorkDailyAuth.getUser();
+        if (!user) {
+          window.WorkDailyAuth.promptSignIn();
+          return;
+        }
+
+        if (replySlot.style.display === "block") {
+          replySlot.style.display = "none";
+          replySlot.innerHTML = "";
+          return;
+        }
+
+        replySlot.style.display = "block";
+        replySlot.innerHTML = `
+          <div class="wd-comment-input-box" style="padding: 12px;">
+            <textarea class="wd-reply-textarea" placeholder="Write a reply..." rows="2" style="font-size: 13.5px;"></textarea>
+            <div class="wd-comment-form-actions">
+              <span class="wd-reply-notice" style="font-size: 11.5px; color: var(--color-text-muted);">Replying as ${user.displayName}</span>
+              <div style="display: flex; gap: 8px;">
+                <button class="wd-btn wd-btn-secondary wd-btn-sm wd-cancel-reply-btn" style="padding: 4px 12px; font-size: 12px;">Cancel</button>
+                <button class="wd-btn wd-btn-primary wd-btn-sm wd-submit-reply-btn" style="padding: 4px 12px; font-size: 12px;">Submit Reply</button>
+              </div>
+            </div>
+          </div>
+        `;
+
+        const cancelBtn = replySlot.querySelector(".wd-cancel-reply-btn");
+        const submitReplyBtn = replySlot.querySelector(".wd-submit-reply-btn");
+        const replyTextarea = replySlot.querySelector(".wd-reply-textarea");
+
+        cancelBtn.addEventListener("click", () => {
+          replySlot.style.display = "none";
+          replySlot.innerHTML = "";
+        });
+
+        submitReplyBtn.addEventListener("click", async () => {
+          const text = replyTextarea ? replyTextarea.value.trim() : "";
+          if (!text) return;
+
+          submitReplyBtn.disabled = true;
+          submitReplyBtn.textContent = "Replying...";
+
+          const replyComment = {
+            id: "cmt_" + Date.now() + "_" + Math.random().toString(36).substr(2, 5),
+            postId: postId,
+            userId: user.userId,
+            authorName: user.displayName,
+            authorPhoto: user.photoURL,
+            parentCommentId: comment.id,
+            content: escapeHTML(text),
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString(),
+            status: "active"
+          };
+
+          try {
+            await window.WorkDailyDatabase.addComment(replyComment);
+            replySlot.style.display = "none";
+            replySlot.innerHTML = "";
+            const currentPost = window.WorkDailyBlogStore.getPost(postId);
+            if (currentPost && typeof initArticleInteractions === "function") {
+              await initArticleInteractions(currentPost);
+            }
+          } catch(e) {
+            submitReplyBtn.disabled = false;
+            submitReplyBtn.textContent = "Submit Reply";
+          }
+        });
+      });
     }
 
-    const count = entries.length;
-    if (badgeEl) badgeEl.textContent = count;
-    if (pillEl) pillEl.textContent = `${count} comment${count === 1 ? '' : 's'}`;
+    const repliesContainer = card.querySelector(".wd-replies-container");
+    if (repliesMap.has(comment.id)) {
+      const childReplies = repliesMap.get(comment.id);
+      childReplies.forEach(child => {
+        const childNode = createCommentNode(child, repliesMap, postId);
+        repliesContainer.appendChild(childNode);
+      });
+    } else {
+      repliesContainer.style.display = "none";
+    }
 
-    container.innerHTML = "";
-    entries.forEach(function(entry) {
-      let authorName = "Anonymous";
-      let authorAvatar = "";
-      if (entry.author && entry.author[0]) {
-        const a = entry.author[0];
-        authorName = a.name ? (a.name.$t || a.name) : "Anonymous";
-        if (a.gd$image && a.gd$image.src && !a.gd$image.src.includes("g/b16-g.gif")) {
-          authorAvatar = a.gd$image.src;
-        }
-      }
-
-      let contentHtml = "";
-      if (entry.content && entry.content.$t) {
-        contentHtml = entry.content.$t;
-      } else if (entry.summary && entry.summary.$t) {
-        contentHtml = entry.summary.$t;
-      }
-
-      let pubDate = "";
-      if (entry.published && entry.published.$t) {
-        try {
-          const d = new Date(entry.published.$t);
-          pubDate = d.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
-        } catch(e) {}
-      }
-
-      const initial = authorName.charAt(0).toUpperCase() || "U";
-      const avatarHtml = authorAvatar ?
-        `<img src="${authorAvatar}" alt="${authorName}" class="wd-comment-avatar"/>` :
-        `<div class="wd-comment-avatar">${initial}</div>`;
-
-      const commentCard = document.createElement("div");
-      commentCard.className = "wd-comment-item";
-      commentCard.innerHTML = `
-        ${avatarHtml}
-        <div class="wd-comment-body">
-          <div class="wd-comment-meta">
-            <span class="wd-comment-author">${authorName}</span>
-            <span class="wd-comment-date">${pubDate}</span>
-          </div>
-          <div class="wd-comment-text">${contentHtml}</div>
-          <div class="wd-comment-actions">
-            <button class="wd-comment-action-btn">Reply</button>
-          </div>
-        </div>
-      `;
-      container.appendChild(commentCard);
-    });
+    return card;
   }
 
   /* BLOG SYSTEM & CLICK HANDLERS */
