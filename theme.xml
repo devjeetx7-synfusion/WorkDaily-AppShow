@@ -3312,25 +3312,6 @@ body {
                       <h3 class="wd-related-heading">Related Articles</h3>
                       <div class="wd-blog-grid" id="wd-related-grid"></div>
                     </div>
-                        <div class="wd-comment-input-box">
-                          <textarea id="wd-comment-textarea" placeholder="Write a comment..." rows="3"></textarea>
-                          <div class="wd-comment-form-actions">
-                            <span class="wd-comment-notice" id="wd-comment-notice">Authentication required for Blogger comment submission.</span>
-                            <button class="wd-btn wd-btn-primary wd-btn-sm" id="wd-comment-submit-btn">Post Comment</button>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div id="wd-comments-list-container">
-                        <!-- Loaded comments dynamically -->
-                      </div>
-
-                      <b:if cond='data:view.isPost'>
-                        <b:loop values='data:posts' var='post'>
-                          <b:include data='post' name='comments'/>
-                        </b:loop>
-                      </b:if>
-                    </div>
                   </article>
                 </div>
 
