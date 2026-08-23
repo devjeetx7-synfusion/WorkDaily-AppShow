@@ -219,13 +219,30 @@ test('Real Comments Loading & Article Action Bar', async ({ page }) => {
   await page.goto('/index.html#article/101');
   await page.waitForSelector('#wd-comments-area', { state: 'visible' });
 
-  // Action Bar UI
+  // Action Bar UI Position Below Article Body
+  const articleBody = page.locator('#wd-article-body');
+  const actionBar = page.locator('#wd-article-action-bar');
+  const discussionSection = page.locator('#wd-comments-area');
+
+  await expect(articleBody).toBeVisible();
+  await expect(actionBar).toBeVisible();
+
+  // Verify Action Bar is located AFTER Article Body in DOM
+  const isActionBarBelowBody = await page.evaluate(() => {
+    const bodyEl = document.getElementById('wd-article-body');
+    const actionEl = document.getElementById('wd-article-action-bar');
+    return !!(bodyEl && actionEl && (bodyEl.compareDocumentPosition(actionEl) & Node.DOCUMENT_POSITION_FOLLOWING));
+  });
+  expect(isActionBarBelowBody).toBe(true);
+
+  // Like Interaction & Count
   const likeBtn = page.locator('#wd-like-btn');
   await expect(likeBtn).toBeVisible();
 
   await likeBtn.click();
   await expect(likeBtn).toHaveClass(/liked/);
   await expect(page.locator('#wd-like-btn-text')).toHaveText('Liked');
+  await expect(page.locator('#wd-action-like-count')).toHaveText('1');
 
   // Share button test
   const shareBtn = page.locator('#wd-share-btn');
@@ -242,6 +259,53 @@ test('Real Comments Loading & Article Action Bar', async ({ page }) => {
 
   await expect(commentItems.first().locator('.wd-comment-author')).toHaveText('John Doe');
   await expect(commentItems.first().locator('.wd-comment-text')).toHaveText('Great update on WorkDaily!');
+});
+
+test('Google Sign-In & Custom Comment Posting / Replies', async ({ page }) => {
+  await page.goto('/index.html#article/101');
+  await page.waitForSelector('#wd-comments-area', { state: 'visible' });
+
+  // Auth Header Sign In button
+  const loginBtn = page.locator('#wd-google-login-btn');
+  await expect(loginBtn).toBeVisible();
+
+  // Dialog listener for mock name prompt when signing in
+  page.on('dialog', async dialog => {
+    await dialog.accept('Test User');
+  });
+
+  await loginBtn.click();
+
+  // Verify profile badge appears in header
+  await expect(page.locator('.wd-user-profile-badge')).toBeVisible();
+
+  // Post a comment
+  const textarea = page.locator('#wd-comment-textarea');
+  const submitBtn = page.locator('#wd-comment-submit-btn');
+
+  await textarea.fill('Testing Playwright persistent comment');
+  await submitBtn.click();
+
+  // Verify posted comment appears
+  await page.waitForSelector('.wd-comment-item:has-text("Testing Playwright persistent comment")');
+  const newComment = page.locator('.wd-comment-item:has-text("Testing Playwright persistent comment")');
+  await expect(newComment).toBeVisible();
+  await expect(newComment.locator('.wd-comment-author')).toHaveText('Test User');
+
+  // Reply to comment
+  const replyBtn = newComment.locator('.wd-reply-btn');
+  await replyBtn.click();
+
+  const replyTextarea = newComment.locator('.wd-reply-textarea');
+  const submitReplyBtn = newComment.locator('.wd-submit-reply-btn');
+
+  await replyTextarea.fill('This is a test reply');
+  await submitReplyBtn.click();
+
+  // Verify reply rendered inside nested replies container
+  await page.waitForSelector('.wd-replies-container .wd-comment-item:has-text("This is a test reply")');
+  const replyNode = newComment.locator('.wd-replies-container .wd-comment-item:has-text("This is a test reply")');
+  await expect(replyNode).toBeVisible();
 });
 
 test('Article Routing & SPA Back Navigation', async ({ page }) => {
