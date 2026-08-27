@@ -1837,6 +1837,9 @@ body {
 /* EDITORIAL SINGLE ARTICLE VIEW */
 .wd-single-post {
   max-width: 780px;
+  width: 100%;
+  overflow-x: hidden;
+  max-width: 780px;
   margin: 0 auto;
   padding: 20px 0 60px;
 }
@@ -1990,20 +1993,13 @@ body {
   stroke: #E53935;
 }
 
-.wd-like-count, .wd-comment-count-badge {
-  background: rgba(0, 0, 0, 0.06);
-  padding: 2px 8px;
-  border-radius: 10px;
-  font-size: 11px;
-}
 
-.wd-action-btn.liked .wd-like-count {
-  background: rgba(229, 57, 53, 0.15);
-}
+
+
 
 .wd-share-toast {
   position: absolute;
-  left: 280px;
+  right: 0; left: auto;
   background: #101410;
   color: #FFFFFF;
   font-size: 12px;
@@ -2020,179 +2016,6 @@ body {
 .wd-share-toast.show {
   opacity: 1;
   transform: translateY(0);
-}
-
-/* DISCUSSION & COMMENTS */
-.wd-comments-area {
-  padding-top: 40px;
-  border-top: 1px solid var(--color-border);
-  margin-top: 48px;
-}
-
-.wd-comments-header-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 24px;
-}
-
-.wd-comments-heading {
-  font-size: 24px;
-  font-weight: 800;
-  margin: 0;
-}
-
-.wd-comments-count-pill {
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--color-primary);
-  background: rgba(20, 90, 50, 0.08);
-  padding: 4px 12px;
-  border-radius: var(--radius-full);
-}
-
-.wd-comment-form-wrap {
-  margin-bottom: 32px;
-}
-
-.wd-comment-input-box {
-  background: var(--color-bg);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  padding: 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  transition: border-color var(--transition-fast);
-}
-
-.wd-comment-input-box:focus-within {
-  border-color: var(--color-primary);
-  box-shadow: 0 0 0 3px rgba(20, 90, 50, 0.1);
-}
-
-.wd-comment-input-box textarea {
-  width: 100%;
-  border: none;
-  outline: none;
-  background: transparent;
-  font-family: inherit;
-  font-size: 14.5px;
-  color: var(--color-text);
-  resize: vertical;
-}
-
-.wd-comment-form-actions {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.wd-comment-notice {
-  font-size: 12.5px;
-  color: var(--color-text-muted);
-}
-
-.wd-comments-loading {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 24px 0;
-  color: var(--color-text-muted);
-  font-size: 14px;
-}
-
-.wd-comments-spinner {
-  width: 20px;
-  height: 20px;
-  border: 2px solid var(--color-border);
-  border-top-color: var(--color-primary);
-  border-radius: 50%;
-  animation: wdSpin 0.8s linear infinite;
-}
-
-.wd-comments-empty {
-  padding: 32px;
-  text-align: center;
-  background: rgba(0, 0, 0, 0.02);
-  border-radius: var(--radius-md);
-  color: var(--color-text-muted);
-  font-size: 14.5px;
-}
-
-.wd-comment-item {
-  display: flex;
-  gap: 16px;
-  padding: 20px 0;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
-}
-
-.wd-comment-item:last-child {
-  border-bottom: none;
-}
-
-.wd-comment-avatar {
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
-  object-fit: cover;
-  background: #E2E6DF;
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 800;
-  color: var(--color-primary);
-  font-size: 16px;
-}
-
-.wd-comment-body {
-  flex-grow: 1;
-}
-
-.wd-comment-meta {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 6px;
-}
-
-.wd-comment-author {
-  font-weight: 700;
-  font-size: 14.5px;
-  color: var(--color-text);
-}
-
-.wd-comment-date {
-  font-size: 12px;
-  color: var(--color-text-muted);
-}
-
-.wd-comment-text {
-  font-size: 14.5px;
-  line-height: 1.55;
-  color: var(--color-text);
-  margin-bottom: 8px;
-}
-
-.wd-comment-actions {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-
-.wd-comment-action-btn {
-  background: none;
-  border: none;
-  padding: 0;
-  font-size: 12.5px;
-  font-weight: 700;
-  color: var(--color-text-muted);
-  cursor: pointer;
-}
-
-.wd-comment-action-btn:hover {
-  color: var(--color-primary);
 }
 
 /* PAGINATION */
@@ -2813,6 +2636,131 @@ body {
   flex-wrap: wrap;
 }
 
+
+.wd-hero-bg-glow, .wd-phone-ambient-glow, .wd-slide-bg-glow, .wd-cta-glow { max-width: 100vw; overflow: hidden; }
+
+.wd-hero, .wd-showcase-section, .wd-benefits-section, .wd-blog-section, .wd-cta-section, .wd-footer { overflow-x: hidden; max-width: 100vw; }
+
+/* SHARE CONTROLS & POPOVER */
+.wd-post-header-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  position: relative;
+  max-width: 100%;
+}
+
+.wd-share-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.wd-share-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(20, 90, 50, 0.08);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
+  padding: 8px 16px;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--color-text);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.wd-share-btn:hover {
+  background: rgba(20, 90, 50, 0.15);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.wd-share-popover {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  width: 220px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  z-index: 100;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-8px);
+  transition: opacity var(--transition-fast), transform var(--transition-fast), visibility var(--transition-fast);
+}
+
+.wd-share-popover.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.wd-share-popover.popover-above {
+  top: auto;
+  bottom: calc(100% + 8px);
+  transform: translateY(8px);
+}
+
+.wd-share-popover.popover-above.show {
+  transform: translateY(0);
+}
+
+.wd-share-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text);
+  text-decoration: none;
+  background: transparent;
+  border: none;
+  width: 100%;
+  cursor: pointer;
+  text-align: left;
+  transition: background var(--transition-fast), color var(--transition-fast);
+}
+
+.wd-share-option:hover, .wd-share-option:focus {
+  background: var(--color-bg);
+  color: var(--color-primary);
+  outline: none;
+}
+
+.wd-share-toast {
+  position: absolute;
+  top: calc(100% + 12px);
+  right: 0;
+  left: auto;
+  background: #101410;
+  color: #FFFFFF;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 6px 16px;
+  border-radius: var(--radius-full);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  transform: translateY(4px);
+  z-index: 105;
+  white-space: nowrap;
+}
+
+.wd-share-toast.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 ]]></b:skin>
 </head>
 <body>
@@ -2841,13 +2789,7 @@ body {
       </nav>
 
       <div class="wd-header-actions">
-        <!-- Auth Profile / Google Sign-In Container -->
-        <div id="wd-auth-header-container" class="wd-auth-header-wrap">
-          <button class="wd-btn wd-btn-secondary wd-btn-sm" id="wd-google-login-btn">
-            <svg width="16" height="16" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg>
-            <span class="wd-btn-text">Sign In</span>
-          </button>
-        </div>
+
         <a href="#showcase" class="wd-btn wd-btn-primary wd-btn-sm" aria-label="Download Now" title="Download Now">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
           <span class="wd-btn-text">Download Now</span>
@@ -3239,8 +3181,43 @@ body {
                     </a>
 
                     <header class="wd-post-header">
-                      <div class="wd-post-labels" id="wd-post-labels-container">
-                        <span class="wd-label-pill">Article</span>
+                      <div class="wd-post-header-top">
+                        <div class="wd-post-labels" id="wd-post-labels-container">
+                          <span class="wd-label-pill">Article</span>
+                        </div>
+                        <div class="wd-share-wrapper">
+                          <button class="wd-share-btn" id="wd-share-btn" aria-label="Share article" aria-haspopup="true" aria-expanded="false">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+                            <span>Share</span>
+                          </button>
+                          <div class="wd-share-popover" id="wd-share-popover" role="menu" aria-label="Share options">
+                            <a href="#" class="wd-share-option" data-platform="whatsapp" role="menuitem" aria-label="Share on WhatsApp" target="_blank" rel="noopener noreferrer">
+                              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414-.074-.124-.272-.198-.57-.347z"/></svg>
+                              <span>WhatsApp</span>
+                            </a>
+                            <a href="#" class="wd-share-option" data-platform="telegram" role="menuitem" aria-label="Share on Telegram" target="_blank" rel="noopener noreferrer">
+                              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.52-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/></svg>
+                              <span>Telegram</span>
+                            </a>
+                            <a href="#" class="wd-share-option" data-platform="facebook" role="menuitem" aria-label="Share on Facebook" target="_blank" rel="noopener noreferrer">
+                              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                              <span>Facebook</span>
+                            </a>
+                            <a href="#" class="wd-share-option" data-platform="x" role="menuitem" aria-label="Share on X" target="_blank" rel="noopener noreferrer">
+                              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                              <span>X</span>
+                            </a>
+                            <a href="#" class="wd-share-option" data-platform="linkedin" role="menuitem" aria-label="Share on LinkedIn" target="_blank" rel="noopener noreferrer">
+                              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9v8.37H9.25V10.9H6.46M7.86 6.78a1.62 1.62 0 1 0 0 3.24 1.62 1.62 0 0 0 0-3.24z"/></svg>
+                              <span>LinkedIn</span>
+                            </a>
+                            <button class="wd-share-option" id="wd-copy-link-btn" data-platform="copy" role="menuitem" aria-label="Copy Link">
+                              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                              <span>Copy Link</span>
+                            </button>
+                          </div>
+                          <div class="wd-share-toast" id="wd-share-toast">Link copied</div>
+                        </div>
                       </div>
                       <h1 class="wd-post-title" id="wd-post-title-heading">Article Title</h1>
                       <div class="wd-post-byline">
@@ -3258,53 +3235,6 @@ body {
 
                     <div class="wd-post-body" id="wd-article-body">
                       <!-- Rendered Article HTML Body -->
-                    </div>
-
-                    <!-- Interaction Action Bar (BELOW ARTICLE BODY) -->
-                    <div class="wd-article-action-bar" id="wd-article-action-bar">
-                      <button class="wd-action-btn" id="wd-like-btn" aria-label="Like post">
-                        <svg class="wd-icon-heart" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-                        <span id="wd-like-btn-text">Like</span>
-                        <span class="wd-like-count" id="wd-action-like-count">0</span>
-                      </button>
-                      <a href="#wd-comments-area" class="wd-action-btn" id="wd-comments-btn" aria-label="Go to comments">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
-                        <span>Comments</span>
-                        <span class="wd-comment-count-badge" id="wd-action-comment-count">0</span>
-                      </a>
-                      <button class="wd-action-btn" id="wd-share-btn" aria-label="Share article">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
-                        <span>Share</span>
-                      </button>
-                      <div class="wd-share-toast" id="wd-share-toast">Link copied</div>
-                    </div>
-
-                    <!-- Discussion Section -->
-                    <div class="wd-comments-area" id="wd-comments-area">
-                      <div class="wd-comments-header-row">
-                        <h3 class="wd-comments-heading">Discussion</h3>
-                        <span class="wd-comments-count-pill" id="wd-comments-count-pill">0 comments</span>
-                      </div>
-
-                      <div class="wd-comment-form-wrap">
-                        <div class="wd-comment-input-box">
-                          <textarea id="wd-comment-textarea" placeholder="Write a comment..." rows="3"></textarea>
-                          <div class="wd-comment-form-actions">
-                            <span class="wd-comment-notice" id="wd-comment-notice">Sign in to leave a comment.</span>
-                            <button class="wd-btn wd-btn-primary wd-btn-sm" id="wd-comment-submit-btn">Post Comment</button>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div id="wd-comments-list-container">
-                        <!-- Loaded comments dynamically -->
-                      </div>
-
-                      <b:if cond='data:view.isPost'>
-                        <b:loop values='data:posts' var='post'>
-                          <b:include data='post' name='comments'/>
-                        </b:loop>
-                      </b:if>
                     </div>
 
                     <!-- Related Articles Section Container -->
@@ -3565,343 +3495,9 @@ body {
     initMobileMenu();
     initShowcase();
     initKeyboardNav();
-    WorkDailyAuth.init();
     initBlogSystem();
     initCustomVideoPlayer();
   });
-
-  /* WORKDAILY PERSISTENT DATABASE SYSTEM (INDEXEDDB & LOCALSTORAGE FALLBACK) */
-  window.WorkDailyDatabase = (function() {
-    let db = null;
-    const DB_NAME = "WorkDailyDB";
-    const DB_VERSION = 1;
-
-    function openDB() {
-      return new Promise((resolve) => {
-        if (!window.indexedDB) {
-          resolve(null);
-          return;
-        }
-        const req = window.indexedDB.open(DB_NAME, DB_VERSION);
-        req.onupgradeneeded = function(e) {
-          const database = e.target.result;
-          if (!database.objectStoreNames.contains("likes")) {
-            database.createObjectStore("likes", { keyPath: "id" });
-          }
-          if (!database.objectStoreNames.contains("comments")) {
-            const commentStore = database.createObjectStore("comments", { keyPath: "id" });
-            commentStore.createIndex("postId", "postId", { unique: false });
-          }
-        };
-        req.onsuccess = function(e) {
-          db = e.target.result;
-          resolve(db);
-        };
-        req.onerror = function() {
-          resolve(null);
-        };
-      });
-    }
-
-    // Likes API
-    async function getLike(userId, postId) {
-      const key = `${userId}_${postId}`;
-      await openDB();
-      if (db) {
-        return new Promise((resolve) => {
-          try {
-            const tx = db.transaction("likes", "readonly");
-            const store = tx.objectStore("likes");
-            const req = store.get(key);
-            req.onsuccess = () => resolve(req.result || null);
-            req.onerror = () => resolve(getLikeFallback(key));
-          } catch(e) {
-            resolve(getLikeFallback(key));
-          }
-        });
-      }
-      return getLikeFallback(key);
-    }
-
-    function getLikeFallback(key) {
-      try {
-        const val = localStorage.getItem("wd_db_like_" + key);
-        return val ? JSON.parse(val) : null;
-      } catch(e) {
-        return null;
-      }
-    }
-
-    async function setLike(userId, postId, liked) {
-      const key = `${userId}_${postId}`;
-      const record = liked ? { id: key, userId, postId, createdAt: new Date().toISOString() } : null;
-
-      await openDB();
-      if (db) {
-        await new Promise((resolve) => {
-          try {
-            const tx = db.transaction("likes", "readwrite");
-            const store = tx.objectStore("likes");
-            if (liked) {
-              store.put(record);
-            } else {
-              store.delete(key);
-            }
-            tx.oncomplete = () => resolve();
-            tx.onerror = () => resolve();
-          } catch(e) {
-            resolve();
-          }
-        });
-      }
-
-      try {
-        if (liked) {
-          localStorage.setItem("wd_db_like_" + key, JSON.stringify(record));
-        } else {
-          localStorage.removeItem("wd_db_like_" + key);
-        }
-      } catch(e) {}
-    }
-
-    async function getLikeCount(postId) {
-      let count = 0;
-      await openDB();
-      if (db) {
-        count = await new Promise((resolve) => {
-          try {
-            const tx = db.transaction("likes", "readonly");
-            const store = tx.objectStore("likes");
-            const req = store.getAll();
-            req.onsuccess = () => {
-              const all = req.result || [];
-              const match = all.filter(r => String(r.postId) === String(postId));
-              resolve(match.length);
-            };
-            req.onerror = () => resolve(0);
-          } catch(e) {
-            resolve(0);
-          }
-        });
-      }
-
-      // Sync with localStorage counts
-      let localCount = 0;
-      try {
-        for (let i = 0; i < localStorage.length; i++) {
-          const k = localStorage.key(i);
-          if (k && k.startsWith("wd_db_like_") && k.endsWith("_" + postId)) {
-            localCount++;
-          }
-        }
-      } catch(e) {}
-
-      return Math.max(count, localCount);
-    }
-
-    // Comments API
-    async function addComment(commentObj) {
-      await openDB();
-      if (db) {
-        await new Promise((resolve) => {
-          try {
-            const tx = db.transaction("comments", "readwrite");
-            const store = tx.objectStore("comments");
-            store.put(commentObj);
-            tx.oncomplete = () => resolve();
-            tx.onerror = () => resolve();
-          } catch(e) {
-            resolve();
-          }
-        });
-      }
-      try {
-        const key = "wd_db_comments_" + commentObj.postId;
-        const saved = localStorage.getItem(key);
-        const list = saved ? JSON.parse(saved) : [];
-        list.push(commentObj);
-        localStorage.setItem(key, JSON.stringify(list));
-      } catch(e) {}
-    }
-
-    async function getComments(postId) {
-      let dbComments = [];
-      await openDB();
-      if (db) {
-        dbComments = await new Promise((resolve) => {
-          try {
-            const tx = db.transaction("comments", "readonly");
-            const store = tx.objectStore("comments");
-            const req = store.getAll();
-            req.onsuccess = () => {
-              const all = req.result || [];
-              resolve(all.filter(c => String(c.postId) === String(postId)));
-            };
-            req.onerror = () => resolve([]);
-          } catch(e) {
-            resolve([]);
-          }
-        });
-      }
-
-      let localComments = [];
-      try {
-        const saved = localStorage.getItem("wd_db_comments_" + postId);
-        if (saved) localComments = JSON.parse(saved);
-      } catch(e) {}
-
-      const map = new Map();
-      [...localComments, ...dbComments].forEach(c => {
-        if (c && c.id && c.status !== "deleted") map.set(c.id, c);
-      });
-
-      return Array.from(map.values()).sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
-    }
-
-    return {
-      getLike,
-      setLike,
-      getLikeCount,
-      addComment,
-      getComments
-    };
-  })();
-
-  /* WORKDAILY AUTHENTICATION & USER IDENTITY SYSTEM */
-  window.WorkDailyAuth = (function() {
-    let currentUser = null;
-    let listeners = [];
-
-    function loadSavedUser() {
-      try {
-        const saved = localStorage.getItem("wd_user_profile");
-        if (saved) {
-          currentUser = JSON.parse(saved);
-        }
-      } catch (e) {
-        currentUser = null;
-      }
-    }
-
-    function saveUser(userObj) {
-      currentUser = userObj;
-      try {
-        if (userObj) {
-          localStorage.setItem("wd_user_profile", JSON.stringify(userObj));
-        } else {
-          localStorage.removeItem("wd_user_profile");
-        }
-      } catch (e) {}
-      notifyListeners();
-      updateAuthUI();
-    }
-
-    function notifyListeners() {
-      listeners.forEach(fn => {
-        try { fn(currentUser); } catch (e) {}
-      });
-    }
-
-    function updateAuthUI() {
-      const headerAuth = document.getElementById("wd-auth-header-container");
-      if (headerAuth) {
-        if (currentUser) {
-          headerAuth.innerHTML = `
-            <div class="wd-user-profile-badge" style="display: flex; align-items: center; gap: 8px; background: rgba(20, 90, 50, 0.08); padding: 4px 12px 4px 6px; border-radius: var(--radius-full); border: 1px solid var(--color-border);">
-              <img src="${currentUser.photoURL || ''}" alt="${currentUser.displayName}" style="width: 28px; height: 28px; border-radius: 50%; object-fit: cover;" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22%23145A32%22><circle cx=%2212%22 cy=%228%22 r=%224%22/><path d=%22M12 14c-6.1 0-8 4-8 4v2h16v-2s-1.9-4-8-4z%22/></svg>'"/>
-              <span style="font-size: 13px; font-weight: 700; color: var(--color-text);">${currentUser.displayName.split(' ')[0]}</span>
-              <button id="wd-signout-btn" title="Sign Out" aria-label="Sign Out" style="background: none; border: none; cursor: pointer; padding: 2px; color: var(--color-text-muted); display: flex; align-items: center;">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-              </button>
-            </div>
-          `;
-          const btnOut = document.getElementById("wd-signout-btn");
-          if (btnOut) {
-            btnOut.addEventListener("click", signOut);
-          }
-        } else {
-          headerAuth.innerHTML = `
-            <button class="wd-btn wd-btn-secondary wd-btn-sm" id="wd-google-login-btn">
-              <svg width="16" height="16" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg>
-              <span class="wd-btn-text">Sign In</span>
-            </button>
-          `;
-          const btnIn = document.getElementById("wd-google-login-btn");
-          if (btnIn) {
-            btnIn.addEventListener("click", promptSignIn);
-          }
-        }
-      }
-
-      // Discussion section notice update
-      const noticeEl = document.getElementById("wd-comment-notice");
-      if (noticeEl) {
-        if (currentUser) {
-          noticeEl.style.color = "var(--color-primary)";
-          noticeEl.textContent = `Commenting as ${currentUser.displayName}`;
-        } else {
-          noticeEl.style.color = "var(--color-text-muted)";
-          noticeEl.textContent = "Sign in to leave a comment.";
-        }
-      }
-    }
-
-    function getOrCreateGuestUser() {
-      if (currentUser) return currentUser;
-      let guestId = localStorage.getItem("wd_guest_user_id");
-      if (!guestId) {
-        guestId = "guest_usr_" + Date.now() + "_" + Math.random().toString(36).substr(2, 5);
-        localStorage.setItem("wd_guest_user_id", guestId);
-      }
-      const guestObj = {
-        userId: guestId,
-        provider: "guest",
-        displayName: "Guest User",
-        photoURL: "",
-        createdAt: new Date().toISOString(),
-        lastLoginAt: new Date().toISOString()
-      };
-      saveUser(guestObj);
-      return guestObj;
-    }
-
-    function promptSignIn() {
-      // Direct Google Identity Modal Simulation / Google Credential Flow
-      const mockName = window.prompt ? window.prompt("Sign in with Google - Enter Your Name:", "WorkDaily User") : "WorkDaily User";
-      if (mockName && mockName.trim()) {
-        const cleanName = mockName.trim();
-        const slugId = cleanName.toLowerCase().replace(/[^a-z0-9]/g, "");
-        const userObj = {
-          userId: "google_usr_" + (slugId || "default"),
-          provider: "google",
-          displayName: cleanName,
-          photoURL: "https://lh3.googleusercontent.com/a/default-user=s96-c",
-          createdAt: new Date().toISOString(),
-          lastLoginAt: new Date().toISOString()
-        };
-        saveUser(userObj);
-      }
-    }
-
-    function signOut() {
-      saveUser(null);
-    }
-
-    function init() {
-      loadSavedUser();
-      updateAuthUI();
-    }
-
-    return {
-      init,
-      getUser: () => currentUser,
-      getOrCreateGuestUser,
-      isAuthenticated: () => !!currentUser,
-      promptSignIn,
-      signOut,
-      onChange: (fn) => { if (typeof fn === "function") listeners.push(fn); }
-    };
-  })();
 
   /* CUSTOM WORKDAILY VIDEO PLAYER INTEGRATION & DETECTOR */
   function initCustomVideoPlayer() {
@@ -4314,15 +3910,6 @@ body {
       const updatedAt = formatDate(rawPost.updatedAt || rawPost.updated || publishedAt);
       const readingTime = calculateReadingTime(fullContent);
 
-      let commentCount = 0;
-      if (rawPost.replies && rawPost.replies.totalItems !== undefined) {
-        commentCount = parseInt(rawPost.replies.totalItems, 10) || 0;
-      } else if (rawPost.thr$total && rawPost.thr$total.$t) {
-        commentCount = parseInt(rawPost.thr$total.$t, 10) || 0;
-      } else if (rawPost.commentCount !== undefined) {
-        commentCount = parseInt(rawPost.commentCount, 10) || 0;
-      }
-
       return {
         id,
         slug,
@@ -4341,8 +3928,7 @@ body {
         permalink: permalink || ("#article/" + id),
         url: permalink || ("#article/" + id),
         readingTime,
-        isFeatured,
-        commentCount
+        isFeatured
       };
     }
 
@@ -4654,7 +4240,9 @@ body {
       if (post) {
         const labelsContainer = document.getElementById("wd-post-labels-container");
         if (labelsContainer) {
-          const categoryName = post.category || "Article";
+          let cat = post.category;
+          if (typeof cat === "object" && cat !== null) cat = cat.name || cat.term || "Article";
+          const categoryName = (cat && typeof cat === "string" && !cat.includes("[object")) ? cat : "Article";
           labelsContainer.innerHTML = `<span class="wd-label-pill">${categoryName}</span>`;
         }
 
@@ -4740,110 +4328,155 @@ body {
     if (errorEl) errorEl.style.display = "block";
   };
 
-  /* ARTICLE INTERACTIONS, REAL COMMENTS & SHARE */
-  async function initArticleInteractions(post) {
+  /* ARTICLE INTERACTIONS & SHARE ONLY */
+  function initArticleInteractions(post) {
     if (!post) return;
 
-    // 1. Persistent Like System with User Identity & DB
-    const likeBtn = document.getElementById("wd-like-btn");
-    const likeText = document.getElementById("wd-like-btn-text");
-    const likeCountBadge = document.getElementById("wd-action-like-count");
+    window.__wdCurrentPost = post;
 
-    async function refreshLikeState() {
-      if (!likeBtn || !likeText || !likeCountBadge) return;
-      const count = await window.WorkDailyDatabase.getLikeCount(post.id);
-      likeCountBadge.textContent = count;
+    const shareBtn = document.getElementById("wd-share-btn");
+    const sharePopover = document.getElementById("wd-share-popover");
+    const shareToast = document.getElementById("wd-share-toast");
+    const copyBtn = document.getElementById("wd-copy-link-btn");
 
-      const user = window.WorkDailyAuth.getUser();
-      if (user) {
-        const userLike = await window.WorkDailyDatabase.getLike(user.userId, post.id);
-        if (userLike) {
-          likeBtn.classList.add("liked");
-          likeText.textContent = "Liked";
-        } else {
-          likeBtn.classList.remove("liked");
-          likeText.textContent = "Like";
-        }
+    if (!shareBtn) return;
+
+    function getShareData() {
+      const activePost = window.__wdCurrentPost || post;
+      let articleUrl = window.location.href;
+      if (activePost.permalink && (activePost.permalink.startsWith("http://") || activePost.permalink.startsWith("https://"))) {
+        articleUrl = activePost.permalink;
       } else {
-        likeBtn.classList.remove("liked");
-        likeText.textContent = "Like";
+        const idOrSlug = activePost.id || activePost.slug || "";
+        const origin = window.location.origin || "";
+        const pathname = window.location.pathname || "";
+        articleUrl = origin + pathname + "#article/" + encodeURIComponent(idOrSlug);
+      }
+      const title = activePost.title || "WorkDaily";
+      const description = activePost.excerpt || activePost.description || "WorkDaily Article";
+      return { url: articleUrl, title: title, text: description };
+    }
+
+    function updateShareLinks() {
+      const data = getShareData();
+      const encodedUrl = encodeURIComponent(data.url);
+      const encodedTitle = encodeURIComponent(data.title);
+
+      if (!sharePopover) return;
+
+      const whatsappLink = sharePopover.querySelector('[data-platform="whatsapp"]');
+      if (whatsappLink) {
+        whatsappLink.href = `https://api.whatsapp.com/send?text=${encodedTitle}%20${encodedUrl}`;
+      }
+
+      const telegramLink = sharePopover.querySelector('[data-platform="telegram"]');
+      if (telegramLink) {
+        telegramLink.href = `https://t.me/share/url?url=${encodedUrl}&text=${encodedTitle}`;
+      }
+
+      const facebookLink = sharePopover.querySelector('[data-platform="facebook"]');
+      if (facebookLink) {
+        facebookLink.href = `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`;
+      }
+
+      const xLink = sharePopover.querySelector('[data-platform="x"]');
+      if (xLink) {
+        xLink.href = `https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedTitle}`;
+      }
+
+      const linkedinLink = sharePopover.querySelector('[data-platform="linkedin"]');
+      if (linkedinLink) {
+        linkedinLink.href = `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`;
       }
     }
 
-    await refreshLikeState();
+    function openPopover() {
+      if (!sharePopover) return;
+      updateShareLinks();
+      sharePopover.classList.remove("popover-above");
+      sharePopover.classList.add("show");
+      shareBtn.setAttribute("aria-expanded", "true");
 
-    if (likeBtn && !likeBtn.dataset.bound) {
-      likeBtn.dataset.bound = "true";
-      likeBtn.addEventListener("click", async function(e) {
-        e.preventDefault();
-        let user = window.WorkDailyAuth.getUser();
-        if (!user) {
-          user = window.WorkDailyAuth.getOrCreateGuestUser();
-        }
-
-        const currentLike = await window.WorkDailyDatabase.getLike(user.userId, post.id);
-        const willLike = !currentLike;
-
-        // Optimistic UI Update
-        if (willLike) {
-          likeBtn.classList.add("liked");
-          likeText.textContent = "Liked";
-        } else {
-          likeBtn.classList.remove("liked");
-          likeText.textContent = "Like";
-        }
-
-        try {
-          await window.WorkDailyDatabase.setLike(user.userId, post.id, willLike);
-          await refreshLikeState();
-        } catch(err) {
-          await refreshLikeState();
-        }
-      });
+      const rect = sharePopover.getBoundingClientRect();
+      const vh = window.innerHeight || document.documentElement.clientHeight;
+      if (rect.bottom > vh - 10 && rect.top > rect.height) {
+        sharePopover.classList.add("popover-above");
+      }
     }
 
-    window.WorkDailyAuth.onChange(() => {
-      refreshLikeState();
-    });
+    function closePopover() {
+      if (!sharePopover) return;
+      sharePopover.classList.remove("show");
+      sharePopover.classList.remove("popover-above");
+      shareBtn.setAttribute("aria-expanded", "false");
+    }
 
-    // 2. Share Action System
-    const shareBtn = document.getElementById("wd-share-btn");
-    const shareToast = document.getElementById("wd-share-toast");
+    function togglePopover() {
+      if (sharePopover && sharePopover.classList.contains("show")) {
+        closePopover();
+      } else {
+        openPopover();
+      }
+    }
 
-    if (shareBtn && !shareBtn.dataset.bound) {
+    if (!shareBtn.dataset.bound) {
       shareBtn.dataset.bound = "true";
       shareBtn.addEventListener("click", async function(e) {
         e.preventDefault();
-        const articleUrl = window.location.href;
-        if (navigator.share && /mobile|android|iphone|ipad/i.test(navigator.userAgent)) {
+        e.stopPropagation();
+
+        const data = getShareData();
+
+        if (typeof navigator !== "undefined" && typeof navigator.share === "function") {
           try {
             await navigator.share({
-              title: post.title,
-              text: post.excerpt,
-              url: articleUrl
+              title: data.title,
+              text: data.text,
+              url: data.url
             });
+            closePopover();
             return;
-          } catch (err) {}
+          } catch (err) {
+            if (err && err.name === "AbortError") {
+              return;
+            }
+          }
         }
 
+        togglePopover();
+      });
+    }
+
+    if (copyBtn && !copyBtn.dataset.bound) {
+      copyBtn.dataset.bound = "true";
+      copyBtn.addEventListener("click", async function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        const data = getShareData();
         let copied = false;
+
         if (navigator.clipboard && navigator.clipboard.writeText) {
           try {
-            await navigator.clipboard.writeText(articleUrl);
+            await navigator.clipboard.writeText(data.url);
             copied = true;
           } catch (err) {}
         }
+
         if (!copied) {
           try {
             const dummy = document.createElement("input");
             document.body.appendChild(dummy);
-            dummy.value = articleUrl;
+            dummy.value = data.url;
             dummy.select();
             document.execCommand("copy");
             document.body.removeChild(dummy);
             copied = true;
           } catch (err) {}
         }
+
+        closePopover();
+
         if (shareToast) {
           shareToast.classList.add("show");
           setTimeout(() => shareToast.classList.remove("show"), 2500);
@@ -4851,289 +4484,33 @@ body {
       });
     }
 
-    // 3. Comment Counter Display
-    const commentBadge = document.getElementById("wd-action-comment-count");
-    const commentPill = document.getElementById("wd-comments-count-pill");
-    const initialCount = post.commentCount || 0;
+    if (!window.__wdShareGlobalBound) {
+      window.__wdShareGlobalBound = true;
 
-    if (commentBadge) commentBadge.textContent = initialCount;
-    if (commentPill) commentPill.textContent = `${initialCount} comment${initialCount === 1 ? '' : 's'}`;
-
-    // 4. Fetch & Render Comments (Custom DB + Blogger Feed Merge)
-    const commentsContainer = document.getElementById("wd-comments-list-container");
-
-    async function loadAndRenderComments() {
-      if (!commentsContainer) return;
-      commentsContainer.innerHTML = `
-        <div class="wd-comments-loading">
-          <div class="wd-comments-spinner"></div>
-          <span>Loading discussion...</span>
-        </div>
-      `;
-
-      let bloggerComments = [];
-      try {
-        const commentsFeedUrl = (window.location.origin || '') + '/feeds/' + encodeURIComponent(post.id) + '/comments/default?alt=json';
-        const res = await fetch(commentsFeedUrl, { headers: { 'Accept': 'application/json' } });
-        if (res.ok) {
-          const data = await res.json();
-          const entries = (data && data.feed && data.feed.entry) ? data.feed.entry : [];
-          bloggerComments = entries.map((entry, idx) => {
-            let authorName = "Anonymous";
-            let authorPhoto = "";
-            if (entry.author && entry.author[0]) {
-              const a = entry.author[0];
-              authorName = a.name ? (a.name.$t || a.name) : "Anonymous";
-              if (a.gd$image && a.gd$image.src && !a.gd$image.src.includes("g/b16-g.gif")) {
-                authorPhoto = a.gd$image.src;
-              }
-            }
-            let text = (entry.content && entry.content.$t) || (entry.summary && entry.summary.$t) || "";
-            let pubDate = entry.published ? new Date(entry.published.$t).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }) : "";
-            return {
-              id: "blogger_c_" + idx,
-              postId: post.id,
-              userId: "blogger_author",
-              authorName,
-              authorPhoto,
-              parentCommentId: null,
-              content: text,
-              createdAt: pubDate || new Date().toISOString(),
-              status: "active"
-            };
-          });
-        }
-      } catch(e) {}
-
-      const customComments = await window.WorkDailyDatabase.getComments(post.id);
-      const allComments = [...bloggerComments, ...customComments];
-
-      const totalCount = allComments.length;
-      if (commentBadge) commentBadge.textContent = totalCount;
-      if (commentPill) commentPill.textContent = `${totalCount} comment${totalCount === 1 ? '' : 's'}`;
-
-      if (totalCount === 0) {
-        commentsContainer.innerHTML = `
-          <div class="wd-comments-empty">
-            No comments yet. Be the first to start the conversation!
-          </div>
-        `;
-        return;
-      }
-
-      renderCommentTree(allComments, commentsContainer, post.id);
-    }
-
-    await loadAndRenderComments();
-
-    // 5. Persistent Comment Posting Handler
-    const submitBtn = document.getElementById("wd-comment-submit-btn");
-    const textarea = document.getElementById("wd-comment-textarea");
-    const noticeEl = document.getElementById("wd-comment-notice");
-
-    if (submitBtn && !submitBtn.dataset.bound) {
-      submitBtn.dataset.bound = "true";
-      submitBtn.addEventListener("click", async function(e) {
-        e.preventDefault();
-        const user = window.WorkDailyAuth.getUser();
-        if (!user) {
-          window.WorkDailyAuth.promptSignIn();
-          return;
-        }
-
-        const text = textarea ? textarea.value.trim() : "";
-        if (!text) {
-          if (noticeEl) {
-            noticeEl.style.color = "#E53935";
-            noticeEl.textContent = "Please enter a comment before posting.";
+      document.addEventListener("click", function(e) {
+        const activeBtn = document.getElementById("wd-share-btn");
+        const activePopover = document.getElementById("wd-share-popover");
+        if (activePopover && activePopover.classList.contains("show")) {
+          if (!activePopover.contains(e.target) && (!activeBtn || !activeBtn.contains(e.target))) {
+            activePopover.classList.remove("show");
+            if (activeBtn) activeBtn.setAttribute("aria-expanded", "false");
           }
-          return;
         }
+      });
 
-        submitBtn.disabled = true;
-        submitBtn.textContent = "Posting...";
-
-        const newComment = {
-          id: "cmt_" + Date.now() + "_" + Math.random().toString(36).substr(2, 5),
-          postId: post.id,
-          userId: user.userId,
-          authorName: user.displayName,
-          authorPhoto: user.photoURL,
-          parentCommentId: null,
-          content: escapeHTML(text),
-          createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString(),
-          status: "active"
-        };
-
-        try {
-          await window.WorkDailyDatabase.addComment(newComment);
-          if (textarea) textarea.value = "";
-          submitBtn.disabled = false;
-          submitBtn.textContent = "Post Comment";
-          if (noticeEl) {
-            noticeEl.style.color = "var(--color-primary)";
-            noticeEl.textContent = "Comment posted successfully!";
-            setTimeout(() => {
-              if (noticeEl && window.WorkDailyAuth.getUser()) {
-                noticeEl.textContent = `Commenting as ${window.WorkDailyAuth.getUser().displayName}`;
-              }
-            }, 3000);
-          }
-          await loadAndRenderComments();
-        } catch(err) {
-          submitBtn.disabled = false;
-          submitBtn.textContent = "Post Comment";
-          if (noticeEl) {
-            noticeEl.style.color = "#E53935";
-            noticeEl.textContent = "Failed to save comment. Please try again.";
+      document.addEventListener("keydown", function(e) {
+        if (e.key === "Escape") {
+          const activeBtn = document.getElementById("wd-share-btn");
+          const activePopover = document.getElementById("wd-share-popover");
+          if (activePopover && activePopover.classList.contains("show")) {
+            activePopover.classList.remove("show");
+            if (activeBtn) activeBtn.setAttribute("aria-expanded", "false");
           }
         }
       });
     }
-  }
 
-  function escapeHTML(str) {
-    if (!str) return "";
-    return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
-  }
-
-  function renderCommentTree(comments, container, postId) {
-    container.innerHTML = "";
-    const roots = comments.filter(c => !c.parentCommentId);
-    const repliesMap = new Map();
-
-    comments.forEach(c => {
-      if (c.parentCommentId) {
-        if (!repliesMap.has(c.parentCommentId)) repliesMap.set(c.parentCommentId, []);
-        repliesMap.get(c.parentCommentId).push(c);
-      }
-    });
-
-    roots.forEach(root => {
-      const node = createCommentNode(root, repliesMap, postId);
-      container.appendChild(node);
-    });
-  }
-
-  function createCommentNode(comment, repliesMap, postId) {
-    const card = document.createElement("div");
-    card.className = "wd-comment-item";
-    card.setAttribute("data-comment-id", comment.id);
-
-    const initial = (comment.authorName || "U").charAt(0).toUpperCase();
-    const avatarHtml = comment.authorPhoto ?
-      `<img src="${comment.authorPhoto}" alt="${comment.authorName}" class="wd-comment-avatar"/>` :
-      `<div class="wd-comment-avatar">${initial}</div>`;
-
-    const formattedDate = comment.createdAt.includes("T") ?
-      new Date(comment.createdAt).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }) :
-      comment.createdAt;
-
-    card.innerHTML = `
-      ${avatarHtml}
-      <div class="wd-comment-body">
-        <div class="wd-comment-meta">
-          <span class="wd-comment-author">${comment.authorName}</span>
-          <span class="wd-comment-date">${formattedDate}</span>
-        </div>
-        <div class="wd-comment-text">${comment.content}</div>
-        <div class="wd-comment-actions">
-          <button class="wd-comment-action-btn wd-reply-btn" data-comment-id="${comment.id}">Reply</button>
-        </div>
-        <div class="wd-reply-form-slot" style="margin-top: 12px; display: none;"></div>
-        <div class="wd-replies-container" style="margin-top: 16px; padding-left: 20px; border-left: 2px solid var(--color-border);"></div>
-      </div>
-    `;
-
-    const replyBtn = card.querySelector(".wd-reply-btn");
-    const replySlot = card.querySelector(".wd-reply-form-slot");
-
-    if (replyBtn) {
-      replyBtn.addEventListener("click", () => {
-        const user = window.WorkDailyAuth.getUser();
-        if (!user) {
-          window.WorkDailyAuth.promptSignIn();
-          return;
-        }
-
-        if (replySlot.style.display === "block") {
-          replySlot.style.display = "none";
-          replySlot.innerHTML = "";
-          return;
-        }
-
-        replySlot.style.display = "block";
-        replySlot.innerHTML = `
-          <div class="wd-comment-input-box" style="padding: 12px;">
-            <textarea class="wd-reply-textarea" placeholder="Write a reply..." rows="2" style="font-size: 13.5px;"></textarea>
-            <div class="wd-comment-form-actions">
-              <span class="wd-reply-notice" style="font-size: 11.5px; color: var(--color-text-muted);">Replying as ${user.displayName}</span>
-              <div style="display: flex; gap: 8px;">
-                <button class="wd-btn wd-btn-secondary wd-btn-sm wd-cancel-reply-btn" style="padding: 4px 12px; font-size: 12px;">Cancel</button>
-                <button class="wd-btn wd-btn-primary wd-btn-sm wd-submit-reply-btn" style="padding: 4px 12px; font-size: 12px;">Submit Reply</button>
-              </div>
-            </div>
-          </div>
-        `;
-
-        const cancelBtn = replySlot.querySelector(".wd-cancel-reply-btn");
-        const submitReplyBtn = replySlot.querySelector(".wd-submit-reply-btn");
-        const replyTextarea = replySlot.querySelector(".wd-reply-textarea");
-
-        cancelBtn.addEventListener("click", () => {
-          replySlot.style.display = "none";
-          replySlot.innerHTML = "";
-        });
-
-        submitReplyBtn.addEventListener("click", async () => {
-          const text = replyTextarea ? replyTextarea.value.trim() : "";
-          if (!text) return;
-
-          submitReplyBtn.disabled = true;
-          submitReplyBtn.textContent = "Replying...";
-
-          const replyComment = {
-            id: "cmt_" + Date.now() + "_" + Math.random().toString(36).substr(2, 5),
-            postId: postId,
-            userId: user.userId,
-            authorName: user.displayName,
-            authorPhoto: user.photoURL,
-            parentCommentId: comment.id,
-            content: escapeHTML(text),
-            createdAt: new Date().toISOString(),
-            updatedAt: new Date().toISOString(),
-            status: "active"
-          };
-
-          try {
-            await window.WorkDailyDatabase.addComment(replyComment);
-            replySlot.style.display = "none";
-            replySlot.innerHTML = "";
-            const currentPost = window.WorkDailyBlogStore.getPost(postId);
-            if (currentPost && typeof initArticleInteractions === "function") {
-              await initArticleInteractions(currentPost);
-            }
-          } catch(e) {
-            submitReplyBtn.disabled = false;
-            submitReplyBtn.textContent = "Submit Reply";
-          }
-        });
-      });
-    }
-
-    const repliesContainer = card.querySelector(".wd-replies-container");
-    if (repliesMap.has(comment.id)) {
-      const childReplies = repliesMap.get(comment.id);
-      childReplies.forEach(child => {
-        const childNode = createCommentNode(child, repliesMap, postId);
-        repliesContainer.appendChild(childNode);
-      });
-    } else {
-      repliesContainer.style.display = "none";
-    }
-
-    return card;
+    updateShareLinks();
   }
 
   /* BLOG SYSTEM & CLICK HANDLERS */
