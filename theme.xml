@@ -19,7 +19,8 @@
   <meta expr:content='data:blog.canonicalUrl' property='og:url'/>
   <meta content='WorkDaily' property='og:site_name'/>
   <meta content='summary_large_image' name='twitter:card'/>
-  <meta content='#145A32' name='theme-color'/>
+  <meta content='#F7F8F5' name='theme-color'/>
+  <meta content='light' name='color-scheme'/>
 
   <!-- Google Typography & Google Identity Services -->
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -2110,43 +2111,36 @@ body {
   z-index: 0;
 }
 
-.wd-footer-standalone-icon {
+.wd-footer-cta-wrap {
   margin-bottom: 4px;
-  display: flex;
-  justify-content: center;
-}
-
-.wd-standalone-icon-badge {
-  width: 50px;
-  height: 50px;
-  border-radius: var(--radius-md);
-  background: linear-gradient(135deg, #145A32 0%, #2E7D32 50%, #6B8E23 100%);
-  border: 1px solid rgba(255, 255, 255, 0.35);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #FFFFFF;
-  box-shadow: 0 10px 24px rgba(20, 90, 50, 0.28), inset 0 1px 1px rgba(255, 255, 255, 0.4);
+  gap: 14px;
+  max-width: 100%;
 }
 
-.wd-btn-download-icon {
+.wd-footer-cta-btn {
+  border-radius: var(--radius-full);
+  padding: 14px 32px;
+  font-size: 15px;
+  font-weight: 700;
+  box-shadow: 0 8px 24px rgba(20, 90, 50, 0.22);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.wd-footer-gradient-icon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 28px;
-  height: 28px;
-  border-radius: 8px;
-  background: linear-gradient(135deg, #2E7D32 0%, #6B8E23 100%);
-  border: 1px solid rgba(255, 255, 255, 0.35);
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.18), inset 0 1px 1px rgba(255, 255, 255, 0.4);
-  color: #FFFFFF;
-  margin-left: 4px;
   flex-shrink: 0;
   transition: transform var(--transition-fast);
 }
 
-.wd-footer-cta-btn:hover .wd-btn-download-icon {
-  transform: translateY(1px);
+.wd-footer-gradient-icon:hover {
+  transform: translateY(-2px);
 }
 
 .wd-footer-curve-wrap {
@@ -2844,7 +2838,7 @@ body {
       <div class="wd-hero-content">
         <div class="wd-hero-badge">
           <span class="wd-badge-dot"></span>
-          <span>WORKDAILY</span>
+          <span>SYNFUSION</span>
         </div>
         <h1 class="wd-hero-title">
           Work smarter.<br/>
@@ -3182,9 +3176,7 @@ body {
 
                     <header class="wd-post-header">
                       <div class="wd-post-header-top">
-                        <div class="wd-post-labels" id="wd-post-labels-container">
-                          <span class="wd-label-pill">Article</span>
-                        </div>
+                        <div class="wd-post-labels" id="wd-post-labels-container" style="display: none;"></div>
                         <div class="wd-share-wrapper">
                           <button class="wd-share-btn" id="wd-share-btn" aria-label="Share article" aria-haspopup="true" aria-expanded="false">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
@@ -3294,27 +3286,23 @@ body {
       </svg>
     </div>
     <div class="wd-container wd-footer-container">
-      <!-- Standalone Download Icon Badge Above Footer CTA Button -->
-      <div class="wd-footer-standalone-icon" aria-hidden="true">
-        <div class="wd-standalone-icon-badge">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-            <polyline points="7 10 12 15 17 10"/>
-            <line x1="12" y1="15" x2="12" y2="3"/>
-          </svg>
-        </div>
-      </div>
-
       <div class="wd-footer-cta-wrap">
         <a href="#showcase" class="wd-btn wd-btn-primary wd-btn-lg wd-footer-cta-btn" aria-label="Download Now">
           <span>Download Now</span>
-          <span class="wd-btn-download-icon" aria-hidden="true">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-              <polyline points="7 10 12 15 17 10"/>
-              <line x1="12" y1="15" x2="12" y2="3"/>
-            </svg>
-          </span>
+        </a>
+        <a href="#showcase" class="wd-footer-gradient-icon" aria-label="Download Icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <defs>
+              <linearGradient id="wdFooterIconGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#145A32"/>
+                <stop offset="50%" stop-color="#2E7D32"/>
+                <stop offset="100%" stop-color="#6B8E23"/>
+              </linearGradient>
+            </defs>
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" stroke="url(#wdFooterIconGradient)"/>
+            <polyline points="7 10 12 15 17 10" stroke="url(#wdFooterIconGradient)"/>
+            <line x1="12" y1="15" x2="12" y2="3" stroke="url(#wdFooterIconGradient)"/>
+          </svg>
         </a>
       </div>
 
@@ -3373,7 +3361,7 @@ body {
       eyebrow: "OFFLINE DASHBOARD",
       title: "Everything at a glance",
       description: "Track daily attendance, active workers, daily wages, and cash advances from one simple dashboard.",
-      badge: "WORKDAILY",
+      badge: "SYNFUSION",
       accentColor: "rgba(20, 90, 50, 0.35)",
       image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80",
       floatingLabel: "100% OFFLINE"
@@ -4240,10 +4228,8 @@ body {
       if (post) {
         const labelsContainer = document.getElementById("wd-post-labels-container");
         if (labelsContainer) {
-          let cat = post.category;
-          if (typeof cat === "object" && cat !== null) cat = cat.name || cat.term || "Article";
-          const categoryName = (cat && typeof cat === "string" && !cat.includes("[object")) ? cat : "Article";
-          labelsContainer.innerHTML = `<span class="wd-label-pill">${categoryName}</span>`;
+          labelsContainer.innerHTML = "";
+          labelsContainer.style.display = "none";
         }
 
         const titleHeading = document.getElementById("wd-post-title-heading");
@@ -4271,26 +4257,41 @@ body {
           bodyEl.innerHTML = post.content || "<p>No article content available.</p>";
         }
 
+        function normalizeBloggerImageUrl(url) {
+          if (!url || typeof url !== "string") return "";
+          return url
+            .split("?")[0]
+            .split("#")[0]
+            .replace(/\/s\d+(-c)?\//g, "/")
+            .replace(/\/w\d+-h\d+(-c)?\//g, "/")
+            .replace(/\/h\d+\//g, "/")
+            .replace(/\/w\d+\//g, "/")
+            .replace(/\/s\d+\//g, "/");
+        }
+
         const heroWrap = document.getElementById("wd-post-hero-wrap");
         const heroImg = document.getElementById("wd-post-hero-img");
         if (heroWrap && heroImg) {
           if (post.image) {
-            let isDuplicateInBody = false;
+            heroImg.src = post.image;
+            heroImg.alt = post.title || "Article Image";
+            heroWrap.style.display = "block";
+
             if (bodyEl) {
+              const normHero = normalizeBloggerImageUrl(post.image);
               const firstBodyImg = bodyEl.querySelector("img");
               if (firstBodyImg) {
-                const firstSrc = firstBodyImg.getAttribute("src") || "";
-                if (firstSrc && (firstSrc === post.image || post.image.includes(firstSrc) || firstSrc.includes(post.image.split('?')[0]))) {
-                  isDuplicateInBody = true;
+                const firstSrc = firstBodyImg.getAttribute("src") || firstBodyImg.getAttribute("data-src") || "";
+                const normBody = normalizeBloggerImageUrl(firstSrc);
+                if (normHero && normBody && (normHero === normBody || normHero.endsWith(normBody) || normBody.endsWith(normHero))) {
+                  const parentP = firstBodyImg.closest("p, div, figure");
+                  if (parentP && parentP.children.length === 1 && parentP.textContent.trim() === "") {
+                    parentP.remove();
+                  } else {
+                    firstBodyImg.remove();
+                  }
                 }
               }
-            }
-            if (isDuplicateInBody) {
-              heroWrap.style.display = "none";
-            } else {
-              heroImg.src = post.image;
-              heroImg.alt = post.title;
-              heroWrap.style.display = "block";
             }
           } else {
             heroWrap.style.display = "none";
