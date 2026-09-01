@@ -2186,20 +2186,6 @@ body {
   padding: 0 20px;
 }
 
-.wd-footer-cta-wrap {
-  margin-bottom: 4px;
-}
-
-.wd-footer-cta-btn {
-  border-radius: var(--radius-full);
-  padding: 14px 32px;
-  font-size: 15px;
-  font-weight: 700;
-  box-shadow: 0 8px 24px rgba(20, 90, 50, 0.22);
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-}
 
 .wd-footer-brand-wrap {
   display: flex;
@@ -2764,10 +2750,6 @@ body {
   white-space: nowrap;
 }
 
-.wd-share-toast.show {
-  opacity: 1;
-  transform: translateY(0);
-}
 
 ]]></b:skin>
 </head>
