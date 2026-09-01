@@ -1614,12 +1614,26 @@ body {
   -webkit-user-select: none;
 }
 
-.wd-video-player-wrapper video {
+.wd-video-player-wrapper video,
+.wd-video-player-wrapper iframe {
   width: 100%;
   height: auto;
   display: block;
   background: #000;
   border-radius: var(--radius-lg);
+}
+
+.wd-video-player-wrapper iframe {
+  aspect-ratio: 16 / 9;
+  pointer-events: none; /* Disable native YT controls so overlay receives clicks */
+}
+
+/* Click Overlay for play/pause toggle (for iframe particularly) */
+.wd-video-click-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  cursor: pointer;
 }
 
 /* Custom Play Overlay Button */
@@ -3488,57 +3502,114 @@ body {
   });
 
   /* CUSTOM WORKDAILY VIDEO PLAYER INTEGRATION & DETECTOR */
+
+  let ytApiPromise = null;
+  function loadYouTubeApi() {
+    if (window.YT && window.YT.Player) {
+      return Promise.resolve(window.YT);
+    }
+    if (ytApiPromise) {
+      return ytApiPromise;
+    }
+    ytApiPromise = new Promise(function(resolve, reject) {
+      window.onYouTubeIframeAPIReady = function() {
+        resolve(window.YT);
+      };
+      const script = document.createElement("script");
+      script.src = "https://www.youtube.com/iframe_api";
+      script.onerror = function() {
+        reject(new Error("Failed to load YouTube IFrame API"));
+      };
+      document.head.appendChild(script);
+    });
+    return ytApiPromise;
+  }
+
   function initCustomVideoPlayer() {
-    // Scan article content for <video> tags
+    const mediaElements = [];
+
+    // 1. Detect <video> tags
     const articleVideos = document.querySelectorAll(".wd-post-body video, video.wd-custom-video-target");
     articleVideos.forEach(function(vid) {
-      upgradeToCustomVideoPlayer(vid);
+      mediaElements.push({ type: 'html5', element: vid });
     });
 
-    // Also sanitize iframe embeds so they do not autoplay
+    // 2. Detect <iframe> YouTube embeds
     const articleIframes = document.querySelectorAll(".wd-post-body iframe");
     articleIframes.forEach(function(iframe) {
       try {
         let src = iframe.getAttribute("src") || "";
+        // Basic autoplay prevention for untracked iframes
         if (src && (src.includes("autoplay=1") || src.includes("autoplay=true"))) {
           src = src.replace(/([?&])autoplay=[^&]+/g, "$1autoplay=0");
           iframe.setAttribute("src", src);
         }
+
+        // Detect YouTube iframe
+        if (src.includes("youtube.com/embed/") || src.includes("youtube-nocookie.com/embed/")) {
+           mediaElements.push({ type: 'youtube-iframe', element: iframe, url: src });
+        }
       } catch (e) {}
+    });
+
+    // 3. Detect <a> links to direct videos or YouTube URLs
+    const articleLinks = document.querySelectorAll(".wd-post-body a");
+    articleLinks.forEach(function(link) {
+      if (link.closest(".wd-video-player-wrapper")) return;
+      try {
+        const href = link.getAttribute("href") || "";
+        const lowerHref = href.toLowerCase();
+
+        // Direct media links
+        if (lowerHref.endsWith(".mp4") || lowerHref.endsWith(".webm") || lowerHref.endsWith(".ogg")) {
+          mediaElements.push({ type: 'html5-link', element: link, url: href });
+        }
+        // YouTube links
+        else if (
+          href.includes("youtube.com/watch") ||
+          href.includes("youtu.be/") ||
+          href.includes("youtube.com/shorts/") ||
+          href.includes("youtube.com/embed/")
+        ) {
+          mediaElements.push({ type: 'youtube-link', element: link, url: href });
+        }
+      } catch (e) {}
+    });
+
+    mediaElements.forEach(function(item) {
+      // Defer to the unified player function
+      if (typeof upgradeToUnifiedPlayer === 'function') {
+        upgradeToUnifiedPlayer(item.element, item);
+      } else if (typeof upgradeToCustomVideoPlayer === 'function' && item.type === 'html5') {
+        // Fallback for transition
+        upgradeToCustomVideoPlayer(item.element);
+      }
     });
   }
 
-  function upgradeToCustomVideoPlayer(videoEl) {
-    if (!videoEl || videoEl.parentElement.classList.contains("wd-video-player-wrapper")) return;
-
-    // Autoplay prevention safeguards
-    videoEl.removeAttribute("autoplay");
-    videoEl.autoplay = false;
-    videoEl.controls = false;
-    videoEl.preload = "metadata";
-
-    if (!videoEl.paused) {
-      try { videoEl.pause(); } catch(e) {}
-    }
+  function upgradeToUnifiedPlayer(originalEl, mediaData) {
+    if (!originalEl || originalEl.closest(".wd-video-player-wrapper")) return;
 
     // Create WorkDaily Custom Player DOM Structure
     const wrapper = document.createElement("div");
     wrapper.className = "wd-video-player-wrapper";
+    wrapper.setAttribute("data-media-type", mediaData.type);
 
-    videoEl.parentNode.insertBefore(wrapper, videoEl);
-    wrapper.appendChild(videoEl);
+    originalEl.parentNode.insertBefore(wrapper, originalEl);
+
+    // Create click overlay for play/pause
+    const clickOverlay = document.createElement("div");
+    clickOverlay.className = "wd-video-click-overlay";
 
     // Add Big Play Button
     const bigPlayBtn = document.createElement("button");
     bigPlayBtn.className = "wd-video-big-play-btn";
     bigPlayBtn.setAttribute("aria-label", "Play Video");
     bigPlayBtn.innerHTML = `<svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>`;
-    wrapper.appendChild(bigPlayBtn);
 
     // Add Loading Spinner
     const spinner = document.createElement("div");
     spinner.className = "wd-video-spinner";
-    wrapper.appendChild(spinner);
 
     // Add Control Bar
     const controlBar = document.createElement("div");
@@ -3595,162 +3666,389 @@ body {
     const pipBtn = controlBar.querySelector(".wd-v-pip");
     const fullscreenBtn = controlBar.querySelector(".wd-v-fullscreen");
 
-    if (document.pictureInPictureEnabled && typeof videoEl.requestPictureInPicture === "function") {
-      pipBtn.style.display = "flex";
+    // Create elements specific to the unified API
+    const UnifiedPlayer = {
+      wrapper, bigPlayBtn, spinner, controlBar, playBtn, iconPlay, iconPause,
+      progressContainer, bufferBar, progressFill, timeDisplay, muteBtn, iconVolOn, iconVolOff,
+      volumeSlider, speedSelect, pipBtn, fullscreenBtn, clickOverlay
+    };
+
+    // Replace original element with appropriate player based on type
+    if (mediaData.type === 'html5' || mediaData.type === 'html5-link') {
+      setupHtml5Player(originalEl, mediaData, UnifiedPlayer);
+    } else if (mediaData.type === 'youtube-iframe' || mediaData.type === 'youtube-link') {
+      setupYouTubePlayer(originalEl, mediaData, UnifiedPlayer);
+    }
+  }
+
+  function setupHtml5Player(originalEl, mediaData, ui) {
+    let videoEl;
+
+    // Determine source element
+    if (mediaData.type === 'html5') {
+      videoEl = originalEl;
+    } else if (mediaData.type === 'html5-link') {
+      videoEl = document.createElement('video');
+      videoEl.src = mediaData.url;
+      // Replace original link with video element in the DOM temporarily
+      originalEl.parentNode.replaceChild(videoEl, originalEl);
     }
 
+    // Autoplay prevention safeguards
+    videoEl.removeAttribute("autoplay");
+    videoEl.autoplay = false;
+    videoEl.controls = false;
+    videoEl.preload = "metadata";
+
+    if (!videoEl.paused) {
+      try { videoEl.pause(); } catch(e) {}
+    }
+
+    // Assemble DOM
+    ui.wrapper.appendChild(videoEl);
+    ui.wrapper.appendChild(ui.clickOverlay);
+    ui.wrapper.appendChild(ui.bigPlayBtn);
+    ui.wrapper.appendChild(ui.spinner);
+    ui.wrapper.appendChild(ui.controlBar);
+
+    if (document.pictureInPictureEnabled && typeof videoEl.requestPictureInPicture === "function") {
+      ui.pipBtn.style.display = "flex";
+    }
+
+    // Playback Toggle API
     function togglePlay() {
       if (videoEl.paused) {
-        videoEl.play().catch(function(err) {
-          console.warn("Playback error:", err);
-        });
+        videoEl.play().catch(err => console.warn("Playback error:", err));
       } else {
         videoEl.pause();
       }
     }
 
-    bigPlayBtn.addEventListener("click", togglePlay);
-    playBtn.addEventListener("click", togglePlay);
-    videoEl.addEventListener("click", togglePlay);
+    ui.bigPlayBtn.addEventListener("click", togglePlay);
+    ui.playBtn.addEventListener("click", togglePlay);
+    ui.clickOverlay.addEventListener("click", togglePlay);
 
-    // Idle timer for hiding controls during playback
+    // Idle timer logic
     let idleTimer = null;
     function resetIdleTimer() {
-      wrapper.classList.remove("user-idle");
+      ui.wrapper.classList.remove("user-idle");
       clearTimeout(idleTimer);
       if (!videoEl.paused) {
-        idleTimer = setTimeout(function() {
-          wrapper.classList.add("user-idle");
-        }, 3000);
+        idleTimer = setTimeout(() => ui.wrapper.classList.add("user-idle"), 3000);
       }
     }
 
-    wrapper.addEventListener("mousemove", resetIdleTimer);
-    wrapper.addEventListener("touchstart", resetIdleTimer, { passive: true });
+    ui.wrapper.addEventListener("mousemove", resetIdleTimer);
+    ui.wrapper.addEventListener("touchstart", resetIdleTimer, { passive: true });
 
-    videoEl.addEventListener("play", function() {
-      wrapper.classList.add("playing");
-      wrapper.classList.remove("loading");
-      iconPlay.style.display = "none";
-      iconPause.style.display = "block";
+    // HTML5 Video Events -> UI Updates
+    videoEl.addEventListener("play", () => {
+      ui.wrapper.classList.add("playing");
+      ui.wrapper.classList.remove("loading");
+      ui.iconPlay.style.display = "none";
+      ui.iconPause.style.display = "block";
       resetIdleTimer();
     });
 
-    videoEl.addEventListener("pause", function() {
-      wrapper.classList.remove("playing");
-      wrapper.classList.remove("user-idle");
+    videoEl.addEventListener("pause", () => {
+      ui.wrapper.classList.remove("playing");
+      ui.wrapper.classList.remove("user-idle");
       clearTimeout(idleTimer);
-      iconPlay.style.display = "block";
-      iconPause.style.display = "none";
+      ui.iconPlay.style.display = "block";
+      ui.iconPause.style.display = "none";
     });
 
-    videoEl.addEventListener("waiting", function() {
-      wrapper.classList.add("loading");
-    });
+    videoEl.addEventListener("waiting", () => ui.wrapper.classList.add("loading"));
+    videoEl.addEventListener("playing", () => ui.wrapper.classList.remove("loading"));
 
-    videoEl.addEventListener("playing", function() {
-      wrapper.classList.remove("loading");
-    });
-
-    videoEl.addEventListener("ended", function() {
-      wrapper.classList.remove("playing");
-      wrapper.classList.remove("user-idle");
+    videoEl.addEventListener("ended", () => {
+      ui.wrapper.classList.remove("playing", "user-idle");
       clearTimeout(idleTimer);
-      iconPlay.style.display = "block";
-      iconPause.style.display = "none";
-      if (videoEl.duration) {
-        progressFill.style.width = "100%";
+      ui.iconPlay.style.display = "block";
+      ui.iconPause.style.display = "none";
+      if (videoEl.duration) ui.progressFill.style.width = "100%";
+    });
+
+    videoEl.addEventListener("error", () => {
+      ui.wrapper.classList.remove("loading");
+      if (!ui.wrapper.querySelector(".wd-video-error-badge")) {
+        const errBadge = document.createElement("div");
+        errBadge.className = "wd-video-error-badge";
+        errBadge.innerHTML = `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#E53935" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>Unable to play video media.</span><button class="wd-btn wd-btn-primary wd-btn-sm" onclick="this.parentElement.remove();">Retry</button>`;
+        ui.wrapper.appendChild(errBadge);
+
+        // Add reload capability to retry button
+        errBadge.querySelector('button').addEventListener('click', () => {
+           videoEl.load();
+        });
       }
     });
 
-    videoEl.addEventListener("error", function() {
-      wrapper.classList.remove("loading");
-      if (!wrapper.querySelector(".wd-video-error-badge")) {
-        const errorBadge = document.createElement("div");
-        errorBadge.className = "wd-video-error-badge";
-        errorBadge.innerHTML = `
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#E53935" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-          <span>Unable to play video media.</span>
-        `;
-        wrapper.appendChild(errorBadge);
-      }
-    });
-
-    videoEl.addEventListener("timeupdate", function() {
+    // Time & Progress
+    videoEl.addEventListener("timeupdate", () => {
       if (videoEl.duration && !isNaN(videoEl.duration)) {
         const pct = (videoEl.currentTime / videoEl.duration) * 100;
-        progressFill.style.width = pct + "%";
-        timeDisplay.textContent = `${formatTime(videoEl.currentTime)} / ${formatTime(videoEl.duration)}`;
+        ui.progressFill.style.width = pct + "%";
+        ui.timeDisplay.textContent = `${formatTime(videoEl.currentTime)} / ${formatTime(videoEl.duration)}`;
       }
+      updateBuffer();
+    });
+
+    videoEl.addEventListener("progress", updateBuffer);
+
+    function updateBuffer() {
       if (videoEl.buffered && videoEl.buffered.length > 0 && videoEl.duration) {
         const bufferedEnd = videoEl.buffered.end(videoEl.buffered.length - 1);
         const bufPct = (bufferedEnd / videoEl.duration) * 100;
-        bufferBar.style.width = bufPct + "%";
+        ui.bufferBar.style.width = bufPct + "%";
       }
-    });
+    }
 
-    videoEl.addEventListener("progress", function() {
-      if (videoEl.buffered && videoEl.buffered.length > 0 && videoEl.duration) {
-        const bufferedEnd = videoEl.buffered.end(videoEl.buffered.length - 1);
-        const bufPct = (bufferedEnd / videoEl.duration) * 100;
-        bufferBar.style.width = bufPct + "%";
-      }
-    });
-
-    progressContainer.addEventListener("click", function(e) {
+    // Seeking interactions
+    ui.progressContainer.addEventListener("click", e => {
       if (!videoEl.duration || isNaN(videoEl.duration)) return;
-      const rect = progressContainer.getBoundingClientRect();
+      const rect = ui.progressContainer.getBoundingClientRect();
       const pos = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
       videoEl.currentTime = pos * videoEl.duration;
     });
 
-    muteBtn.addEventListener("click", function() {
-      videoEl.muted = !videoEl.muted;
-      updateVolumeIcon();
-    });
-
-    volumeSlider.addEventListener("input", function() {
-      videoEl.volume = parseFloat(volumeSlider.value);
-      videoEl.muted = (videoEl.volume === 0);
-      updateVolumeIcon();
-    });
-
-    function updateVolumeIcon() {
+    // Volume & Mute
+    function syncVolumeUI() {
       if (videoEl.muted || videoEl.volume === 0) {
-        iconVolOn.style.display = "none";
-        iconVolOff.style.display = "block";
+        ui.iconVolOn.style.display = "none";
+        ui.iconVolOff.style.display = "block";
       } else {
-        iconVolOn.style.display = "block";
-        iconVolOff.style.display = "none";
+        ui.iconVolOn.style.display = "block";
+        ui.iconVolOff.style.display = "none";
       }
     }
 
-    speedSelect.addEventListener("change", function() {
-      videoEl.playbackRate = parseFloat(speedSelect.value);
+    ui.muteBtn.addEventListener("click", () => {
+      videoEl.muted = !videoEl.muted;
+      syncVolumeUI();
     });
 
-    pipBtn.addEventListener("click", function() {
-      if (document.pictureInPictureElement) {
-        document.exitPictureInPicture().catch(e => console.log(e));
-      } else if (document.pictureInPictureEnabled && videoEl.requestPictureInPicture) {
-        videoEl.requestPictureInPicture().catch(e => console.log(e));
-      }
+    ui.volumeSlider.addEventListener("input", () => {
+      videoEl.volume = parseFloat(ui.volumeSlider.value);
+      videoEl.muted = (videoEl.volume === 0);
+      syncVolumeUI();
     });
 
-    fullscreenBtn.addEventListener("click", function() {
-      if (!document.fullscreenElement) {
-        wrapper.requestFullscreen().catch(err => console.log(err));
-      } else {
-        document.exitFullscreen();
-      }
+    // Speed
+    ui.speedSelect.addEventListener("change", () => {
+      videoEl.playbackRate = parseFloat(ui.speedSelect.value);
     });
 
-    function formatTime(seconds) {
-      if (isNaN(seconds) || seconds < 0) return "00:00";
-      const mins = Math.floor(seconds / 60);
-      const secs = Math.floor(seconds % 60);
-      return `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+    // Display
+    ui.pipBtn.addEventListener("click", () => {
+      if (document.pictureInPictureElement) document.exitPictureInPicture().catch(console.log);
+      else if (videoEl.requestPictureInPicture) videoEl.requestPictureInPicture().catch(console.log);
+    });
+
+    ui.fullscreenBtn.addEventListener("click", () => {
+      if (!document.fullscreenElement) ui.wrapper.requestFullscreen().catch(console.log);
+      else document.exitFullscreen();
+    });
+  }
+
+  function extractYouTubeId(url) {
+    let match = url.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=|shorts\/))([\w-]{11})/);
+    return (match && match[1]) ? match[1] : null;
+  }
+
+  function setupYouTubePlayer(originalEl, mediaData, ui) {
+    const videoId = extractYouTubeId(mediaData.url);
+    if (!videoId) return;
+
+    let targetEl;
+    if (mediaData.type === 'youtube-iframe') {
+      targetEl = originalEl;
+    } else {
+      targetEl = document.createElement('div');
+      originalEl.parentNode.replaceChild(targetEl, originalEl);
     }
+
+    // Assemble DOM
+    ui.wrapper.appendChild(targetEl);
+    ui.wrapper.appendChild(ui.clickOverlay);
+    ui.wrapper.appendChild(ui.bigPlayBtn);
+    ui.wrapper.appendChild(ui.spinner);
+    ui.wrapper.appendChild(ui.controlBar);
+
+    ui.wrapper.classList.add("loading");
+
+    loadYouTubeApi().then((YT) => {
+      const ytPlayer = new YT.Player(targetEl, {
+        videoId: videoId,
+        playerVars: {
+          autoplay: 0,
+          controls: 0,
+          disablekb: 1,
+          fs: 0,
+          rel: 0,
+          modestbranding: 1,
+          playsinline: 1,
+          enablejsapi: 1
+        },
+        events: {
+          'onReady': onPlayerReady,
+          'onStateChange': onPlayerStateChange,
+          'onError': onPlayerError
+        }
+      });
+
+      let timeUpdateInterval;
+
+      function onPlayerReady(event) {
+        ui.wrapper.classList.remove("loading");
+        updateTimeDisplay();
+      }
+
+      function onPlayerStateChange(event) {
+        const state = event.data;
+        if (state === YT.PlayerState.PLAYING) {
+          ui.wrapper.classList.add("playing");
+          ui.wrapper.classList.remove("loading");
+          ui.iconPlay.style.display = "none";
+          ui.iconPause.style.display = "block";
+
+          timeUpdateInterval = setInterval(updateTimeDisplay, 200);
+          resetIdleTimer();
+        } else {
+          ui.wrapper.classList.remove("playing", "user-idle");
+          clearTimeout(idleTimer);
+          clearInterval(timeUpdateInterval);
+
+          if (state === YT.PlayerState.PAUSED) {
+            ui.iconPlay.style.display = "block";
+            ui.iconPause.style.display = "none";
+          } else if (state === YT.PlayerState.ENDED) {
+            ui.iconPlay.style.display = "block";
+            ui.iconPause.style.display = "none";
+            ui.progressFill.style.width = "100%";
+          } else if (state === YT.PlayerState.BUFFERING) {
+            ui.wrapper.classList.add("loading");
+          }
+        }
+      }
+
+      function onPlayerError(event) {
+        ui.wrapper.classList.remove("loading");
+        if (!ui.wrapper.querySelector(".wd-video-error-badge")) {
+          const errBadge = document.createElement("div");
+          errBadge.className = "wd-video-error-badge";
+          errBadge.innerHTML = `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#E53935" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>Unable to play YouTube video.</span>`;
+          ui.wrapper.appendChild(errBadge);
+        }
+      }
+
+      function updateTimeDisplay() {
+        if (!ytPlayer || typeof ytPlayer.getDuration !== 'function') return;
+        const duration = ytPlayer.getDuration() || 0;
+        const current = ytPlayer.getCurrentTime() || 0;
+
+        if (duration > 0) {
+           const pct = (current / duration) * 100;
+           ui.progressFill.style.width = pct + "%";
+           ui.timeDisplay.textContent = `${formatTime(current)} / ${formatTime(duration)}`;
+
+           const loaded = ytPlayer.getVideoLoadedFraction() || 0;
+           ui.bufferBar.style.width = (loaded * 100) + "%";
+        }
+      }
+
+      // Playback Toggle API
+      function togglePlay() {
+        if (!ytPlayer || typeof ytPlayer.getPlayerState !== 'function') return;
+        const state = ytPlayer.getPlayerState();
+        if (state === YT.PlayerState.PLAYING) {
+          ytPlayer.pauseVideo();
+        } else {
+          ytPlayer.playVideo();
+        }
+      }
+
+      ui.bigPlayBtn.addEventListener("click", togglePlay);
+      ui.playBtn.addEventListener("click", togglePlay);
+      ui.clickOverlay.addEventListener("click", togglePlay);
+
+      // Idle timer logic
+      let idleTimer = null;
+      function resetIdleTimer() {
+        ui.wrapper.classList.remove("user-idle");
+        clearTimeout(idleTimer);
+        if (ytPlayer && ytPlayer.getPlayerState() === YT.PlayerState.PLAYING) {
+          idleTimer = setTimeout(() => ui.wrapper.classList.add("user-idle"), 3000);
+        }
+      }
+
+      ui.wrapper.addEventListener("mousemove", resetIdleTimer);
+      ui.wrapper.addEventListener("touchstart", resetIdleTimer, { passive: true });
+
+      // Seeking interactions
+      ui.progressContainer.addEventListener("click", e => {
+        if (!ytPlayer || typeof ytPlayer.getDuration !== 'function') return;
+        const duration = ytPlayer.getDuration();
+        if (!duration) return;
+        const rect = ui.progressContainer.getBoundingClientRect();
+        const pos = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+        ytPlayer.seekTo(pos * duration, true);
+        updateTimeDisplay();
+      });
+
+      // Volume & Mute
+      function syncVolumeUI() {
+        if (ytPlayer.isMuted() || ytPlayer.getVolume() === 0) {
+          ui.iconVolOn.style.display = "none";
+          ui.iconVolOff.style.display = "block";
+        } else {
+          ui.iconVolOn.style.display = "block";
+          ui.iconVolOff.style.display = "none";
+        }
+      }
+
+      ui.muteBtn.addEventListener("click", () => {
+        if (ytPlayer.isMuted()) {
+           ytPlayer.unMute();
+           ui.volumeSlider.value = (ytPlayer.getVolume() || 100) / 100;
+        } else {
+           ytPlayer.mute();
+           ui.volumeSlider.value = 0;
+        }
+        syncVolumeUI();
+      });
+
+      ui.volumeSlider.addEventListener("input", () => {
+        const vol = parseFloat(ui.volumeSlider.value) * 100;
+        ytPlayer.setVolume(vol);
+        if (vol > 0 && ytPlayer.isMuted()) ytPlayer.unMute();
+        syncVolumeUI();
+      });
+
+      // Speed
+      ui.speedSelect.addEventListener("change", () => {
+        ytPlayer.setPlaybackRate(parseFloat(ui.speedSelect.value));
+      });
+
+      // Picture-in-Picture (Not directly supported by YT Iframe API, hide button)
+      ui.pipBtn.style.display = "none";
+
+      ui.fullscreenBtn.addEventListener("click", () => {
+        if (!document.fullscreenElement) ui.wrapper.requestFullscreen().catch(console.log);
+        else document.exitFullscreen();
+      });
+
+    }).catch(err => {
+      ui.wrapper.classList.remove("loading");
+      console.error(err);
+    });
+  }
+
+  function formatTime(seconds) {
+    if (isNaN(seconds) || seconds < 0) return "00:00";
+    const mins = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60);
+    return `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
   }
 
   /* WORKDAILY BLOG STORE & POST NORMALIZER */
