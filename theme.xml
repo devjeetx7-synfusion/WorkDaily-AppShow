@@ -1600,6 +1600,14 @@ body {
 }
 
 /* CUSTOM WORKDAILY VIDEO PLAYER */
+.wd-video-btn:focus-visible,
+.wd-video-progress-container:focus-visible,
+.wd-video-click-overlay:focus-visible,
+.wd-video-speed-select:focus-visible {
+  outline: 2px solid var(--color-light-accent);
+  outline-offset: 2px;
+}
+
 .wd-video-player-wrapper {
   position: relative;
   width: 100%;
@@ -3510,10 +3518,32 @@ body {
   function initCustomVideoPlayer() {
     const mediaElements = [];
 
+    const allowedYTHosts = ["youtube.com", "www.youtube.com", "youtu.be", "youtube-nocookie.com", "www.youtube-nocookie.com"];
+    function isAllowedYT(urlStr) {
+      try {
+        const url = new URL(urlStr, window.location.origin);
+        return allowedYTHosts.includes(url.hostname);
+      } catch (e) {
+        return false;
+      }
+    }
+
     // 1. Detect <video> tags
     const articleVideos = document.querySelectorAll(".wd-post-body video, video.wd-custom-video-target");
     articleVideos.forEach(function(vid) {
       mediaElements.push({ type: 'html5', element: vid });
+    });
+
+    // 1b. Detect <source> tags not inside <video> (if any manually inserted poorly formatted HTML exists)
+    const articleSources = document.querySelectorAll(".wd-post-body source");
+    articleSources.forEach(function(src) {
+      const parent = src.parentElement;
+      if (parent && parent.tagName.toLowerCase() !== 'video' && parent.tagName.toLowerCase() !== 'audio') {
+        const url = src.getAttribute("src") || "";
+        if (url) {
+          mediaElements.push({ type: 'html5-link', element: src, url: url });
+        }
+      }
     });
 
     // 2. Detect <iframe> YouTube embeds
@@ -3527,8 +3557,8 @@ body {
           iframe.setAttribute("src", src);
         }
 
-        // Detect YouTube iframe
-        if (src.includes("youtube.com/embed/") || src.includes("youtube-nocookie.com/embed/")) {
+        // Detect YouTube iframe with strict validation
+        if (isAllowedYT(src) && src.includes("/embed/")) {
            mediaElements.push({ type: 'youtube-iframe', element: iframe, url: src });
         }
       } catch (e) {}
@@ -3548,10 +3578,11 @@ body {
         }
         // YouTube links
         else if (
-          href.includes("youtube.com/watch") ||
-          href.includes("youtu.be/") ||
-          href.includes("youtube.com/shorts/") ||
-          href.includes("youtube.com/embed/")
+          isAllowedYT(href) &&
+          (href.includes("/watch") ||
+           href.includes("youtu.be/") ||
+           href.includes("/shorts/") ||
+           href.includes("/embed/"))
         ) {
           mediaElements.push({ type: 'youtube-link', element: link, url: href });
         }
@@ -3562,9 +3593,6 @@ body {
       // Defer to the unified player function
       if (typeof upgradeToUnifiedPlayer === 'function') {
         upgradeToUnifiedPlayer(item.element, item);
-      } else if (typeof upgradeToCustomVideoPlayer === 'function' && item.type === 'html5') {
-        // Fallback for transition
-        upgradeToCustomVideoPlayer(item.element);
       }
     });
   }
@@ -3582,6 +3610,15 @@ body {
     // Create click overlay for play/pause
     const clickOverlay = document.createElement("div");
     clickOverlay.className = "wd-video-click-overlay";
+    clickOverlay.setAttribute("tabindex", "0");
+    clickOverlay.setAttribute("role", "button");
+    clickOverlay.setAttribute("aria-label", "Toggle Play");
+    clickOverlay.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            clickOverlay.click();
+        }
+    });
 
     // Add Big Play Button
     const bigPlayBtn = document.createElement("button");
@@ -3597,17 +3634,17 @@ body {
     const controlBar = document.createElement("div");
     controlBar.className = "wd-video-control-bar";
     controlBar.innerHTML = `
-      <button class="wd-video-btn wd-v-play" aria-label="Play/Pause">
+      <button class="wd-video-btn wd-v-play" aria-label="Play/Pause" tabindex="0">
         <svg class="icon-play" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
         <svg class="icon-pause" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="display:none;"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
       </button>
-      <div class="wd-video-progress-container" title="Seek video">
+      <div class="wd-video-progress-container" title="Seek video" tabindex="0" role="slider" aria-label="Seek video" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
         <div class="wd-video-buffer-bar"></div>
         <div class="wd-video-progress-fill">
           <div class="wd-video-progress-handle"></div>
         </div>
       </div>
-      <span class="wd-video-time-display">00:00 / 00:00</span>
+      <span class="wd-video-time-display" aria-live="polite">00:00 / 00:00</span>
       <div class="wd-video-volume-wrap">
         <button class="wd-video-btn wd-v-mute" aria-label="Mute/Unmute">
           <svg class="icon-vol-on" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
@@ -3771,6 +3808,7 @@ body {
       if (videoEl.duration && !isNaN(videoEl.duration)) {
         const pct = (videoEl.currentTime / videoEl.duration) * 100;
         ui.progressFill.style.width = pct + "%";
+        ui.progressContainer.setAttribute("aria-valuenow", Math.round(pct));
         ui.timeDisplay.textContent = `${formatTime(videoEl.currentTime)} / ${formatTime(videoEl.duration)}`;
       }
       updateBuffer();
@@ -3792,6 +3830,20 @@ body {
       const rect = ui.progressContainer.getBoundingClientRect();
       const pos = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
       videoEl.currentTime = pos * videoEl.duration;
+    });
+
+    ui.progressContainer.addEventListener('keydown', (e) => {
+      if (!videoEl.duration || isNaN(videoEl.duration)) return;
+      let pos = videoEl.currentTime / videoEl.duration;
+      if (e.key === 'ArrowRight' || e.key === 'ArrowUp') {
+         e.preventDefault();
+         pos = Math.min(1, pos + 0.05);
+         videoEl.currentTime = pos * videoEl.duration;
+      } else if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') {
+         e.preventDefault();
+         pos = Math.max(0, pos - 0.05);
+         videoEl.currentTime = pos * videoEl.duration;
+      }
     });
 
     // Volume & Mute
@@ -3842,13 +3894,9 @@ body {
     const videoId = extractYouTubeId(mediaData.url);
     if (!videoId) return;
 
-    let targetEl;
-    if (mediaData.type === 'youtube-iframe') {
-      targetEl = originalEl;
-    } else {
-      targetEl = document.createElement('div');
-      originalEl.parentNode.replaceChild(targetEl, originalEl);
-    }
+    // Always replace the element with a fresh div for YT API to inject into properly
+    let targetEl = document.createElement('div');
+    originalEl.parentNode.replaceChild(targetEl, originalEl);
 
     // Assemble DOM
     ui.wrapper.appendChild(targetEl);
@@ -3932,6 +3980,7 @@ body {
         if (duration > 0) {
            const pct = (current / duration) * 100;
            ui.progressFill.style.width = pct + "%";
+        ui.progressContainer.setAttribute("aria-valuenow", Math.round(pct));
            ui.timeDisplay.textContent = `${formatTime(current)} / ${formatTime(duration)}`;
 
            const loaded = ytPlayer.getVideoLoadedFraction() || 0;
@@ -3976,6 +4025,24 @@ body {
         const pos = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
         ytPlayer.seekTo(pos * duration, true);
         updateTimeDisplay();
+      });
+
+      ui.progressContainer.addEventListener('keydown', (e) => {
+        if (!ytPlayer || typeof ytPlayer.getDuration !== 'function') return;
+        const duration = ytPlayer.getDuration();
+        if (!duration) return;
+        let pos = (ytPlayer.getCurrentTime() || 0) / duration;
+        if (e.key === 'ArrowRight' || e.key === 'ArrowUp') {
+           e.preventDefault();
+           pos = Math.min(1, pos + 0.05);
+           ytPlayer.seekTo(pos * duration, true);
+           updateTimeDisplay();
+        } else if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') {
+           e.preventDefault();
+           pos = Math.max(0, pos - 0.05);
+           ytPlayer.seekTo(pos * duration, true);
+           updateTimeDisplay();
+        }
       });
 
       // Volume & Mute
