@@ -7,19 +7,19 @@
 
   <!-- Dynamic Title -->
   <b:if cond='data:view.isHomepage'>
-    <title><data:blog.title/></title>
+    <title>WorkDaily - 100% Offline Attendance & Wage Tracker</title>
   <b:else/>
-    <title><data:blog.pageTitle/></title>
+    <title>WorkDaily - 100% Offline Attendance & Wage Tracker</title>
   </b:if>
 
   <!-- Meta SEO & OpenGraph -->
-  <meta content='WorkDaily — Premium Daily Work, Workforce &amp; Payment Management Application' name='description'/>
+  <meta content='Track your daily attendance, overtime, and advances with WorkDaily. A private, offline-first ledger for daily wage earners with shareable PDF passbooks and secure backups.' name='description'/>
   <link expr:href='data:blog.canonicalUrl' rel='canonical'/>
-  <meta expr:content='data:blog.pageTitle' property='og:title'/>
+  <meta content='WorkDaily - 100% Offline Attendance & Wage Tracker' property='og:title'/>
   <meta expr:content='data:blog.canonicalUrl' property='og:url'/>
   <meta content='WorkDaily' property='og:site_name'/>
   <meta content='summary_large_image' name='twitter:card'/>
-  <meta content='#F7F8F5' name='theme-color'/>
+  <meta content='#F8FAFB' name='theme-color'/>
   <meta content='light' name='color-scheme'/>
 
   <!-- Google Typography & Google Identity Services -->
@@ -33,26 +33,26 @@
 /*
   WorkDaily Blogger Theme Variables & Styles
   -----------------------------------------
-  <Variable name="primaryColor" description="Primary Color" type="color" default="#145A32" value="#145A32"/>
-  <Variable name="secondaryColor" description="Secondary Color" type="color" default="#2E7D32" value="#2E7D32"/>
-  <Variable name="accentColor" description="Accent Color" type="color" default="#6B8E23" value="#6B8E23"/>
-  <Variable name="lightAccentColor" description="Light Accent" type="color" default="#9ACD32" value="#9ACD32"/>
-  <Variable name="bgColor" description="Background Color" type="color" default="#F7F8F5" value="#F7F8F5"/>
-  <Variable name="textColor" description="Text Color" type="color" default="#101410" value="#101410"/>
-  <Variable name="secTextColor" description="Secondary Text" type="color" default="#667067" value="#667067"/>
+  <Variable name="primaryColor" description="Primary Color" type="color" default="#0F9F7A" value="#0F9F7A"/>
+  <Variable name="secondaryColor" description="Secondary Color" type="color" default="#2563EB" value="#2563EB"/>
+  <Variable name="accentColor" description="Accent Color" type="color" default="#EA580C" value="#EA580C"/>
+  <Variable name="lightAccentColor" description="Light Accent" type="color" default="#10B981" value="#10B981"/>
+  <Variable name="bgColor" description="Background Color" type="color" default="#F8FAFB" value="#F8FAFB"/>
+  <Variable name="textColor" description="Text Color" type="color" default="#0F172A" value="#0F172A"/>
+  <Variable name="secTextColor" description="Secondary Text" type="color" default="#475569" value="#475569"/>
 */
 
 :root {
-  --color-primary: #145A32;
-  --color-secondary: #2E7D32;
-  --color-accent: #6B8E23;
-  --color-light-accent: #9ACD32;
-  --color-bg: #F7F8F5;
+  --color-primary: #0F9F7A;
+  --color-secondary: #2563EB;
+  --color-accent: #EA580C;
+  --color-light-accent: #10B981;
+  --color-bg: #F8FAFB;
   --color-surface: #FFFFFF;
-  --color-text: #101410;
-  --color-text-muted: #667067;
-  --color-border: rgba(16, 20, 16, 0.10);
-  --color-border-glow: rgba(46, 125, 50, 0.25);
+  --color-text: #0F172A;
+  --color-text-muted: #475569;
+  --color-border: #E2E8F0;
+  --color-border-glow: rgba(15, 159, 122, 0.25);
 
   --font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 
@@ -64,7 +64,7 @@
   --shadow-sm: 0 4px 12px rgba(16, 20, 16, 0.04);
   --shadow-md: 0 8px 24px rgba(16, 20, 16, 0.08);
   --shadow-lg: 0 20px 40px rgba(16, 20, 16, 0.12);
-  --shadow-phone: 0 30px 80px rgba(20, 90, 50, 0.18), 0 10px 30px rgba(16, 20, 16, 0.08);
+  --shadow-phone: 0 30px 80px rgba(15, 159, 122, 0.18), 0 10px 30px rgba(16, 20, 16, 0.08);
 
   --transition-fast: 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   --transition-normal: 0.35s cubic-bezier(0.16, 1, 0.3, 1);
@@ -151,13 +151,13 @@ body {
 .wd-btn-primary {
   background-color: var(--color-primary);
   color: #FFFFFF;
-  box-shadow: 0 6px 20px rgba(20, 90, 50, 0.25);
+  box-shadow: 0 6px 20px rgba(15, 159, 122, 0.25);
 }
 
 .wd-btn-primary:hover {
   background-color: var(--color-secondary);
   transform: translateY(-2px);
-  box-shadow: 0 10px 25px rgba(20, 90, 50, 0.35);
+  box-shadow: 0 10px 25px rgba(15, 159, 122, 0.35);
   color: #FFFFFF;
 }
 
@@ -234,7 +234,7 @@ body {
   width: 36px;
   height: 36px;
   border-radius: var(--radius-sm);
-  background: rgba(20, 90, 50, 0.08);
+  background: rgba(15, 159, 122, 0.08);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -352,7 +352,7 @@ body {
   transform: translateX(-50%);
   width: 800px;
   height: 500px;
-  background: radial-gradient(circle, rgba(154, 205, 50, 0.15) 0%, rgba(46, 125, 50, 0.08) 40%, rgba(247, 248, 245, 0) 70%);
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.15) 0%, rgba(37, 99, 235, 0.08) 40%, rgba(247, 248, 245, 0) 70%);
   filter: blur(60px);
   pointer-events: none;
   z-index: 0;
@@ -372,8 +372,8 @@ body {
   align-items: center;
   gap: 8px;
   padding: 6px 14px;
-  background: rgba(20, 90, 50, 0.08);
-  border: 1px solid rgba(20, 90, 50, 0.15);
+  background: rgba(15, 159, 122, 0.08);
+  border: 1px solid rgba(15, 159, 122, 0.15);
   border-radius: var(--radius-full);
   font-size: 12px;
   font-weight: 700;
@@ -402,7 +402,7 @@ body {
 
 .wd-hero-title span {
   color: var(--color-primary);
-  background: linear-gradient(135deg, #145A32 0%, #2E7D32 50%, #6B8E23 100%);
+  background: linear-gradient(135deg, #0F9F7A 0%, #2563EB 50%, #EA580C 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -464,7 +464,7 @@ body {
 .wd-phone-ambient-glow {
   position: absolute;
   inset: -20px;
-  background: radial-gradient(circle, rgba(46, 125, 50, 0.25) 0%, rgba(154, 205, 50, 0.1) 50%, transparent 75%);
+  background: radial-gradient(circle, rgba(15, 159, 122, 0.25) 0%, rgba(16, 185, 129, 0.1) 50%, transparent 75%);
   filter: blur(40px);
   border-radius: 60px;
   z-index: 0;
@@ -556,7 +556,7 @@ body {
   font-weight: 700;
   padding: 4px 10px;
   border-radius: var(--radius-full);
-  background: rgba(46, 125, 50, 0.12);
+  background: rgba(37, 99, 235, 0.12);
   color: var(--color-secondary);
 }
 
@@ -569,7 +569,7 @@ body {
 }
 
 .wd-app-card-primary {
-  background: linear-gradient(135deg, #145A32 0%, #2E7D32 100%);
+  background: linear-gradient(135deg, #0F9F7A 0%, #2563EB 100%);
   color: #FFFFFF;
 }
 
@@ -696,7 +696,7 @@ body {
   position: relative;
   width: 100%;
   height: 100svh;
-  background: linear-gradient(180deg, #F7F8F5 0%, #EBF2EC 100%);
+  background: linear-gradient(180deg, #F8FAFB 0%, #EBF2EC 100%);
   color: var(--color-text);
   overflow: hidden;
   overscroll-behavior-y: auto;
@@ -744,7 +744,7 @@ body {
   transform: translate(-50%, -50%);
   width: clamp(500px, 60vw, 850px);
   height: clamp(500px, 60vw, 850px);
-  background: radial-gradient(circle, var(--slide-accent, rgba(46, 125, 50, 0.22)) 0%, rgba(154, 205, 50, 0.08) 45%, transparent 70%);
+  background: radial-gradient(circle, var(--slide-accent, rgba(37, 99, 235, 0.22)) 0%, rgba(16, 185, 129, 0.08) 45%, transparent 70%);
   filter: blur(80px);
   pointer-events: none;
   z-index: 0;
@@ -763,7 +763,7 @@ body {
 .wd-slide-bg-decor .wd-decor-grid {
   position: absolute;
   inset: -100px;
-  background-image: radial-gradient(rgba(20, 90, 50, 0.35) 1px, transparent 1px);
+  background-image: radial-gradient(rgba(15, 159, 122, 0.35) 1px, transparent 1px);
   background-size: 24px 24px;
 }
 
@@ -775,7 +775,7 @@ body {
   width: clamp(350px, 50vw, 750px);
   height: clamp(350px, 50vw, 750px);
   border-radius: 50%;
-  border: 1.5px dashed rgba(20, 90, 50, 0.4);
+  border: 1.5px dashed rgba(15, 159, 122, 0.4);
 }
 
 .wd-slide-bg-decor .wd-decor-blob-1 {
@@ -784,7 +784,7 @@ body {
   left: 8%;
   width: 220px;
   height: 220px;
-  background: radial-gradient(circle, #2E7D32 0%, transparent 70%);
+  background: radial-gradient(circle, #2563EB 0%, transparent 70%);
   filter: blur(45px);
 }
 
@@ -794,7 +794,7 @@ body {
   right: 10%;
   width: 260px;
   height: 260px;
-  background: radial-gradient(circle, #9ACD32 0%, transparent 70%);
+  background: radial-gradient(circle, #10B981 0%, transparent 70%);
   filter: blur(55px);
 }
 
@@ -823,7 +823,7 @@ body {
   font-size: clamp(10px, 2.5vw, 12px);
   font-weight: 800;
   letter-spacing: 0.12em;
-  color: #145A32;
+  color: #0F9F7A;
   text-transform: uppercase;
   margin-bottom: 2px;
   display: flex;
@@ -836,14 +836,14 @@ body {
   font-size: clamp(20px, 4.5vw, 34px);
   font-weight: 800;
   line-height: 1.15;
-  color: #101410;
+  color: #0F172A;
   letter-spacing: -0.02em;
   margin: 0 0 2px;
 }
 
 .wd-slide-desc {
   font-size: clamp(12.5px, 2.8vw, 15px);
-  color: #667067;
+  color: #475569;
   line-height: 1.38;
   margin: 0;
   display: -webkit-box;
@@ -878,7 +878,7 @@ body {
   padding: clamp(8px, 1.2vw, 12px);
   box-shadow:
     0 35px 85px -15px rgba(0, 0, 0, 0.45),
-    0 20px 45px -10px rgba(20, 90, 50, 0.32),
+    0 20px 45px -10px rgba(15, 159, 122, 0.32),
     inset 0 0 0 1px rgba(255, 255, 255, 0.22);
   border: 2.5px solid rgba(255, 255, 255, 0.18);
   display: flex;
@@ -932,10 +932,10 @@ body {
   width: clamp(48px, 6vw, 68px);
   height: clamp(48px, 6vw, 68px);
   border-radius: clamp(14px, 1.8vw, 22px);
-  background: linear-gradient(135deg, #145A32 0%, #2E7D32 55%, #6B8E23 100%);
+  background: linear-gradient(135deg, #0F9F7A 0%, #2563EB 55%, #EA580C 100%);
   border: 1px solid rgba(255, 255, 255, 0.4);
   box-shadow:
-    0 16px 32px rgba(20, 90, 50, 0.38),
+    0 16px 32px rgba(15, 159, 122, 0.38),
     0 6px 12px rgba(0, 0, 0, 0.12),
     inset 0 1px 1px rgba(255, 255, 255, 0.6),
     inset 0 -2px 6px rgba(10, 40, 22, 0.4);
@@ -1118,7 +1118,7 @@ body {
   width: 52px;
   height: 52px;
   border-radius: var(--radius-md);
-  background: rgba(20, 90, 50, 0.08);
+  background: rgba(15, 159, 122, 0.08);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1178,10 +1178,10 @@ body {
 }
 
 .wd-category-chip.active {
-  background: linear-gradient(135deg, #145A32 0%, #2E7D32 100%);
+  background: linear-gradient(135deg, #0F9F7A 0%, #2563EB 100%);
   color: #FFFFFF;
   border-color: transparent;
-  box-shadow: 0 4px 14px rgba(20, 90, 50, 0.25);
+  box-shadow: 0 4px 14px rgba(15, 159, 122, 0.25);
 }
 
 /* FEATURED ARTICLE - LAYERED AMBIENT BLUR REDESIGN */
@@ -1192,7 +1192,7 @@ body {
   border-radius: var(--radius-lg);
   overflow: hidden;
   margin-bottom: 48px;
-  background-color: #145A32;
+  background-color: #0F9F7A;
   display: flex;
   flex-direction: column;
   box-shadow: var(--shadow-md);
@@ -1204,7 +1204,7 @@ body {
 .wd-featured-article:hover {
   transform: translateY(-4px);
   box-shadow: var(--shadow-lg);
-  border-color: rgba(154, 205, 50, 0.4);
+  border-color: rgba(16, 185, 129, 0.4);
 }
 
 .wd-featured-article:hover .wd-featured-sharp-img {
@@ -1225,7 +1225,7 @@ body {
 }
 
 .wd-ambient-default-bg {
-  background: radial-gradient(circle at 70% 30%, #2E7D32 0%, #145A32 50%, #0D2818 100%);
+  background: radial-gradient(circle at 70% 30%, #2563EB 0%, #0F9F7A 50%, #0D2818 100%);
 }
 
 /* Layer 2: WorkDaily Gradient Overlay */
@@ -1248,7 +1248,7 @@ body {
   left: 24px;
   z-index: 2;
   padding: 6px 16px;
-  background: rgba(20, 90, 50, 0.88);
+  background: rgba(15, 159, 122, 0.88);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   color: #FFFFFF;
@@ -1304,8 +1304,8 @@ body {
   display: inline-flex;
   align-items: center;
   padding: 4px 12px;
-  background: rgba(154, 205, 50, 0.22);
-  border: 1px solid rgba(154, 205, 50, 0.4);
+  background: rgba(16, 185, 129, 0.22);
+  border: 1px solid rgba(16, 185, 129, 0.4);
   color: var(--color-light-accent);
   border-radius: var(--radius-full);
   font-size: 12px;
@@ -1490,7 +1490,7 @@ body {
 
 .wd-blog-card.no-image {
   border-top: 3px solid var(--color-primary);
-  background: linear-gradient(180deg, rgba(20, 90, 50, 0.03) 0%, var(--color-bg) 100%);
+  background: linear-gradient(180deg, rgba(15, 159, 122, 0.03) 0%, var(--color-bg) 100%);
 }
 
 .wd-blog-card.no-image .wd-blog-card-body {
@@ -1535,7 +1535,7 @@ body {
   font-weight: 700;
   text-transform: uppercase;
   color: var(--color-primary);
-  background: rgba(20, 90, 50, 0.1);
+  background: rgba(15, 159, 122, 0.1);
   padding: 4px 10px;
   border-radius: var(--radius-full);
   text-decoration: none;
@@ -1653,7 +1653,7 @@ body {
   width: 68px;
   height: 68px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #145A32 0%, #2E7D32 50%, #6B8E23 100%);
+  background: linear-gradient(135deg, #0F9F7A 0%, #2563EB 50%, #EA580C 100%);
   border: 2px solid rgba(255, 255, 255, 0.4);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.5);
   color: #FFFFFF;
@@ -1788,7 +1788,7 @@ body {
   left: 0;
   height: 100%;
   width: 0%;
-  background: linear-gradient(90deg, #2E7D32 0%, #9ACD32 100%);
+  background: linear-gradient(90deg, #2563EB 0%, #10B981 100%);
   border-radius: 3px;
 }
 
@@ -1987,7 +1987,7 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: rgba(20, 90, 50, 0.05);
+  background: rgba(15, 159, 122, 0.05);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-full);
   padding: 8px 16px;
@@ -2000,20 +2000,20 @@ body {
 }
 
 .wd-action-btn:hover {
-  background: rgba(20, 90, 50, 0.1);
+  background: rgba(15, 159, 122, 0.1);
   border-color: var(--color-primary);
   color: var(--color-primary);
 }
 
 .wd-action-btn.liked {
-  background: rgba(229, 57, 53, 0.1);
-  border-color: rgba(229, 57, 53, 0.3);
-  color: #E53935;
+  background: rgba(220, 38, 38, 0.1);
+  border-color: rgba(220, 38, 38, 0.3);
+  color: #DC2626;
 }
 
 .wd-action-btn.liked .wd-icon-heart {
-  fill: #E53935;
-  stroke: #E53935;
+  fill: #DC2626;
+  stroke: #DC2626;
 }
 
 
@@ -2023,7 +2023,7 @@ body {
 .wd-share-toast {
   position: absolute;
   right: 0; left: auto;
-  background: #101410;
+  background: #0F172A;
   color: #FFFFFF;
   font-size: 12px;
   font-weight: 700;
@@ -2053,7 +2053,7 @@ body {
 .wd-cta-section {
   position: relative;
   padding: 120px 24px;
-  background: linear-gradient(180deg, #101511 0%, #145A32 100%);
+  background: linear-gradient(180deg, #101511 0%, #0F9F7A 100%);
   color: #FFFFFF;
   text-align: center;
   overflow: hidden;
@@ -2066,7 +2066,7 @@ body {
   transform: translate(-50%, -50%);
   width: 700px;
   height: 400px;
-  background: radial-gradient(circle, rgba(154, 205, 50, 0.2) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.2) 0%, transparent 70%);
   filter: blur(80px);
   pointer-events: none;
 }
@@ -2111,8 +2111,8 @@ body {
 /* FOOTER & GRADIENT CIRCLE */
 .wd-footer {
   position: relative;
-  background-color: #F7F8F5;
-  color: #667067;
+  background-color: #F8FAFB;
+  color: #475569;
   padding: 0 0 48px;
   font-size: 14px;
   text-align: center;
@@ -2127,7 +2127,7 @@ body {
   width: clamp(280px, 45vw, 560px);
   height: clamp(280px, 45vw, 560px);
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(20, 90, 50, 0.12) 0%, rgba(46, 125, 50, 0.08) 45%, rgba(107, 142, 35, 0.03) 70%, transparent 85%);
+  background: radial-gradient(circle, rgba(15, 159, 122, 0.12) 0%, rgba(37, 99, 235, 0.08) 45%, rgba(234, 88, 12, 0.03) 70%, transparent 85%);
   filter: blur(40px);
   pointer-events: none;
   z-index: 0;
@@ -2147,7 +2147,7 @@ body {
   padding: 14px 32px;
   font-size: 15px;
   font-weight: 700;
-  box-shadow: 0 8px 24px rgba(20, 90, 50, 0.22);
+  box-shadow: 0 8px 24px rgba(15, 159, 122, 0.22);
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -2181,7 +2181,7 @@ body {
   width: 100%;
   height: 100%;
   display: block;
-  filter: drop-shadow(0 12px 18px rgba(20, 90, 50, 0.18));
+  filter: drop-shadow(0 12px 18px rgba(15, 159, 122, 0.18));
 }
 
 .wd-footer-container {
@@ -2202,7 +2202,7 @@ body {
 }
 
 .wd-footer-brand-wrap .wd-logo-text {
-  color: #101410;
+  color: #0F172A;
   font-size: 22px;
   font-weight: 800;
 }
@@ -2212,11 +2212,11 @@ body {
   align-items: center;
   gap: 8px;
   font-size: 14px;
-  color: #667067;
+  color: #475569;
 }
 
 .wd-footer-support a {
-  color: #145A32;
+  color: #0F9F7A;
   text-decoration: none;
   font-weight: 600;
 }
@@ -2231,13 +2231,13 @@ body {
 }
 
 .wd-footer-legal-links a {
-  color: #667067;
+  color: #475569;
   text-decoration: none;
   transition: color 0.2s ease;
 }
 
 .wd-footer-legal-links a:hover {
-  color: #145A32;
+  color: #0F9F7A;
 }
 
 .wd-footer-sep {
@@ -2608,7 +2608,7 @@ body {
   width: 64px;
   height: 64px;
   border-radius: 50%;
-  background: rgba(20, 90, 50, 0.08);
+  background: rgba(15, 159, 122, 0.08);
   color: var(--color-primary);
   display: flex;
   align-items: center;
@@ -2662,7 +2662,7 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: rgba(20, 90, 50, 0.08);
+  background: rgba(15, 159, 122, 0.08);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-full);
   padding: 8px 16px;
@@ -2674,7 +2674,7 @@ body {
 }
 
 .wd-share-btn:hover {
-  background: rgba(20, 90, 50, 0.15);
+  background: rgba(15, 159, 122, 0.15);
   border-color: var(--color-primary);
   color: var(--color-primary);
 }
@@ -2744,7 +2744,7 @@ body {
   top: calc(100% + 12px);
   right: 0;
   left: auto;
-  background: #101410;
+  background: #0F172A;
   color: #FFFFFF;
   font-size: 12px;
   font-weight: 700;
@@ -2769,10 +2769,10 @@ body {
       <a expr:href='data:blog.homepageUrl' class="wd-logo">
         <div class="wd-logo-icon">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="3" y="3" width="8" height="8" rx="2" fill="#145A32"/>
-            <rect x="13" y="3" width="8" height="8" rx="2" fill="#2E7D32"/>
-            <rect x="3" y="13" width="8" height="8" rx="2" fill="#6B8E23"/>
-            <rect x="13" y="13" width="8" height="8" rx="2" fill="#9ACD32"/>
+            <rect x="3" y="3" width="8" height="8" rx="2" fill="#0F9F7A"/>
+            <rect x="13" y="3" width="8" height="8" rx="2" fill="#2563EB"/>
+            <rect x="3" y="13" width="8" height="8" rx="2" fill="#EA580C"/>
+            <rect x="13" y="13" width="8" height="8" rx="2" fill="#10B981"/>
           </svg>
         </div>
         <span class="wd-logo-text">Work<span>Daily</span></span>
@@ -2788,9 +2788,9 @@ body {
 
       <div class="wd-header-actions">
 
-        <a href="#showcase" class="wd-btn wd-btn-primary wd-btn-sm" aria-label="Download Now" title="Download Now">
+        <a href="#showcase" class="wd-btn wd-btn-primary wd-btn-sm" aria-label="Download WorkDaily" title="Download WorkDaily">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-          <span class="wd-btn-text">Download Now</span>
+          <span class="wd-btn-text">Download WorkDaily</span>
         </a>
         <button class="wd-menu-toggle" id="wd-menu-toggle" aria-label="Toggle navigation menu">
           <svg class="wd-icon-menu" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -2820,7 +2820,7 @@ body {
       <div class="wd-mobile-drawer-footer">
         <a href="#showcase" class="wd-btn wd-btn-primary wd-btn-full">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-          <span>Download Now</span>
+          <span>Download WorkDaily</span>
         </a>
       </div>
     </div>
@@ -2842,21 +2842,21 @@ body {
       <div class="wd-hero-content">
         <div class="wd-hero-badge">
           <span class="wd-badge-dot"></span>
-          <span>SYNFUSION</span>
+          <span>WORKDAILY</span>
         </div>
         <h1 class="wd-hero-title">
-          Work smarter.<br/>
-          <span>Track everything.</span>
+          Your Work, Your Data.<br/>
+          <span>Completely Offline.</span>
         </h1>
         <p class="wd-hero-desc">
-          Track offline attendance, worker daily wages, overtime, advances, and passbook ledgers in Contractor or Personal mode without paperwork.
+          WorkDaily turns your phone into a private digital passbook. Mark attendance in seconds, calculate earnings automatically, track overtime and advances, and generate shareable PDF records — all without requiring an internet connection.
         </p>
         <div class="wd-hero-buttons">
           <a href="#showcase" class="wd-btn wd-btn-primary">
-            <span>Explore WorkDaily</span>
+            <span>Download WorkDaily</span>
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           </a>
-          <a href="#blog" class="wd-btn wd-btn-secondary">Read the Blog</a>
+          <a href="#blog" class="wd-btn wd-btn-secondary">Get Started Offline</a>
         </div>
         <div class="wd-hero-stats">
           <div class="wd-stat-item">
@@ -2865,13 +2865,13 @@ body {
           </div>
           <div class="wd-stat-divider"></div>
           <div class="wd-stat-item">
-            <span class="wd-stat-number">2 Modes</span>
-            <span class="wd-stat-label">Contractor &amp; Personal</span>
+            <span class="wd-stat-number">Passbook</span>
+            <span class="wd-stat-label">Local Ledger</span>
           </div>
           <div class="wd-stat-divider"></div>
           <div class="wd-stat-item">
-            <span class="wd-stat-number">PDF/Excel</span>
-            <span class="wd-stat-label">Report Exports</span>
+            <span class="wd-stat-number">PDF Export</span>
+            <span class="wd-stat-label">Shareable</span>
           </div>
         </div>
       </div>
@@ -2971,63 +2971,63 @@ body {
     <div class="wd-container">
       <div class="wd-section-header">
         <div class="wd-eyebrow">ALL-IN-ONE SYSTEM</div>
-        <h2 class="wd-section-title">Everything WorkDaily handles</h2>
-        <p class="wd-section-subtitle">Designed to track daily attendance, worker wages, overtime, advances, and export passbook reports without paperwork.</p>
+        <h2 class="wd-section-title">Strictly Offline & Private</h2>
+        <p class="wd-section-subtitle">WorkDaily is designed around local-first storage. Attendance, earnings, advances, profile information, and settings are stored on the device rather than synchronized to a cloud service.</p>
       </div>
 
       <div class="wd-feature-grid">
         <!-- Card 1 -->
         <div class="wd-feature-card">
           <div class="wd-feature-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#145A32" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><path d="M9 16l2 2 4-4"/></svg>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0F9F7A" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><path d="M9 16l2 2 4-4"/></svg>
           </div>
-          <h3 class="wd-feature-title">Attendance Tracking</h3>
-          <p class="wd-feature-desc">Record daily site attendance with Present, Absent, Half Day &amp; Overtime status. Works 100% offline with single-tap check-in.</p>
+          <h3 class="wd-feature-title">Simple Attendance Tracking</h3>
+          <p class="wd-feature-desc">Record Present, Absent, Half-Day, Leave, or Holiday in seconds and keep a complete history of your work.</p>
         </div>
 
         <!-- Card 2 -->
         <div class="wd-feature-card">
           <div class="wd-feature-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#145A32" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0F9F7A" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
           </div>
-          <h3 class="wd-feature-title">Worker Management</h3>
-          <p class="wd-feature-desc">Maintain worker profiles, daily wage rates, contact details, and role assignments in contractor or personal mode.</p>
+          <h3 class="wd-feature-title">Strictly Offline & Private</h3>
+          <p class="wd-feature-desc">Your attendance, earnings, profile details, and work records stay on your device. WorkDaily is designed to work without internet access, cloud syncing, accounts, or tracking SDKs.</p>
         </div>
 
         <!-- Card 3 -->
         <div class="wd-feature-card">
           <div class="wd-feature-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#145A32" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0F9F7A" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
           </div>
-          <h3 class="wd-feature-title">Earnings &amp; Daily Wages</h3>
-          <p class="wd-feature-desc">Automatically calculate base daily wages, overtime hours, total earnings, and worker payout summaries.</p>
+          <h3 class="wd-feature-title">Automatic Wage Calculation</h3>
+          <p class="wd-feature-desc">WorkDaily automatically calculates earnings from your daily wage, half-days, overtime, and advances so you can see what you have earned and what remains payable.</p>
         </div>
 
         <!-- Card 4 -->
         <div class="wd-feature-card">
           <div class="wd-feature-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#145A32" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0F9F7A" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
           </div>
-          <h3 class="wd-feature-title">Advances &amp; Passbook</h3>
-          <p class="wd-feature-desc">Track cash advances, partial payouts, and payment settlements in a clear passbook ledger for every worker.</p>
+          <h3 class="wd-feature-title">Your Digital Passbook</h3>
+          <p class="wd-feature-desc">Review your attendance, earnings, overtime, and advances in a clear ledger-style history.</p>
         </div>
 
         <!-- Card 5 -->
         <div class="wd-feature-card">
           <div class="wd-feature-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#145A32" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0F9F7A" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
           </div>
-          <h3 class="wd-feature-title">Contractor &amp; Personal Modes</h3>
-          <p class="wd-feature-desc">Switch effortlessly between Contractor mode for team site management and Personal mode for individual daily work.</p>
+          <h3 class="wd-feature-title">Track Overtime Clearly</h3>
+          <p class="wd-feature-desc">Record overtime using hourly calculations or custom amounts and keep overtime earnings connected to your work history.</p>
         </div>
 
         <!-- Card 6 -->
         <div class="wd-feature-card">
           <div class="wd-feature-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#145A32" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0F9F7A" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
           </div>
-          <h3 class="wd-feature-title">Reports &amp; Export</h3>
-          <p class="wd-feature-desc">Generate financial summaries, work calendar archives, and export attendance sheets as clean PDF or Excel files.</p>
+          <h3 class="wd-feature-title">Reliable Backup & Restore</h3>
+          <p class="wd-feature-desc">Create a complete local backup containing your app data, settings, and profile media, then restore it safely when needed.</p>
         </div>
       </div>
     </div>
@@ -3255,15 +3255,15 @@ body {
   <section class="wd-cta-section" id="cta">
     <div class="wd-cta-glow"></div>
     <div class="wd-container wd-cta-container">
-      <div class="wd-cta-badge">AVAILABLE NOW</div>
-      <h2 class="wd-cta-title">Work smarter.<br/>Build better days.</h2>
-      <p class="wd-cta-desc">Track offline attendance, daily wages, overtime, advances and reports effortlessly with WorkDaily.</p>
+      <div class="wd-cta-badge">100% OFFLINE</div>
+      <h2 class="wd-cta-title">Your Work, Your Data.<br/>Completely Offline.</h2>
+      <p class="wd-cta-desc">100% Offline by design.</p>
       <div class="wd-cta-actions">
         <a href="#showcase" class="wd-btn wd-btn-primary wd-btn-lg">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-          <span>Download Now</span>
+          <span>Download WorkDaily</span>
         </a>
-        <a href="#blog" class="wd-btn wd-btn-secondary wd-btn-lg">Read WorkDaily Blog</a>
+        <a href="#blog" class="wd-btn wd-btn-secondary wd-btn-lg">Read Privacy Policy</a>
       </div>
     </div>
   </section>
@@ -3275,13 +3275,13 @@ body {
       <svg class="wd-footer-curve-svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
         <defs>
           <linearGradient id="wdCurveFillGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stop-color="#145A32"/>
-            <stop offset="50%" stop-color="#2E7D32"/>
+            <stop offset="0%" stop-color="#0F9F7A"/>
+            <stop offset="50%" stop-color="#2563EB"/>
             <stop offset="100%" stop-color="#1E6C3B"/>
           </linearGradient>
           <linearGradient id="wdCurveEdgeGlow" x1="0%" y1="0%" x2="100%" y2="0%">
             <stop offset="0%" stop-color="rgba(255, 255, 255, 0.35)"/>
-            <stop offset="50%" stop-color="rgba(154, 205, 50, 0.5)"/>
+            <stop offset="50%" stop-color="rgba(16, 185, 129, 0.5)"/>
             <stop offset="100%" stop-color="rgba(255, 255, 255, 0.35)"/>
           </linearGradient>
         </defs>
@@ -3291,16 +3291,16 @@ body {
     </div>
     <div class="wd-container wd-footer-container">
       <div class="wd-footer-cta-wrap">
-        <a href="#showcase" class="wd-btn wd-btn-primary wd-btn-lg wd-footer-cta-btn" aria-label="Download Now">
-          <span>Download Now</span>
+        <a href="#showcase" class="wd-btn wd-btn-primary wd-btn-lg wd-footer-cta-btn" aria-label="Download WorkDaily">
+          <span>Download WorkDaily</span>
         </a>
         <a href="#showcase" class="wd-footer-gradient-icon" aria-label="Download Icon">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
             <defs>
               <linearGradient id="wdFooterIconGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stop-color="#145A32"/>
-                <stop offset="50%" stop-color="#2E7D32"/>
-                <stop offset="100%" stop-color="#6B8E23"/>
+                <stop offset="0%" stop-color="#0F9F7A"/>
+                <stop offset="50%" stop-color="#2563EB"/>
+                <stop offset="100%" stop-color="#EA580C"/>
               </linearGradient>
             </defs>
             <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" stroke="url(#wdFooterIconGradient)"/>
@@ -3314,10 +3314,10 @@ body {
         <a expr:href='data:blog.homepageUrl' class="wd-logo">
           <div class="wd-logo-icon">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect x="3" y="3" width="8" height="8" rx="2" fill="#145A32"/>
-              <rect x="13" y="3" width="8" height="8" rx="2" fill="#2E7D32"/>
-              <rect x="3" y="13" width="8" height="8" rx="2" fill="#6B8E23"/>
-              <rect x="13" y="13" width="8" height="8" rx="2" fill="#9ACD32"/>
+              <rect x="3" y="3" width="8" height="8" rx="2" fill="#0F9F7A"/>
+              <rect x="13" y="3" width="8" height="8" rx="2" fill="#2563EB"/>
+              <rect x="3" y="13" width="8" height="8" rx="2" fill="#EA580C"/>
+              <rect x="13" y="13" width="8" height="8" rx="2" fill="#10B981"/>
             </svg>
           </div>
           <span class="wd-logo-text">Work<span>Daily</span></span>
@@ -3325,7 +3325,7 @@ body {
       </div>
 
       <div class="wd-footer-support">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#145A32" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0F9F7A" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
         <a href="mailto:support@workdaily.app">support@workdaily.app</a>
       </div>
 
@@ -3365,8 +3365,8 @@ body {
       eyebrow: "OFFLINE DASHBOARD",
       title: "Everything at a glance",
       description: "Track daily attendance, active workers, daily wages, and cash advances from one simple dashboard.",
-      badge: "SYNFUSION",
-      accentColor: "rgba(20, 90, 50, 0.35)",
+      badge: "WORKDAILY",
+      accentColor: "rgba(15, 159, 122, 0.35)",
       image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80",
       floatingLabel: "100% OFFLINE"
     },
@@ -3376,7 +3376,7 @@ body {
       title: "Quick daily attendance",
       description: "Mark Present, Absent, Half Day, and Overtime status with 1-tap check-in.",
       badge: "ATTENDANCE",
-      accentColor: "rgba(46, 125, 50, 0.35)",
+      accentColor: "rgba(37, 99, 235, 0.35)",
       image: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=800&q=80",
       floatingLabel: "1-TAP CHECK-IN"
     },
@@ -3386,7 +3386,7 @@ body {
       title: "Worker profiles & daily rates",
       description: "Manage worker contact details, daily wage rates, and active assignments.",
       badge: "WORKFORCE",
-      accentColor: "rgba(107, 142, 35, 0.35)",
+      accentColor: "rgba(234, 88, 12, 0.35)",
       image: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80",
       floatingLabel: "CREW PROFILES"
     },
@@ -3396,7 +3396,7 @@ body {
       title: "Cash advances & settlements",
       description: "Log daily cash advances, track partial payouts, and maintain worker passbook ledgers.",
       badge: "PASSBOOK",
-      accentColor: "rgba(20, 90, 50, 0.35)",
+      accentColor: "rgba(15, 159, 122, 0.35)",
       image: "https://images.unsplash.com/photo-1559526324-4b87b5e36e44?auto=format&fit=crop&w=800&q=80",
       floatingLabel: "PAYMENT LEDGER"
     },
@@ -3406,7 +3406,7 @@ body {
       title: "Wage & overtime calculator",
       description: "Auto-calculate base daily wages, overtime hours, and net worker earnings accurately.",
       badge: "WAGES",
-      accentColor: "rgba(46, 125, 50, 0.35)",
+      accentColor: "rgba(37, 99, 235, 0.35)",
       image: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=800&q=80",
       floatingLabel: "AUTO CALCULATOR"
     },
@@ -3416,7 +3416,7 @@ body {
       title: "Team & site management",
       description: "Manage multiple workers, job sites, daily logs, and team payouts from one contractor hub.",
       badge: "CONTRACTOR",
-      accentColor: "rgba(107, 142, 35, 0.35)",
+      accentColor: "rgba(234, 88, 12, 0.35)",
       image: "https://images.unsplash.com/photo-1542744094-3a3172720177?auto=format&fit=crop&w=800&q=80",
       floatingLabel: "SITE HUB"
     },
@@ -3426,7 +3426,7 @@ body {
       title: "Personal work ledger",
       description: "Track your individual daily work days, wages, overtime, advances, and monthly income.",
       badge: "PERSONAL",
-      accentColor: "rgba(20, 90, 50, 0.35)",
+      accentColor: "rgba(15, 159, 122, 0.35)",
       image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=800&q=80",
       floatingLabel: "INDIVIDUAL LEDGER"
     },
@@ -3436,7 +3436,7 @@ body {
       title: "Daily history & logs",
       description: "Review past attendance records, work dates, and payment history on an interactive calendar.",
       badge: "CALENDAR",
-      accentColor: "rgba(46, 125, 50, 0.35)",
+      accentColor: "rgba(37, 99, 235, 0.35)",
       image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80",
       floatingLabel: "WORK HISTORY"
     },
@@ -3446,7 +3446,7 @@ body {
       title: "Income & payout analytics",
       description: "View total wage expenses, outstanding advances, and net financial summaries.",
       badge: "FINANCE",
-      accentColor: "rgba(107, 142, 35, 0.35)",
+      accentColor: "rgba(234, 88, 12, 0.35)",
       image: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=800&q=80",
       floatingLabel: "FINANCIAL STATS"
     },
@@ -3456,7 +3456,7 @@ body {
       title: "PDF & Excel report export",
       description: "Export clear attendance sheets, passbook statements, and wage reports anytime.",
       badge: "REPORTS",
-      accentColor: "rgba(20, 90, 50, 0.35)",
+      accentColor: "rgba(15, 159, 122, 0.35)",
       image: "https://images.unsplash.com/photo-1512428559087-560fa5ceab42?auto=format&fit=crop&w=800&q=80",
       floatingLabel: "PDF / EXCEL"
     },
@@ -3465,20 +3465,20 @@ body {
       eyebrow: "OFFLINE PRIVACY",
       title: "100% Offline & secure",
       description: "All worker data, daily wages, and financial records stay 100% stored on your local device.",
-      badge: "SECURITY",
-      accentColor: "rgba(46, 125, 50, 0.35)",
+      badge: "PRIVACY",
+      accentColor: "rgba(37, 99, 235, 0.35)",
       image: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=800&q=80",
       floatingLabel: "LOCAL DATA"
     },
     {
       number: "12",
-      eyebrow: "APP SETTINGS",
-      title: "Workspace preferences & PIN lock",
-      description: "Protect your attendance data with PIN security and customize workspace preferences.",
-      badge: "SETTINGS",
-      accentColor: "rgba(107, 142, 35, 0.35)",
+      eyebrow: "PROFILE & SETTINGS",
+      title: "Workspace preferences",
+      description: "Manage your name, phone, email, role, daily wage, and profile photo.",
+      badge: "PROFILE",
+      accentColor: "rgba(234, 88, 12, 0.35)",
       image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80",
-      floatingLabel: "PIN LOCK"
+      floatingLabel: "PROFILE"
     }
   ];
 
@@ -3793,7 +3793,7 @@ body {
       if (!ui.wrapper.querySelector(".wd-video-error-badge")) {
         const errBadge = document.createElement("div");
         errBadge.className = "wd-video-error-badge";
-        errBadge.innerHTML = `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#E53935" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>Unable to play video media.</span><button class="wd-btn wd-btn-primary wd-btn-sm" onclick="this.parentElement.remove();">Retry</button>`;
+        errBadge.innerHTML = `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>Unable to play video media.</span><button class="wd-btn wd-btn-primary wd-btn-sm" onclick="this.parentElement.remove();">Retry</button>`;
         ui.wrapper.appendChild(errBadge);
 
         // Add reload capability to retry button
@@ -3967,7 +3967,7 @@ body {
         if (!ui.wrapper.querySelector(".wd-video-error-badge")) {
           const errBadge = document.createElement("div");
           errBadge.className = "wd-video-error-badge";
-          errBadge.innerHTML = `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#E53935" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>Unable to play YouTube video.</span>`;
+          errBadge.innerHTML = `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>Unable to play YouTube video.</span>`;
           ui.wrapper.appendChild(errBadge);
         }
       }
