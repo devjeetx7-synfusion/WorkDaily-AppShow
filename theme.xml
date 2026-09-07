@@ -26,26 +26,17 @@
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"/>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
-  <script src="https://accounts.google.com/gsi/client" async defer></script>
 
   <!-- Blogger Skin & CSS -->
   <b:skin><![CDATA[
 /*
   WorkDaily Blogger Theme Variables & Styles
   -----------------------------------------
-  <Variable name="primaryColor" description="Primary Color" type="color" default="#0F9F7A" value="#0F9F7A"/>
-  <Variable name="secondaryColor" description="Secondary Color" type="color" default="#2563EB" value="#2563EB"/>
-  <Variable name="accentColor" description="Accent Color" type="color" default="#EA580C" value="#EA580C"/>
-  <Variable name="lightAccentColor" description="Light Accent" type="color" default="#10B981" value="#10B981"/>
-  <Variable name="bgColor" description="Background Color" type="color" default="#F8FAFB" value="#F8FAFB"/>
-  <Variable name="textColor" description="Text Color" type="color" default="#0F172A" value="#0F172A"/>
-  <Variable name="secTextColor" description="Secondary Text" type="color" default="#475569" value="#475569"/>
 */
 
 :root {
   --color-primary: #0F9F7A;
   --color-secondary: #2563EB;
-  --color-accent: #EA580C;
   --color-light-accent: #10B981;
   --color-bg: #F8FAFB;
   --color-surface: #FFFFFF;
@@ -78,7 +69,7 @@
 }
 
 /* Hide Blogger default header section to eliminate duplicate text */
-.header-section, #header-section, #Header1, #Header1_header-inner {
+.header-section, #header-section, #Header1 {
   display: none !important;
   visibility: hidden !important;
   height: 0 !important;
@@ -1971,55 +1962,6 @@ body {
   margin-bottom: 28px;
 }
 
-/* ARTICLE INTERACTION ACTION BAR */
-.wd-article-action-bar {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-top: 20px;
-  padding-top: 16px;
-  border-top: 1px solid var(--color-border);
-  position: relative;
-  flex-wrap: wrap;
-}
-
-.wd-action-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: rgba(15, 159, 122, 0.05);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-full);
-  padding: 8px 16px;
-  font-size: 13.5px;
-  font-weight: 700;
-  color: var(--color-text);
-  cursor: pointer;
-  text-decoration: none;
-  transition: all var(--transition-fast);
-}
-
-.wd-action-btn:hover {
-  background: rgba(15, 159, 122, 0.1);
-  border-color: var(--color-primary);
-  color: var(--color-primary);
-}
-
-.wd-action-btn.liked {
-  background: rgba(220, 38, 38, 0.1);
-  border-color: rgba(220, 38, 38, 0.3);
-  color: #DC2626;
-}
-
-.wd-action-btn.liked .wd-icon-heart {
-  fill: #DC2626;
-  stroke: #DC2626;
-}
-
-
-
-
-
 .wd-share-toast {
   position: absolute;
   right: 0; left: auto;
@@ -2528,17 +2470,6 @@ body {
   .wd-feature-grid, .wd-blog-grid {
     grid-template-columns: 1fr;
     gap: 20px;
-  }
-
-  .wd-footer-grid {
-    grid-template-columns: 1fr;
-    gap: 32px;
-  }
-
-  .wd-footer-bottom {
-    flex-direction: column;
-    gap: 16px;
-    text-align: center;
   }
 }
 
@@ -4283,16 +4214,6 @@ body {
       }
     }
 
-    function addPost(rawPost) {
-      const normalized = normalizePost(rawPost, postsList.length);
-      postsList.push(normalized);
-      postsMap.set(normalized.id, normalized);
-      if (normalized.slug) {
-        postsMap.set(normalized.slug, normalized);
-      }
-      return normalized;
-    }
-
     function getPost(idOrSlug) {
       if (!idOrSlug) return null;
       const key = String(idOrSlug).trim();
@@ -4301,14 +4222,6 @@ body {
 
     function getAllPosts() {
       return [...postsList];
-    }
-
-    function getPostsByCategory(cat) {
-      if (!cat || cat.toLowerCase() === "all") return [...postsList];
-      const targetCat = cat.toLowerCase();
-      return postsList.filter(p => {
-        return p.category.toLowerCase() === targetCat || p.categories.some(c => c.toLowerCase() === targetCat);
-      });
     }
 
     function getFeaturedPost() {
@@ -4395,15 +4308,11 @@ body {
     return {
       normalizePost,
       setPosts,
-      addPost,
       getPost,
       getAllPosts,
-      getPostsByCategory,
       getFeaturedPost,
       fetchPosts,
       hasError: () => fetchError !== null,
-      getError: () => fetchError,
-      isLoading: () => loading,
       init
     };
   })();
@@ -4662,18 +4571,6 @@ body {
         if (notFoundEl) notFoundEl.style.display = "block";
       }
     }, 100);
-  };
-
-  window.showArticleError = function() {
-    const loadingEl = document.getElementById("wd-article-loading");
-    const errorEl = document.getElementById("wd-article-error");
-    const notFoundEl = document.getElementById("wd-article-not-found");
-    const contentEl = document.getElementById("wd-article-content");
-
-    if (loadingEl) loadingEl.style.display = "none";
-    if (contentEl) contentEl.style.display = "none";
-    if (notFoundEl) notFoundEl.style.display = "none";
-    if (errorEl) errorEl.style.display = "block";
   };
 
   /* ARTICLE INTERACTIONS & SHARE ONLY */
