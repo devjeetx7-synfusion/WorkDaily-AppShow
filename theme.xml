@@ -2900,7 +2900,7 @@ body {
       <div class="wd-hero-content">
         <div class="wd-hero-badge">
           <span class="wd-badge-dot"></span>
-          <span>WORKDAILY</span>
+          <span>SYNFUSION</span>
         </div>
         <h1 class="wd-hero-title">
           Your Work, Your Data.<br/>
@@ -3078,42 +3078,42 @@ body {
       <div class="wd-faq-grid">
         <div class="wd-faq-card">
           <h3 class="wd-faq-question">Is WorkDaily completely offline?</h3>
-          <p class="wd-faq-answer">Yes. WorkDaily's core attendance, wage, overtime, passbook and backup features work locally on your device.</p>
+          <p class="wd-faq-answer">Yes. Core attendance, wage, overtime, passbook and backup features work locally.</p>
         </div>
 
         <div class="wd-faq-card">
           <h3 class="wd-faq-question">Where is my data stored?</h3>
-          <p class="wd-faq-answer">Your work records and settings are stored locally on your device using the app's local database and preferences.</p>
+          <p class="wd-faq-answer">Your work records and settings are stored locally on your device.</p>
         </div>
 
         <div class="wd-faq-card">
           <h3 class="wd-faq-question">Can I track overtime?</h3>
-          <p class="wd-faq-answer">Yes. WorkDaily supports hourly overtime as well as custom overtime amounts.</p>
+          <p class="wd-faq-answer">Yes. WorkDaily supports hourly and custom overtime amounts.</p>
         </div>
 
         <div class="wd-faq-card">
           <h3 class="wd-faq-question">Can I record advances?</h3>
-          <p class="wd-faq-answer">Yes. Add advance payments and WorkDaily includes them when calculating the net payable amount.</p>
+          <p class="wd-faq-answer">Yes. Record advances and track the resulting net payable amount.</p>
         </div>
 
         <div class="wd-faq-card">
           <h3 class="wd-faq-question">Can I create a PDF passbook?</h3>
-          <p class="wd-faq-answer">Yes. You can generate monthly or all-time PDF passbook statements and share them using Android's native sharing system.</p>
+          <p class="wd-faq-answer">Yes. Create monthly or all-time PDF passbook statements and share them from Android.</p>
         </div>
 
         <div class="wd-faq-card">
           <h3 class="wd-faq-question">Can I back up my data?</h3>
-          <p class="wd-faq-answer">Yes. WorkDaily can create a local ZIP backup containing your database, settings and profile media.</p>
+          <p class="wd-faq-answer">Yes. Create a local ZIP backup of your database, settings and profile media.</p>
         </div>
 
         <div class="wd-faq-card">
           <h3 class="wd-faq-question">Can I restore a backup?</h3>
-          <p class="wd-faq-answer">Yes. WorkDaily validates the backup before restoring it and supports Replace and Merge restore modes.</p>
+          <p class="wd-faq-answer">Yes. Backups are validated before restoration and support Replace and Merge modes.</p>
         </div>
 
         <div class="wd-faq-card">
           <h3 class="wd-faq-question">Do I need an account?</h3>
-          <p class="wd-faq-answer">No account is required for the core offline experience.</p>
+          <p class="wd-faq-answer">No. The core WorkDaily experience does not require an account.</p>
         </div>
       </div>
     </div>
@@ -3376,26 +3376,6 @@ body {
       </svg>
     </div>
     <div class="wd-container wd-footer-container">
-      <div class="wd-footer-cta-wrap">
-        <a href="#showcase" class="wd-btn wd-btn-primary wd-btn-lg wd-footer-cta-btn" aria-label="Download WorkDaily">
-          <span>Download WorkDaily</span>
-        </a>
-        <a href="#showcase" class="wd-footer-gradient-icon" aria-label="Download Icon">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-            <defs>
-              <linearGradient id="wdFooterIconGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stop-color="#0F9F7A"/>
-                <stop offset="50%" stop-color="#10B981"/>
-                <stop offset="100%" stop-color="#0D8263"/>
-              </linearGradient>
-            </defs>
-            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" stroke="url(#wdFooterIconGradient)"/>
-            <polyline points="7 10 12 15 17 10" stroke="url(#wdFooterIconGradient)"/>
-            <line x1="12" y1="15" x2="12" y2="3" stroke="url(#wdFooterIconGradient)"/>
-          </svg>
-        </a>
-      </div>
-
       <div class="wd-footer-brand-wrap">
         <a expr:href='data:blog.homepageUrl' class="wd-logo">
           <div class="wd-logo-icon">
@@ -3407,7 +3387,7 @@ body {
 
       <div class="wd-footer-support">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-        <a href="mailto:support@workdaily.app">support@workdaily.app</a>
+        <a href="mailto:workdaily.synfusion@gmail.com">workdaily.synfusion@gmail.com</a>
       </div>
 
       <div class="wd-footer-legal-links">
