@@ -7,18 +7,21 @@
 
   <!-- Dynamic Title -->
   <b:if cond='data:view.isHomepage'>
-    <title>WorkDaily - 100% Offline Attendance & Wage Tracker</title>
+    <title>WorkDaily - 100% Offline Attendance &amp; Wage Tracker</title>
   <b:else/>
-    <title>WorkDaily - 100% Offline Attendance & Wage Tracker</title>
+    <title>WorkDaily - 100% Offline Attendance &amp; Wage Tracker</title>
   </b:if>
 
   <!-- Meta SEO & OpenGraph -->
   <meta content='Track your daily attendance, overtime, and advances with WorkDaily. A private, offline-first ledger for daily wage earners with shareable PDF passbooks and secure backups.' name='description'/>
   <link expr:href='data:blog.canonicalUrl' rel='canonical'/>
-  <meta content='WorkDaily - 100% Offline Attendance & Wage Tracker' property='og:title'/>
+  <meta content='WorkDaily - 100% Offline Attendance &amp; Wage Tracker' property='og:title'/>
+  <meta content='Track your daily attendance, overtime, and advances with WorkDaily. A private, offline-first ledger for daily wage earners with shareable PDF passbooks and secure backups.' property='og:description'/>
   <meta expr:content='data:blog.canonicalUrl' property='og:url'/>
   <meta content='WorkDaily' property='og:site_name'/>
   <meta content='summary_large_image' name='twitter:card'/>
+  <meta content='WorkDaily - 100% Offline Attendance &amp; Wage Tracker' name='twitter:title'/>
+  <meta content='Track your daily attendance, overtime, and advances with WorkDaily. A private, offline-first ledger for daily wage earners with shareable PDF passbooks and secure backups.' name='twitter:description'/>
   <meta content='#F8FAFB' name='theme-color'/>
   <meta content='light' name='color-scheme'/>
 
@@ -2901,64 +2904,64 @@ body {
   <section class="wd-benefits-section" id="benefits">
     <div class="wd-container">
       <div class="wd-section-header">
-        <div class="wd-eyebrow">ALL-IN-ONE SYSTEM</div>
-        <h2 class="wd-section-title">Strictly Offline & Private</h2>
-        <p class="wd-section-subtitle">WorkDaily is designed around local-first storage. Attendance, earnings, advances, profile information, and settings are stored on the device rather than synchronized to a cloud service.</p>
+        <div class="wd-eyebrow">WORKDAILY CORE FEATURES</div>
+        <h2 class="wd-section-title">Strictly Offline &amp; Private</h2>
+        <p class="wd-section-subtitle">Your data stays on your phone using secure local databases. No cloud syncing, no accounts required, and no tracking SDKs for the core offline experience.</p>
       </div>
 
       <div class="wd-feature-grid">
-        <!-- Card 1 -->
+        <!-- Feature 01 -->
         <div class="wd-feature-card">
           <div class="wd-feature-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0F9F7A" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><path d="M9 16l2 2 4-4"/></svg>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
           </div>
-          <h3 class="wd-feature-title">Simple Attendance Tracking</h3>
-          <p class="wd-feature-desc">Record Present, Absent, Half-Day, Leave, or Holiday in seconds and keep a complete history of your work.</p>
+          <h3 class="wd-feature-title">Strictly Offline &amp; Private</h3>
+          <p class="wd-feature-desc">Your data stays on your phone using secure local Room SQLite &amp; DataStore databases. No cloud syncing, no accounts required, and no tracking SDKs.</p>
         </div>
 
-        <!-- Card 2 -->
+        <!-- Feature 02 -->
         <div class="wd-feature-card">
           <div class="wd-feature-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0F9F7A" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
           </div>
-          <h3 class="wd-feature-title">Strictly Offline & Private</h3>
-          <p class="wd-feature-desc">Your attendance, earnings, profile details, and work records stay on your device. WorkDaily is designed to work without internet access, cloud syncing, accounts, or tracking SDKs.</p>
+          <h3 class="wd-feature-title">Instant Wage Calculation</h3>
+          <p class="wd-feature-desc">Base daily wages, half-day calculations, hourly overtime, custom overtime amounts, cash advance deductions, and net payable calculations are auto-computed locally.</p>
         </div>
 
-        <!-- Card 3 -->
+        <!-- Feature 03 -->
         <div class="wd-feature-card">
           <div class="wd-feature-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0F9F7A" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
           </div>
-          <h3 class="wd-feature-title">Automatic Wage Calculation</h3>
-          <p class="wd-feature-desc">WorkDaily automatically calculates earnings from your daily wage, half-days, overtime, and advances so you can see what you have earned and what remains payable.</p>
+          <h3 class="wd-feature-title">PDF Passbooks on Demand</h3>
+          <p class="wd-feature-desc">Generate monthly or all-time PDF ledgers in a tap with native PDF generation and share complete breakdowns directly via the Android Sharesheet.</p>
         </div>
 
-        <!-- Card 4 -->
+        <!-- Feature 04 -->
         <div class="wd-feature-card">
           <div class="wd-feature-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0F9F7A" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
           </div>
-          <h3 class="wd-feature-title">Your Digital Passbook</h3>
-          <p class="wd-feature-desc">Review your attendance, earnings, overtime, and advances in a clear ledger-style history.</p>
+          <h3 class="wd-feature-title">Smart Localized Notifications</h3>
+          <p class="wd-feature-desc">On-device daily reminders, weekly/monthly summaries, overtime alerts, streak messages, missed-day alerts, and Indian festival greetings with English/Hinglish templates.</p>
         </div>
 
-        <!-- Card 5 -->
+        <!-- Feature 05 -->
         <div class="wd-feature-card">
           <div class="wd-feature-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0F9F7A" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2"><path d="M21 8v13H3V8"/><path d="M1 3h22v5H1z"/><path d="M10 12h4"/></svg>
           </div>
-          <h3 class="wd-feature-title">Track Overtime Clearly</h3>
-          <p class="wd-feature-desc">Record overtime using hourly calculations or custom amounts and keep overtime earnings connected to your work history.</p>
+          <h3 class="wd-feature-title">Failsafe Backup &amp; Restore</h3>
+          <p class="wd-feature-desc">Back up SQLite database, DataStore settings, profile media, and manifest into a validated ZIP file with SHA-256 integrity validation, atomic restore, and replace or merge modes.</p>
         </div>
 
-        <!-- Card 6 -->
+        <!-- Supporting Feature Card -->
         <div class="wd-feature-card">
           <div class="wd-feature-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0F9F7A" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><path d="M9 16l2 2 4-4"/></svg>
           </div>
-          <h3 class="wd-feature-title">Reliable Backup & Restore</h3>
-          <p class="wd-feature-desc">Create a complete local backup containing your app data, settings, and profile media, then restore it safely when needed.</p>
+          <h3 class="wd-feature-title">Attendance, Calendar &amp; Profile</h3>
+          <p class="wd-feature-desc">Track Present, Absent, Half-Day, Leave, and Holiday status; review work streak statistics and calendar indicators; and manage personal profiles with 1:1 image cropping, animated search, and customizable bottom navigation.</p>
         </div>
       </div>
     </div>
@@ -3186,15 +3189,15 @@ body {
   <section class="wd-cta-section" id="cta">
     <div class="wd-cta-glow"></div>
     <div class="wd-container wd-cta-container">
-      <div class="wd-cta-badge">100% OFFLINE</div>
-      <h2 class="wd-cta-title">Your Work, Your Data.<br/>Completely Offline.</h2>
-      <p class="wd-cta-desc">100% Offline by design.</p>
+      <div class="wd-cta-badge">100% OFFLINE GUARANTEE</div>
+      <h2 class="wd-cta-title">Start Tracking Your Work — Completely Offline.</h2>
+      <p class="wd-cta-desc">Track attendance, calculate wages, manage overtime and keep your passbook on your phone without depending on the internet.</p>
       <div class="wd-cta-actions">
         <a href="#showcase" class="wd-btn wd-btn-primary wd-btn-lg">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
           <span>Download WorkDaily</span>
         </a>
-        <a href="#blog" class="wd-btn wd-btn-secondary wd-btn-lg">Read Privacy Policy</a>
+        <a href="#benefits" class="wd-btn wd-btn-secondary wd-btn-lg">Read Privacy Policy</a>
       </div>
     </div>
   </section>
@@ -3253,19 +3256,22 @@ body {
           </div>
           <span class="wd-logo-text">Work<span>Daily</span></span>
         </a>
+        <p style="font-size: 13.5px; color: var(--color-text-muted); max-width: 460px; margin: 12px auto 0; line-height: 1.5;">
+          A private, offline-first ledger for daily wage earners with shareable PDF passbooks and secure local backups.
+        </p>
       </div>
 
       <div class="wd-footer-support">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0F9F7A" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
         <a href="mailto:support@workdaily.app">support@workdaily.app</a>
       </div>
 
       <div class="wd-footer-legal-links">
-        <a href="#">Privacy Policy</a>
+        <a href="#benefits">Privacy Policy</a>
         <span class="wd-footer-sep">&#8226;</span>
-        <a href="#">Terms</a>
+        <a href="#benefits">Terms</a>
         <span class="wd-footer-sep">&#8226;</span>
-        <a href="#">Disclaimer</a>
+        <a href="#showcase">Download</a>
       </div>
 
       <div class="wd-footer-copy">
