@@ -51,7 +51,7 @@
 
 :root, [data-theme="light"] {
   --color-primary: #0F9F7A;
-  --color-secondary: #2563EB;
+  --color-secondary: #0F9F7A;
   --color-tertiary: #EA580C;
   --color-bg: #F8FAFB;
   --color-surface: #FFFFFF;
@@ -83,7 +83,7 @@
 
 [data-theme="dark"] {
   --color-primary: #10B981;
-  --color-secondary: #60A5FA;
+  --color-secondary: #10B981;
   --color-tertiary: #FDBA74;
   --color-bg: #020617;
   --color-surface: #0F172A;
@@ -100,7 +100,7 @@
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     --color-primary: #10B981;
-    --color-secondary: #60A5FA;
+    --color-secondary: #10B981;
     --color-tertiary: #FDBA74;
     --color-bg: #020617;
     --color-surface: #0F172A;
@@ -300,10 +300,11 @@ body {
   display: flex;
   align-items: center;
   gap: 32px;
-  background: rgba(255, 255, 255, 0.7);
+  background: var(--color-surface);
   padding: 8px 24px;
   border-radius: var(--radius-full);
   border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
   backdrop-filter: blur(10px);
 }
 
@@ -312,12 +313,19 @@ body {
   color: var(--color-text-muted);
   font-size: 14.5px;
   font-weight: 500;
-  transition: color var(--transition-fast);
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+  transition: color var(--transition-fast), background-color var(--transition-fast);
 }
 
 .wd-nav-link:hover, .wd-nav-link.active {
   color: var(--color-primary);
   font-weight: 600;
+}
+
+.wd-nav-link:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
 }
 
 .wd-header-actions {
@@ -363,6 +371,12 @@ body {
   justify-content: center;
   cursor: pointer;
   color: var(--color-text);
+  transition: background var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);
+}
+
+.wd-menu-toggle:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
 }
 
 .wd-menu-toggle .wd-icon-close {
@@ -634,7 +648,7 @@ body {
   font-weight: 700;
   padding: 4px 10px;
   border-radius: var(--radius-full);
-  background: rgba(37, 99, 235, 0.12);
+  background: rgba(15, 159, 122, 0.12);
   color: var(--color-secondary);
 }
 
@@ -2538,35 +2552,93 @@ body {
 .wd-faq-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 24px;
+  gap: 20px;
+  align-items: start;
 }
 
 .wd-faq-card {
   background: var(--color-surface);
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
-  padding: 28px 24px;
-  transition: all var(--transition-normal);
-  box-shadow: var(--shadow-sm);
+  border-radius: var(--radius-md);
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast), background-color var(--transition-fast);
+  overflow: hidden;
 }
 
 .wd-faq-card:hover {
   border-color: var(--color-primary);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
+  box-shadow: var(--shadow-sm);
 }
 
-.wd-faq-question {
-  font-size: 18px;
-  font-weight: 700;
+.wd-faq-card.open {
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow-sm);
+}
+
+.wd-faq-trigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 22px 24px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  text-align: left;
   color: var(--color-text);
-  margin-bottom: 10px;
+  font-size: 16.5px;
+  font-weight: 700;
+  line-height: 1.4;
+  transition: color var(--transition-fast);
+}
+
+.wd-faq-trigger:hover {
+  color: var(--color-primary);
+}
+
+.wd-faq-trigger:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: -2px;
+  border-radius: var(--radius-md);
+}
+
+.wd-faq-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(15, 159, 122, 0.08);
+  color: var(--color-primary);
+  flex-shrink: 0;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), background-color var(--transition-fast);
+}
+
+.wd-faq-card.open .wd-faq-icon {
+  transform: rotate(180deg);
+  background: var(--color-primary);
+  color: #FFFFFF;
+}
+
+.wd-faq-collapse {
+  display: block;
+}
+
+.wd-faq-collapse[hidden] {
+  display: none;
+}
+
+.wd-faq-answer-inner {
+  padding: 0 24px 22px 24px;
 }
 
 .wd-faq-answer {
-  font-size: 14.5px;
+  font-size: 15px;
   color: var(--color-text-muted);
-  line-height: 1.6;
+  line-height: 1.65;
+  margin: 0;
 }
 
   /* OTHER SECTIONS ON MOBILE */
@@ -3085,44 +3157,116 @@ body {
       </div>
 
       <div class="wd-faq-grid">
-        <div class="wd-faq-card">
-          <h3 class="wd-faq-question">Is WorkDaily completely offline?</h3>
-          <p class="wd-faq-answer">Yes. Core attendance, wage, overtime, passbook and backup features work locally.</p>
+        <div class="wd-faq-card open">
+          <button class="wd-faq-trigger" type="button" aria-expanded="true" aria-controls="faq-answer-1" id="faq-trigger-1">
+            <span class="wd-faq-question-text">Is WorkDaily completely offline?</span>
+            <span class="wd-faq-icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </span>
+          </button>
+          <div class="wd-faq-collapse" id="faq-answer-1" role="region" aria-labelledby="faq-trigger-1">
+            <div class="wd-faq-answer-inner">
+              <p class="wd-faq-answer">Yes. Core attendance, wage, overtime, passbook and backup features work locally.</p>
+            </div>
+          </div>
         </div>
 
         <div class="wd-faq-card">
-          <h3 class="wd-faq-question">Where is my data stored?</h3>
-          <p class="wd-faq-answer">Your work records and settings are stored locally on your device.</p>
+          <button class="wd-faq-trigger" type="button" aria-expanded="false" aria-controls="faq-answer-2" id="faq-trigger-2">
+            <span class="wd-faq-question-text">Where is my data stored?</span>
+            <span class="wd-faq-icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </span>
+          </button>
+          <div class="wd-faq-collapse" id="faq-answer-2" role="region" aria-labelledby="faq-trigger-2" hidden="hidden">
+            <div class="wd-faq-answer-inner">
+              <p class="wd-faq-answer">Your work records and settings are stored locally on your device.</p>
+            </div>
+          </div>
         </div>
 
         <div class="wd-faq-card">
-          <h3 class="wd-faq-question">Can I track overtime?</h3>
-          <p class="wd-faq-answer">Yes. WorkDaily supports hourly and custom overtime amounts.</p>
+          <button class="wd-faq-trigger" type="button" aria-expanded="false" aria-controls="faq-answer-3" id="faq-trigger-3">
+            <span class="wd-faq-question-text">Can I track overtime?</span>
+            <span class="wd-faq-icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </span>
+          </button>
+          <div class="wd-faq-collapse" id="faq-answer-3" role="region" aria-labelledby="faq-trigger-3" hidden="hidden">
+            <div class="wd-faq-answer-inner">
+              <p class="wd-faq-answer">Yes. WorkDaily supports hourly and custom overtime amounts.</p>
+            </div>
+          </div>
         </div>
 
         <div class="wd-faq-card">
-          <h3 class="wd-faq-question">Can I record advances?</h3>
-          <p class="wd-faq-answer">Yes. Record advances and track the resulting net payable amount.</p>
+          <button class="wd-faq-trigger" type="button" aria-expanded="false" aria-controls="faq-answer-4" id="faq-trigger-4">
+            <span class="wd-faq-question-text">Can I record advances?</span>
+            <span class="wd-faq-icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </span>
+          </button>
+          <div class="wd-faq-collapse" id="faq-answer-4" role="region" aria-labelledby="faq-trigger-4" hidden="hidden">
+            <div class="wd-faq-answer-inner">
+              <p class="wd-faq-answer">Yes. Record advances and track the resulting net payable amount.</p>
+            </div>
+          </div>
         </div>
 
         <div class="wd-faq-card">
-          <h3 class="wd-faq-question">Can I create a PDF passbook?</h3>
-          <p class="wd-faq-answer">Yes. Create monthly or all-time PDF passbook statements and share them from Android.</p>
+          <button class="wd-faq-trigger" type="button" aria-expanded="false" aria-controls="faq-answer-5" id="faq-trigger-5">
+            <span class="wd-faq-question-text">Can I create a PDF passbook?</span>
+            <span class="wd-faq-icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </span>
+          </button>
+          <div class="wd-faq-collapse" id="faq-answer-5" role="region" aria-labelledby="faq-trigger-5" hidden="hidden">
+            <div class="wd-faq-answer-inner">
+              <p class="wd-faq-answer">Yes. Create monthly or all-time PDF passbook statements and share them from Android.</p>
+            </div>
+          </div>
         </div>
 
         <div class="wd-faq-card">
-          <h3 class="wd-faq-question">Can I back up my data?</h3>
-          <p class="wd-faq-answer">Yes. Create a local ZIP backup of your database, settings and profile media.</p>
+          <button class="wd-faq-trigger" type="button" aria-expanded="false" aria-controls="faq-answer-6" id="faq-trigger-6">
+            <span class="wd-faq-question-text">Can I back up my data?</span>
+            <span class="wd-faq-icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </span>
+          </button>
+          <div class="wd-faq-collapse" id="faq-answer-6" role="region" aria-labelledby="faq-trigger-6" hidden="hidden">
+            <div class="wd-faq-answer-inner">
+              <p class="wd-faq-answer">Yes. Create a local ZIP backup of your database, settings and profile media.</p>
+            </div>
+          </div>
         </div>
 
         <div class="wd-faq-card">
-          <h3 class="wd-faq-question">Can I restore a backup?</h3>
-          <p class="wd-faq-answer">Yes. Backups are validated before restoration and support Replace and Merge modes.</p>
+          <button class="wd-faq-trigger" type="button" aria-expanded="false" aria-controls="faq-answer-7" id="faq-trigger-7">
+            <span class="wd-faq-question-text">Can I restore a backup?</span>
+            <span class="wd-faq-icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </span>
+          </button>
+          <div class="wd-faq-collapse" id="faq-answer-7" role="region" aria-labelledby="faq-trigger-7" hidden="hidden">
+            <div class="wd-faq-answer-inner">
+              <p class="wd-faq-answer">Yes. Backups are validated before restoration and support Replace and Merge modes.</p>
+            </div>
+          </div>
         </div>
 
         <div class="wd-faq-card">
-          <h3 class="wd-faq-question">Do I need an account?</h3>
-          <p class="wd-faq-answer">No. The core WorkDaily experience does not require an account.</p>
+          <button class="wd-faq-trigger" type="button" aria-expanded="false" aria-controls="faq-answer-8" id="faq-trigger-8">
+            <span class="wd-faq-question-text">Do I need an account?</span>
+            <span class="wd-faq-icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </span>
+          </button>
+          <div class="wd-faq-collapse" id="faq-answer-8" role="region" aria-labelledby="faq-trigger-8" hidden="hidden">
+            <div class="wd-faq-answer-inner">
+              <p class="wd-faq-answer">No. The core WorkDaily experience does not require an account.</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -3505,6 +3649,7 @@ body {
     initThemeToggle();
     initHeader();
     initMobileMenu();
+    initFaqAccordion();
     initShowcase();
     initKeyboardNav();
     initBlogSystem();
@@ -3535,6 +3680,10 @@ body {
       if (document.body) {
         if (theme === "dark") document.body.classList.add("dark-theme");
         else document.body.classList.remove("dark-theme");
+      }
+      const metaThemeColor = document.querySelector('meta[name="theme-color"]');
+      if (metaThemeColor) {
+        metaThemeColor.setAttribute('content', theme === 'dark' ? '#020617' : '#F8FAFB');
       }
 
       if (theme === "dark") {
@@ -5238,6 +5387,32 @@ body {
         header.classList.remove("scrolled");
       }
     }, { passive: true });
+  }
+
+
+  /* FAQ ACCORDION INTERACTION */
+  function initFaqAccordion() {
+    const faqCards = document.querySelectorAll(".wd-faq-card");
+    if (!faqCards.length) return;
+
+    faqCards.forEach(function(card) {
+      const trigger = card.querySelector(".wd-faq-trigger");
+      const collapse = card.querySelector(".wd-faq-collapse");
+      if (!trigger || !collapse) return;
+
+      trigger.addEventListener("click", function() {
+        const isExpanded = trigger.getAttribute("aria-expanded") === "true";
+        if (isExpanded) {
+          trigger.setAttribute("aria-expanded", "false");
+          card.classList.remove("open");
+          collapse.setAttribute("hidden", "hidden");
+        } else {
+          trigger.setAttribute("aria-expanded", "true");
+          card.classList.add("open");
+          collapse.removeAttribute("hidden");
+        }
+      });
+    });
   }
 
   /* MOBILE DRAWER TOGGLE */
