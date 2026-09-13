@@ -2035,8 +2035,38 @@ body {
 .wd-post-body {
   font-size: 18px;
   line-height: 1.75;
-  color: #222B23;
+  color: var(--color-text);
   margin-bottom: 60px;
+}
+
+/* STATIC PAGE STYLING */
+.wd-static-page-container {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 40px 24px 80px;
+}
+
+.wd-static-page-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 48px 40px;
+  box-shadow: var(--shadow-sm);
+}
+
+.wd-static-page-body {
+  margin-bottom: 0;
+  color: var(--color-text);
+}
+
+@media (max-width: 767px) {
+  .wd-static-page-container {
+    padding: 24px 16px 60px;
+  }
+  .wd-static-page-card {
+    padding: 28px 20px;
+    border-radius: var(--radius-md);
+  }
 }
 
 .wd-post-body p {
@@ -2077,6 +2107,131 @@ body {
   justify-content: center;
   gap: 16px;
   margin-top: 40px;
+}
+
+/* WHATSAPP CHANNEL PROMO SECTION */
+.wd-whatsapp-section {
+  padding: 60px 0;
+  background: var(--color-bg);
+  position: relative;
+}
+
+.wd-whatsapp-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 40px 36px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  box-shadow: var(--shadow-sm);
+  position: relative;
+  overflow: hidden;
+  transition: border-color var(--transition-normal), box-shadow var(--transition-normal);
+}
+
+.wd-whatsapp-card:hover {
+  border-color: rgba(37, 211, 102, 0.4);
+  box-shadow: var(--shadow-md);
+}
+
+.wd-whatsapp-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: #25D366;
+  border-radius: 4px 0 0 4px;
+}
+
+.wd-whatsapp-content {
+  flex: 1;
+  max-width: 680px;
+}
+
+.wd-whatsapp-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #25D366;
+  background: rgba(37, 211, 102, 0.1);
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  margin-bottom: 16px;
+}
+
+.wd-whatsapp-title {
+  font-size: clamp(24px, 3vw, 32px);
+  font-weight: 800;
+  color: var(--color-text);
+  line-height: 1.25;
+  margin-bottom: 12px;
+  letter-spacing: -0.01em;
+}
+
+.wd-whatsapp-desc {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+.wd-whatsapp-actions {
+  flex-shrink: 0;
+}
+
+.wd-btn-whatsapp {
+  background: #25D366;
+  color: #FFFFFF;
+  border: none;
+  font-weight: 700;
+  font-size: 15px;
+  padding: 14px 24px;
+  border-radius: var(--radius-full);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  box-shadow: 0 4px 14px rgba(37, 211, 102, 0.3);
+  transition: transform var(--transition-fast), background-color var(--transition-fast), box-shadow var(--transition-fast);
+  white-space: nowrap;
+}
+
+.wd-btn-whatsapp:hover {
+  background: #20bd5a;
+  color: #FFFFFF;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+}
+
+.wd-btn-whatsapp:focus-visible {
+  outline: 2px solid #25D366;
+  outline-offset: 2px;
+}
+
+@media (max-width: 767px) {
+  .wd-whatsapp-section {
+    padding: 40px 0;
+  }
+  .wd-whatsapp-card {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 28px 24px;
+    gap: 24px;
+  }
+  .wd-btn-whatsapp {
+    width: 100%;
+    justify-content: center;
+  }
+  .wd-whatsapp-actions {
+    width: 100%;
+  }
 }
 
 /* FINAL CTA SECTION */
@@ -2934,7 +3089,7 @@ body {
           </svg>
         </button>
 
-        <a href="#showcase" class="wd-btn wd-btn-primary wd-btn-sm" aria-label="Download WorkDaily" title="Download WorkDaily">
+        <a href="https://play.google.com/store/apps/details?id=com.synfusion.attendance" target="_blank" rel="noopener noreferrer" class="wd-btn wd-btn-primary wd-btn-sm" aria-label="Download WorkDaily" title="Download WorkDaily">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
           <span class="wd-btn-text">Download WorkDaily</span>
         </a>
@@ -2965,7 +3120,7 @@ body {
         <a href="#footer" class="wd-mobile-nav-link">About</a>
       </nav>
       <div class="wd-mobile-drawer-footer">
-        <a href="#showcase" class="wd-btn wd-btn-primary wd-btn-full">
+        <a href="https://play.google.com/store/apps/details?id=com.synfusion.attendance" target="_blank" rel="noopener noreferrer" class="wd-btn wd-btn-primary wd-btn-full">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
           <span>Download WorkDaily</span>
         </a>
@@ -2982,6 +3137,7 @@ body {
     </b:widget>
   </b:section>
 
+  <b:if cond='!data:view.isPage'>
   <!-- ================= HERO SECTION ================= -->
   <section class="wd-hero" id="hero">
     <div class="wd-hero-bg-glow"></div>
@@ -2999,7 +3155,7 @@ body {
           Track attendance, wages, overtime and advances — privately on your phone.
         </p>
         <div class="wd-hero-buttons">
-          <a href="#showcase" class="wd-btn wd-btn-primary">
+          <a href="https://play.google.com/store/apps/details?id=com.synfusion.attendance" target="_blank" rel="noopener noreferrer" class="wd-btn wd-btn-primary">
             <span>Download WorkDaily</span>
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           </a>
@@ -3279,10 +3435,12 @@ body {
       </div>
     </div>
   </section>
+  </b:if>
 
   <!-- ================= BLOG CONTENT SECTION (NATIVE BLOGGER INTEGRATION) ================= -->
   <section class="wd-blog-section" id="blog">
     <div class="wd-container">
+      <b:if cond='!data:view.isPage'>
       <div class="wd-section-header">
         <div class="wd-eyebrow">UPDATES &amp; INSIGHTS</div>
         <h2 class="wd-section-title">WorkDaily Editorial</h2>
@@ -3297,6 +3455,7 @@ body {
         <button class="wd-category-chip" data-category="article">Article</button>
         <button class="wd-category-chip" data-category="feedback">Feedback</button>
       </nav>
+      </b:if>
 
       <main class="wd-main-content">
         <!-- Native Blogger Main Section with Hybrid SPA Container Views -->
@@ -3304,7 +3463,28 @@ body {
           <b:widget id='Blog1' locked='true' title='Blog Posts' type='Blog'>
             <b:includable id='main' var='top'>
 
-              <!-- 1. BLOG LIST VIEW CONTAINER -->
+              <b:if cond='data:view.isPage'>
+                <!-- STATIC PAGE CONTAINER (Privacy Policy, Terms & Conditions, etc.) -->
+                <div id="wd-static-page-view" class="wd-static-page-container">
+                  <b:loop values='data:posts' var='post'>
+                    <article class="wd-single-post wd-static-page-card">
+                      <header class="wd-post-header">
+                        <div class="wd-post-top-bar">
+                          <a expr:href='data:blog.homepageUrl' class="wd-back-link">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                            <span>Back to Home</span>
+                          </a>
+                        </div>
+                        <h1 class="wd-post-title"><data:post.title/></h1>
+                      </header>
+                      <div class="wd-post-body wd-static-page-body">
+                        <data:post.body/>
+                      </div>
+                    </article>
+                  </b:loop>
+                </div>
+              <b:else/>
+                <!-- 1. BLOG LIST VIEW CONTAINER -->
               <div id="wd-blog-list-view">
                 <!-- Dynamic Featured Post Header container -->
                 <div id="wd-featured-post-slot"></div>
@@ -3488,6 +3668,7 @@ body {
                 </div>
 
               </div>
+              </b:if>
 
           </b:includable>
 
@@ -3497,6 +3678,30 @@ body {
     </div>
   </section>
 
+  <b:if cond='!data:view.isPage'>
+  <!-- ================= WHATSAPP CHANNEL SECTION ================= -->
+  <section class="wd-whatsapp-section" id="whatsapp">
+    <div class="wd-container">
+      <div class="wd-whatsapp-card">
+        <div class="wd-whatsapp-content">
+          <div class="wd-whatsapp-badge">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414-.074-.124-.272-.198-.57-.347z"/></svg>
+            <span>OFFICIAL COMMUNITY</span>
+          </div>
+          <h2 class="wd-whatsapp-title">Stay Updated with WorkDaily</h2>
+          <p class="wd-whatsapp-desc">Follow the WorkDaily channel on WhatsApp for app updates, new features, useful tips, and announcements.</p>
+        </div>
+        <div class="wd-whatsapp-actions">
+          <a href="https://whatsapp.com/channel/0029Vb8bS4U23n3lJwvpbP3H" target="_blank" rel="noopener noreferrer" class="wd-btn wd-btn-whatsapp">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414-.074-.124-.272-.198-.57-.347z"/></svg>
+            <span>Join WhatsApp Channel</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+  </b:if>
+
   <!-- ================= FINAL CTA SECTION ================= -->
   <section class="wd-cta-section" id="cta">
     <div class="wd-cta-glow"></div>
@@ -3505,7 +3710,7 @@ body {
       <h2 class="wd-cta-title">Start Tracking Your Work — Completely Offline.</h2>
       <p class="wd-cta-desc">Track attendance, calculate wages, manage overtime and keep your passbook on your phone without depending on the internet.</p>
       <div class="wd-cta-actions">
-        <a href="#showcase" class="wd-btn wd-btn-primary wd-btn-lg">
+        <a href="https://play.google.com/store/apps/details?id=com.synfusion.attendance" target="_blank" rel="noopener noreferrer" class="wd-btn wd-btn-primary wd-btn-lg">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
           <span>Download WorkDaily</span>
         </a>
@@ -3555,7 +3760,7 @@ body {
         <span class="wd-footer-sep">&#8226;</span>
         <a href="/p/term-conditions.html">Terms</a>
         <span class="wd-footer-sep">&#8226;</span>
-        <a href="#showcase">Download</a>
+        <a href="https://play.google.com/store/apps/details?id=com.synfusion.attendance" target="_blank" rel="noopener noreferrer">Download</a>
       </div>
 
       <div class="wd-footer-copy">
@@ -4650,7 +4855,12 @@ body {
         }
       }
 
-      // 3. Path Routing (/blog/article/id or /2026/05/slug.html)
+      // 3. Static Pages (/p/privacy-policy.html, /p/term-conditions.html, etc.)
+      if (pathname.includes("/p/")) {
+        return { view: "page", postId: null };
+      }
+
+      // 4. Path Routing (/blog/article/id or /2026/05/slug.html)
       if (pathname.includes("/article/")) {
         const parts = pathname.split("/article/");
         const id = parts[1].replace(/\/$/, "").trim();
@@ -4709,6 +4919,12 @@ body {
     function renderRoute() {
       const blogListView = document.getElementById("wd-blog-list-view");
       const articleDetailView = document.getElementById("wd-article-detail-view");
+
+      if (currentRoute.view === "page") {
+        if (articleDetailView) articleDetailView.style.display = "none";
+        if (blogListView) blogListView.style.display = "none";
+        return;
+      }
 
       if (currentRoute.view === "article" && currentRoute.postId) {
         if (blogListView) blogListView.style.display = "none";
