@@ -286,6 +286,7 @@ body {
   justify-content: center;
   overflow: hidden;
   flex-shrink: 0;
+  position: relative;
 }
 
 .wd-logo-img {
@@ -293,6 +294,84 @@ body {
   height: 100%;
   object-fit: contain;
   display: block;
+  transition: opacity 0.25s ease;
+}
+
+/* APP SCREENSHOT & APP LOGO IMAGE LOADING INDICATOR & FALLBACK STYLES */
+.wd-img-container {
+  position: relative;
+}
+
+.wd-img-loader {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 5;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
+}
+
+.wd-img-spinner {
+  width: 28px;
+  height: 28px;
+  border: 2.5px solid rgba(15, 159, 122, 0.2);
+  border-top-color: var(--color-primary);
+  border-radius: 50%;
+  animation: wdImgSpin 0.8s linear infinite;
+  box-sizing: border-box;
+}
+
+.wd-logo-icon .wd-img-spinner {
+  width: 14px;
+  height: 14px;
+  border-width: 2px;
+}
+
+.wd-img-fallback {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-muted);
+  opacity: 0.6;
+}
+
+@keyframes wdImgSpin {
+  to { transform: rotate(360deg); }
+}
+
+.wd-img-container.is-loading .wd-img-spinner {
+  display: block;
+}
+
+.wd-img-container.is-loading .wd-img-fallback {
+  display: none;
+}
+
+.wd-img-container.is-loading img {
+  opacity: 0;
+}
+
+.wd-img-container.is-loaded .wd-img-loader {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.wd-img-container.is-loaded img {
+  opacity: 1;
+}
+
+.wd-img-container.is-error .wd-img-spinner {
+  display: none;
+}
+
+.wd-img-container.is-error .wd-img-fallback {
+  display: flex;
+}
+
+.wd-img-container.is-error img {
+  opacity: 0;
 }
 
 .wd-logo-text span {
@@ -3204,7 +3283,8 @@ body {
   <header class="wd-header" id="wd-header">
     <div class="wd-header-container">
       <a expr:href='data:blog.homepageUrl' class="wd-logo">
-        <div class="wd-logo-icon">
+        <div class="wd-logo-icon wd-img-container">
+          <div class="wd-img-loader"><div class="wd-img-spinner"></div><div class="wd-img-fallback"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div></div>
           <img src="https://i.postimg.cc/hGvVCbsr/20260813-220349.png" alt="WorkDaily" class="wd-logo-img"/>
         </div>
         <span class="wd-logo-text">Work<span>Daily</span></span>
@@ -3342,7 +3422,8 @@ body {
           <!-- Mock Phone -->
           <div class="wd-phone-mockup">
             <div class="wd-phone-notch"></div>
-            <div class="wd-phone-screen">
+            <div class="wd-phone-screen wd-img-container">
+              <div class="wd-img-loader"><div class="wd-img-spinner"></div><div class="wd-img-fallback"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div></div>
               <img src="https://i.postimg.cc/3NRBHFJk/Screenshot-20260910-205058.jpg" alt="WorkDaily Home Screen" class="wd-hero-screen-img" style="width: 100%; height: 100%; object-fit: cover; display: block;"/>
             </div>
           </div>
@@ -3897,7 +3978,8 @@ body {
     <div class="wd-container wd-footer-container">
       <div class="wd-footer-brand-wrap">
         <a expr:href='data:blog.homepageUrl' class="wd-logo">
-          <div class="wd-logo-icon">
+          <div class="wd-logo-icon wd-img-container">
+            <div class="wd-img-loader"><div class="wd-img-spinner"></div><div class="wd-img-fallback"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div></div>
             <img src="https://i.postimg.cc/hGvVCbsr/20260813-220349.png" alt="WorkDaily" class="wd-logo-img"/>
           </div>
           <span class="wd-logo-text">Work<span>Daily</span></span>
@@ -4022,7 +4104,49 @@ body {
     initBlogSystem();
     initCustomVideoPlayer();
     initStaticPageToc();
+    initAppImageLoaders();
   });
+
+  /* APP SCREENSHOTS & LOGOS LOADING PROGRESS & FALLBACK HANDLER */
+  function handleImageLoadState(img) {
+    const container = img.closest('.wd-img-container');
+    if (!container) return;
+
+    function markLoaded() {
+      container.classList.remove('is-loading', 'is-error');
+      container.classList.add('is-loaded');
+    }
+
+    function markError() {
+      container.classList.remove('is-loading', 'is-loaded');
+      container.classList.add('is-error');
+    }
+
+    if (img.dataset.wdLoaderAttached !== "true") {
+      img.dataset.wdLoaderAttached = "true";
+      img.addEventListener('load', markLoaded);
+      img.addEventListener('error', markError);
+    }
+
+    if (img.complete) {
+      if (img.naturalWidth > 0) {
+        markLoaded();
+      } else {
+        markError();
+      }
+    } else {
+      container.classList.remove('is-loaded', 'is-error');
+      container.classList.add('is-loading');
+    }
+  }
+
+  function initAppImageLoaders(scope) {
+    const root = scope || document;
+    const images = root.querySelectorAll('.wd-logo-img, .wd-hero-screen-img, .wd-slide-img');
+    images.forEach(function(img) {
+      handleImageLoadState(img);
+    });
+  }
 
   /* STATIC PAGE TOC GENERATOR */
   function initStaticPageToc() {
@@ -5976,7 +6100,8 @@ body {
             <div class="wd-feature-icon-badge wd-icon-br" aria-hidden="true">
               ${icons[2]}
             </div>
-            <div class="wd-slide-phone">
+            <div class="wd-slide-phone wd-img-container">
+              <div class="wd-img-loader"><div class="wd-img-spinner"></div><div class="wd-img-fallback"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div></div>
               <img src="${item.image}" alt="${item.alt || ('WorkDaily ' + item.title)}" class="wd-slide-img" loading="${loadingAttr}" decoding="async" />
             </div>
           </div>
@@ -5985,6 +6110,8 @@ body {
 
       track.appendChild(slide);
     });
+
+    initAppImageLoaders(track);
 
     // Build Vertical Indicator Dots
     workDailyScreens.forEach(function(_, index) {
