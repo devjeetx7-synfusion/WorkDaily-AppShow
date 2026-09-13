@@ -2039,33 +2039,181 @@ body {
   margin-bottom: 60px;
 }
 
-/* STATIC PAGE STYLING */
+/* STATIC LEGAL PAGE STYLING */
 .wd-static-page-container {
-  max-width: 860px;
+  max-width: 1120px;
   margin: 0 auto;
-  padding: 40px 24px 80px;
+  padding: 32px 24px 64px;
 }
 
-.wd-static-page-card {
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
-  padding: 48px 40px;
-  box-shadow: var(--shadow-sm);
+.wd-static-page-content {
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  box-shadow: none;
+}
+
+.wd-static-page-header {
+  margin-bottom: 32px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.wd-static-page-title {
+  font-size: clamp(28px, 3.5vw, 40px);
+  font-weight: 800;
+  color: var(--color-text);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  margin-top: 12px;
+  margin-bottom: 0;
+}
+
+/* Two-Column Responsive Layout */
+.wd-static-page-grid {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 48px;
+  align-items: start;
+}
+
+/* Sticky Sidebar Table of Contents */
+.wd-static-page-toc-wrap {
+  position: sticky;
+  top: 90px;
+  background: transparent;
+  border: none;
+  padding: 0;
+}
+
+.wd-toc-title {
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-text-muted);
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+/* Compact Table-Style TOC List */
+.wd-toc-table {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.wd-toc-row {
+  display: grid;
+  grid-template-columns: 32px 1fr;
+  align-items: baseline;
+  gap: 8px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--color-border);
+  color: var(--color-text-muted);
+  text-decoration: none;
+  font-size: 14px;
+  line-height: 1.4;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.wd-toc-row:hover,
+.wd-toc-row.active {
+  color: var(--color-primary);
+}
+
+.wd-toc-num {
+  font-family: monospace, sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  opacity: 0.75;
+}
+
+.wd-toc-text {
+  font-weight: 500;
+  word-break: break-word;
 }
 
 .wd-static-page-body {
   margin-bottom: 0;
   color: var(--color-text);
+  min-width: 0;
+}
+
+.wd-static-page-body h2 {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--color-text);
+  margin: 32px 0 12px;
+  padding-top: 16px;
+  letter-spacing: -0.01em;
+  scroll-margin-top: 100px;
+}
+
+.wd-static-page-body h2:first-child {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+.wd-static-page-body h3 {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--color-text);
+  margin: 24px 0 10px;
+  scroll-margin-top: 100px;
+}
+
+.wd-static-page-body p,
+.wd-static-page-body li {
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--color-text-muted);
+}
+
+.wd-static-page-body ul,
+.wd-static-page-body ol {
+  padding-left: 20px;
+  margin-bottom: 20px;
+}
+
+.wd-static-page-body section,
+.wd-static-page-body .legal-section,
+.wd-static-page-body .card {
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin: 0 0 28px 0 !important;
+}
+
+@media (max-width: 1023px) {
+  .wd-static-page-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .wd-static-page-toc-wrap {
+    position: relative;
+    top: 0;
+    margin-bottom: 12px;
+  }
 }
 
 @media (max-width: 767px) {
   .wd-static-page-container {
-    padding: 24px 16px 60px;
+    padding: 20px 16px 48px;
   }
-  .wd-static-page-card {
-    padding: 28px 20px;
-    border-radius: var(--radius-md);
+
+  .wd-static-page-header {
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+  }
+
+  .wd-static-page-title {
+    font-size: 26px;
   }
 }
 
@@ -3467,18 +3615,24 @@ body {
                 <!-- STATIC PAGE CONTAINER (Privacy Policy, Terms & Conditions, etc.) -->
                 <div id="wd-static-page-view" class="wd-static-page-container">
                   <b:loop values='data:posts' var='post'>
-                    <article class="wd-single-post wd-static-page-card">
-                      <header class="wd-post-header">
+                    <article class="wd-static-page-content">
+                      <header class="wd-static-page-header">
                         <div class="wd-post-top-bar">
                           <a expr:href='data:blog.homepageUrl' class="wd-back-link">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
                             <span>Back to Home</span>
                           </a>
                         </div>
-                        <h1 class="wd-post-title"><data:post.title/></h1>
+                        <h1 class="wd-static-page-title"><data:post.title/></h1>
                       </header>
-                      <div class="wd-post-body wd-static-page-body">
-                        <data:post.body/>
+                      <div class="wd-static-page-grid">
+                        <aside class="wd-static-page-toc-wrap" id="wd-static-page-toc-slot" style="display: none;">
+                          <div class="wd-toc-title">On This Page</div>
+                          <nav class="wd-toc-table" id="wd-toc-table-nav" aria-label="On This Page Navigation"></nav>
+                        </aside>
+                        <div class="wd-post-body wd-static-page-body" id="wd-static-page-body-content">
+                          <data:post.body/>
+                        </div>
                       </div>
                     </article>
                   </b:loop>
@@ -3867,7 +4021,66 @@ body {
     initKeyboardNav();
     initBlogSystem();
     initCustomVideoPlayer();
+    initStaticPageToc();
   });
+
+  /* STATIC PAGE TOC GENERATOR */
+  function initStaticPageToc() {
+    const bodyContent = document.getElementById("wd-static-page-body-content");
+    const tocSlot = document.getElementById("wd-static-page-toc-slot");
+    const tocNav = document.getElementById("wd-toc-table-nav");
+
+    if (!bodyContent || !tocSlot || !tocNav) return;
+
+    const headings = Array.from(bodyContent.querySelectorAll("h2, h3"));
+    if (headings.length < 2) {
+      tocSlot.style.display = "none";
+      return;
+    }
+
+    tocNav.innerHTML = "";
+    let sectionCount = 0;
+
+    headings.forEach(function(heading, index) {
+      if (!heading.id) {
+        const textSlug = heading.textContent
+          .toLowerCase()
+          .replace(/[^a-z0-9]+/g, "-")
+          .replace(/(^-|-$)/g, "");
+        heading.id = textSlug || ("section-" + (index + 1));
+      }
+
+      if (heading.tagName.toLowerCase() === "h2") {
+        sectionCount++;
+      }
+
+      const numStr = String(sectionCount).padStart(2, "0");
+      const row = document.createElement("a");
+      row.className = "wd-toc-row";
+      row.href = "#" + heading.id;
+      row.innerHTML = `
+        <span class="wd-toc-num">${numStr}</span>
+        <span class="wd-toc-text">${heading.textContent.trim()}</span>
+      `;
+
+      tocNav.appendChild(row);
+    });
+
+    tocSlot.style.display = "block";
+
+    // Smooth scroll handling for TOC links
+    tocNav.querySelectorAll("a.wd-toc-row").forEach(function(link) {
+      link.addEventListener("click", function(e) {
+        const targetId = this.getAttribute("href").replace("#", "");
+        const targetEl = document.getElementById(targetId);
+        if (targetEl) {
+          e.preventDefault();
+          targetEl.scrollIntoView({ behavior: "smooth" });
+          history.pushState(null, null, "#" + targetId);
+        }
+      });
+    });
+  }
 
   function initThemeToggle() {
     const toggleBtn = document.getElementById("wd-theme-toggle");
