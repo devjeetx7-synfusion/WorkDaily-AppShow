@@ -2149,71 +2149,6 @@ body {
   margin-bottom: 0;
 }
 
-/* Two-Column Responsive Layout */
-.wd-static-page-grid {
-  display: grid;
-  grid-template-columns: 280px 1fr;
-  gap: 48px;
-  align-items: start;
-}
-
-/* Sticky Sidebar Table of Contents */
-.wd-static-page-toc-wrap {
-  position: sticky;
-  top: 90px;
-  background: transparent;
-  border: none;
-  padding: 0;
-}
-
-.wd-toc-title {
-  font-size: 13px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--color-text-muted);
-  margin-bottom: 12px;
-  padding-bottom: 8px;
-  border-bottom: 1px solid var(--color-border);
-}
-
-/* Compact Table-Style TOC List */
-.wd-toc-table {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-}
-
-.wd-toc-row {
-  display: grid;
-  grid-template-columns: 32px 1fr;
-  align-items: baseline;
-  gap: 8px;
-  padding: 10px 0;
-  border-bottom: 1px solid var(--color-border);
-  color: var(--color-text-muted);
-  text-decoration: none;
-  font-size: 14px;
-  line-height: 1.4;
-  transition: color 0.15s ease, border-color 0.15s ease;
-}
-
-.wd-toc-row:hover,
-.wd-toc-row.active {
-  color: var(--color-primary);
-}
-
-.wd-toc-num {
-  font-family: monospace, sans-serif;
-  font-size: 13px;
-  font-weight: 600;
-  opacity: 0.75;
-}
-
-.wd-toc-text {
-  font-weight: 500;
-  word-break: break-word;
-}
 
 .wd-static-page-body {
   margin-bottom: 0;
@@ -2268,18 +2203,6 @@ body {
   margin: 0 0 28px 0 !important;
 }
 
-@media (max-width: 1023px) {
-  .wd-static-page-grid {
-    grid-template-columns: 1fr;
-    gap: 32px;
-  }
-
-  .wd-static-page-toc-wrap {
-    position: relative;
-    top: 0;
-    margin-bottom: 12px;
-  }
-}
 
 @media (max-width: 767px) {
   .wd-static-page-container {
@@ -3706,14 +3629,8 @@ body {
                         </div>
                         <h1 class="wd-static-page-title"><data:post.title/></h1>
                       </header>
-                      <div class="wd-static-page-grid">
-                        <aside class="wd-static-page-toc-wrap" id="wd-static-page-toc-slot" style="display: none;">
-                          <div class="wd-toc-title">On This Page</div>
-                          <nav class="wd-toc-table" id="wd-toc-table-nav" aria-label="On This Page Navigation"></nav>
-                        </aside>
-                        <div class="wd-post-body wd-static-page-body" id="wd-static-page-body-content">
-                          <data:post.body/>
-                        </div>
+                      <div class="wd-post-body wd-static-page-body" id="wd-static-page-body-content">
+                        <data:post.body/>
                       </div>
                     </article>
                   </b:loop>
@@ -4103,7 +4020,6 @@ body {
     initKeyboardNav();
     initBlogSystem();
     initCustomVideoPlayer();
-    initStaticPageToc();
     initAppImageLoaders();
   });
 
@@ -4148,63 +4064,6 @@ body {
     });
   }
 
-  /* STATIC PAGE TOC GENERATOR */
-  function initStaticPageToc() {
-    const bodyContent = document.getElementById("wd-static-page-body-content");
-    const tocSlot = document.getElementById("wd-static-page-toc-slot");
-    const tocNav = document.getElementById("wd-toc-table-nav");
-
-    if (!bodyContent || !tocSlot || !tocNav) return;
-
-    const headings = Array.from(bodyContent.querySelectorAll("h2, h3"));
-    if (headings.length < 2) {
-      tocSlot.style.display = "none";
-      return;
-    }
-
-    tocNav.innerHTML = "";
-    let sectionCount = 0;
-
-    headings.forEach(function(heading, index) {
-      if (!heading.id) {
-        const textSlug = heading.textContent
-          .toLowerCase()
-          .replace(/[^a-z0-9]+/g, "-")
-          .replace(/(^-|-$)/g, "");
-        heading.id = textSlug || ("section-" + (index + 1));
-      }
-
-      if (heading.tagName.toLowerCase() === "h2") {
-        sectionCount++;
-      }
-
-      const numStr = String(sectionCount).padStart(2, "0");
-      const row = document.createElement("a");
-      row.className = "wd-toc-row";
-      row.href = "#" + heading.id;
-      row.innerHTML = `
-        <span class="wd-toc-num">${numStr}</span>
-        <span class="wd-toc-text">${heading.textContent.trim()}</span>
-      `;
-
-      tocNav.appendChild(row);
-    });
-
-    tocSlot.style.display = "block";
-
-    // Smooth scroll handling for TOC links
-    tocNav.querySelectorAll("a.wd-toc-row").forEach(function(link) {
-      link.addEventListener("click", function(e) {
-        const targetId = this.getAttribute("href").replace("#", "");
-        const targetEl = document.getElementById(targetId);
-        if (targetEl) {
-          e.preventDefault();
-          targetEl.scrollIntoView({ behavior: "smooth" });
-          history.pushState(null, null, "#" + targetId);
-        }
-      });
-    });
-  }
 
   function initThemeToggle() {
     const toggleBtn = document.getElementById("wd-theme-toggle");
