@@ -1421,16 +1421,12 @@ body {
   pointer-events: none;
 }
 
-.wd-featured-badge-wrap {
-  padding: 24px 28px 0 28px;
-  position: relative;
-  z-index: 3;
-}
-
 .wd-featured-badge {
   display: inline-flex;
   align-items: center;
-  position: static;
+  position: absolute;
+  top: 14px;
+  right: 14px;
   background: var(--color-primary);
   color: #FFFFFF;
   font-size: 11px;
@@ -1439,8 +1435,8 @@ body {
   text-transform: uppercase;
   padding: 6px 14px;
   border-radius: var(--radius-full);
-  z-index: 3;
-  box-shadow: 0 4px 12px rgba(15, 159, 122, 0.4);
+  z-index: 5;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
 }
 
 .wd-featured-layout {
@@ -1451,7 +1447,7 @@ body {
   display: grid;
   grid-template-columns: 1.15fr 0.85fr;
   align-items: center;
-  padding: 20px 28px 28px 28px;
+  padding: 28px;
   gap: 36px;
   box-sizing: border-box;
 }
@@ -1629,8 +1625,8 @@ body {
     aspect-ratio: 16 / 9;
   }
   .wd-featured-badge {
-    top: 16px;
-    left: 16px;
+    top: 12px;
+    right: 12px;
     padding: 5px 12px;
     font-size: 10px;
   }
@@ -4747,11 +4743,25 @@ body {
     let fetchError = null;
     let loading = false;
 
+    function stripNonContentElements(element) {
+      if (!element) return;
+      const nonContent = element.querySelectorAll("style, script, noscript, template, iframe");
+      nonContent.forEach(el => el.remove());
+    }
+
     function calculateReadingTime(htmlContent) {
       if (!htmlContent) return "1 min read";
       const tmp = document.createElement("div");
       tmp.innerHTML = htmlContent;
-      const text = tmp.textContent || tmp.innerText || "";
+      stripNonContentElements(tmp);
+      let text = tmp.textContent || tmp.innerText || "";
+      if (text.includes("<") && text.includes(">")) {
+        const tmp2 = document.createElement("div");
+        tmp2.innerHTML = text;
+        stripNonContentElements(tmp2);
+        text = tmp2.textContent || tmp2.innerText || "";
+      }
+      text = text.replace(/(?:[a-zA-Z0-9_.-]+|\.[a-zA-Z0-9_-]+|#[a-zA-Z0-9_-]+)\s*\{[^}]*\}/g, "");
       const words = text.trim().split(/\s+/).filter(Boolean).length;
       const minutes = Math.max(1, Math.round(words / 200));
       return `${minutes} min read`;
@@ -4773,7 +4783,22 @@ body {
       if (!htmlContent) return "";
       const tmp = document.createElement("div");
       tmp.innerHTML = htmlContent;
-      const text = tmp.textContent || tmp.innerText || "";
+      stripNonContentElements(tmp);
+
+      let text = tmp.textContent || tmp.innerText || "";
+
+      if (text.includes("<") && text.includes(">")) {
+        const tmp2 = document.createElement("div");
+        tmp2.innerHTML = text;
+        stripNonContentElements(tmp2);
+        text = tmp2.textContent || tmp2.innerText || "";
+      }
+
+      text = text.replace(/<style[^>]*>[\s\S]*?<\/style>/gi, "");
+      text = text.replace(/<script[^>]*>[\s\S]*?<\/script>/gi, "");
+      text = text.replace(/(?:[a-zA-Z0-9_.-]+|\.[a-zA-Z0-9_-]+|#[a-zA-Z0-9_-]+)\s*\{[^}]*\}/g, "");
+      text = text.replace(/--[a-zA-Z0-9_-]+:\s*[^;]+;/g, "");
+
       const trimmed = text.trim().replace(/\s+/g, " ");
       if (trimmed.length <= maxLength) return trimmed;
       return trimmed.substring(0, maxLength).trim() + "...";
@@ -5718,10 +5743,13 @@ body {
     const ambientBgStyle = hasImage ? `style="background-image: url('${thumbUrl.replace(/'/g, "\\'")}');"` : '';
     const ambientBgClass = hasImage ? 'wd-featured-ambient-bg' : 'wd-featured-ambient-bg wd-ambient-default-bg';
 
+    const badgeHtml = `<span class="wd-featured-badge">FEATURED</span>`;
+
     const mediaColHtml = hasImage ? `
       <div class="wd-featured-media-col">
         <div class="wd-featured-media-frame">
           <img src="${thumbUrl}" alt="${featured.title}" class="wd-featured-sharp-img" />
+          ${badgeHtml}
         </div>
       </div>
     ` : '';
@@ -5732,9 +5760,7 @@ body {
       <div class="wd-featured-article ${hasImage ? 'has-image' : 'no-image'}" data-post-id="${featured.id}">
         <div class="${ambientBgClass}" ${ambientBgStyle}></div>
         <div class="wd-featured-gradient-overlay"></div>
-        <div class="wd-featured-badge-wrap">
-          <span class="wd-featured-badge">FEATURED</span>
-        </div>
+        ${!hasImage ? badgeHtml : ''}
         <div class="wd-featured-layout">
           <div class="wd-featured-content">
             <div class="wd-featured-meta">
