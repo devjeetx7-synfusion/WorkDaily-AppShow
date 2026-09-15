@@ -1421,23 +1421,26 @@ body {
   pointer-events: none;
 }
 
+.wd-featured-badge-wrap {
+  padding: 24px 28px 0 28px;
+  position: relative;
+  z-index: 3;
+}
+
 .wd-featured-badge {
-  position: absolute;
-  top: 24px;
-  left: 24px;
-  z-index: 2;
-  padding: 6px 16px;
-  background: rgba(15, 159, 122, 0.88);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  display: inline-flex;
+  align-items: center;
+  position: static;
+  background: var(--color-primary);
   color: #FFFFFF;
   font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 0.12em;
+  font-weight: 700;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
+  padding: 6px 14px;
   border-radius: var(--radius-full);
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  z-index: 3;
+  box-shadow: 0 4px 12px rgba(15, 159, 122, 0.4);
 }
 
 .wd-featured-layout {
@@ -1445,11 +1448,10 @@ body {
   z-index: 2;
   width: 100%;
   height: 100%;
-  min-height: 440px;
   display: grid;
   grid-template-columns: 1.15fr 0.85fr;
   align-items: center;
-  padding: 44px 40px;
+  padding: 20px 28px 28px 28px;
   gap: 36px;
   box-sizing: border-box;
 }
@@ -2054,8 +2056,10 @@ body {
   font-weight: 700;
   color: var(--color-primary);
   text-decoration: none;
-  margin-bottom: 28px;
+  margin-bottom: 0;
   padding: 8px 16px;
+  height: 38px;
+  box-sizing: border-box;
   background: var(--color-bg);
   border-radius: var(--radius-full);
   border: 1px solid var(--color-border);
@@ -3105,6 +3109,8 @@ body {
   border: 1px solid var(--color-border);
   border-radius: var(--radius-full);
   padding: 8px 16px;
+  height: 38px;
+  box-sizing: border-box;
   font-size: 13.5px;
   font-weight: 700;
   color: var(--color-text);
@@ -3599,14 +3605,6 @@ body {
         <p class="wd-section-subtitle">Articles on workforce efficiency, contractor best practices, and daily management tech.</p>
       </div>
 
-      <!-- Category Navigation Chips -->
-      <nav class="wd-blog-categories-wrap" aria-label="Blog Categories">
-        <button class="wd-category-chip active" data-category="all">All</button>
-        <button class="wd-category-chip" data-category="update">Update</button>
-        <button class="wd-category-chip" data-category="news">News</button>
-        <button class="wd-category-chip" data-category="article">Article</button>
-        <button class="wd-category-chip" data-category="feedback">Feedback</button>
-      </nav>
       </b:if>
 
       <main class="wd-main-content">
@@ -3638,6 +3636,11 @@ body {
               <b:else/>
                 <!-- 1. BLOG LIST VIEW CONTAINER -->
               <div id="wd-blog-list-view">
+                  <!-- Dynamic Category Navigation Chips -->
+                  <nav class="wd-blog-categories-wrap" aria-label="Blog Categories">
+                    <button class="wd-category-chip active" data-category="all">All</button>
+                  </nav>
+
                 <!-- Dynamic Featured Post Header container -->
                 <div id="wd-featured-post-slot"></div>
 
@@ -4793,7 +4796,19 @@ body {
 
     function normalizeCategoryLabel(label) {
       if (!label) return "Article";
-      const clean = String(label).trim();
+      let clean = "";
+      if (typeof label === "string") {
+        clean = label;
+      } else if (typeof label === "object" && label !== null) {
+        clean = label.name || label.term || label.label || label.title || (label.$t ? label.$t : "");
+        if (typeof clean === "object" && clean !== null && clean.$t) clean = clean.$t;
+        if (typeof clean !== "string") clean = String(clean || "");
+      } else {
+        clean = String(label);
+      }
+      clean = clean.trim();
+      if (!clean || clean === "[object Object]") return "Article";
+
       const lower = clean.toLowerCase();
       if (lower === "update" || lower === "updates") return "Update";
       if (lower === "news") return "News";
@@ -4802,6 +4817,7 @@ body {
       if (lower === "featured") return "Featured";
       return clean.charAt(0).toUpperCase() + clean.slice(1);
     }
+    window.normalizeCategoryLabel = normalizeCategoryLabel;
 
     function formatDate(rawDate) {
       if (!rawDate) return "";
@@ -4857,15 +4873,17 @@ body {
 
       let rawLabels = [];
       if (Array.isArray(rawPost.labels)) {
-        rawLabels = rawPost.labels.map(l => (typeof l === "object" ? (l.name || l.term) : String(l)));
+        rawLabels = rawPost.labels;
+      } else if (Array.isArray(rawPost.category)) {
+        rawLabels = rawPost.category;
       } else if (rawPost.category) {
-        rawLabels = [String(rawPost.category)];
+        rawLabels = [rawPost.category];
       } else if (Array.isArray(rawPost.categories)) {
-        rawLabels = rawPost.categories.map(c => c.term || c.label || String(c)).filter(Boolean);
+        rawLabels = rawPost.categories;
       }
 
-      const isFeatured = rawLabels.some(l => String(l).toLowerCase() === "featured") || (rawPost.isFeatured === true);
-      const normalizedLabels = rawLabels.map(normalizeCategoryLabel);
+      const normalizedLabels = rawLabels.map(normalizeCategoryLabel).filter(Boolean);
+      const isFeatured = normalizedLabels.some(l => l.toLowerCase() === "featured") || (rawPost.isFeatured === true);
       const displayCategories = normalizedLabels.filter(c => c.toLowerCase() !== "featured");
       const categories = displayCategories.length > 0 ? displayCategories : (normalizedLabels.length > 0 ? normalizedLabels : ["Article"]);
       const category = categories[0] || "Article";
@@ -5567,10 +5585,62 @@ body {
       return;
     }
 
+    buildCategoryNav();
     buildFeaturedPost();
     renderBlogGrid();
     filterBlogPosts(window.WorkDailyRouter.getActiveCategory());
   }
+
+  window.buildCategoryNav = function() {
+    const navContainer = document.querySelector(".wd-blog-categories-wrap");
+    if (!navContainer) return;
+
+    const allPosts = window.WorkDailyBlogStore.getAllPosts();
+    const activeCat = window.WorkDailyRouter.getActiveCategory() || "all";
+
+    const categorySet = new Set();
+    allPosts.forEach(post => {
+      const cats = post.categories || (post.category ? [post.category] : []);
+      cats.forEach(cat => {
+        if (!cat) return;
+        const norm = window.normalizeCategoryLabel(cat);
+        if (norm.toLowerCase() !== "featured") {
+          categorySet.add(norm);
+        }
+      });
+    });
+
+    const definedOrder = ["Update", "News", "Article", "Feedback"];
+    const presentCategories = definedOrder.filter(cat => categorySet.has(cat));
+    Array.from(categorySet).forEach(cat => {
+      if (!presentCategories.includes(cat)) {
+        presentCategories.push(cat);
+      }
+    });
+
+    navContainer.innerHTML = "";
+
+    const allBtn = document.createElement("button");
+    allBtn.className = "wd-category-chip" + (activeCat.toLowerCase() === "all" ? " active" : "");
+    allBtn.setAttribute("data-category", "all");
+    allBtn.textContent = "All";
+    allBtn.addEventListener("click", function() {
+      window.WorkDailyRouter.setActiveCategory("all");
+    });
+    navContainer.appendChild(allBtn);
+
+    presentCategories.forEach(cat => {
+      const catKey = cat.toLowerCase();
+      const btn = document.createElement("button");
+      btn.className = "wd-category-chip" + (activeCat.toLowerCase() === catKey ? " active" : "");
+      btn.setAttribute("data-category", catKey);
+      btn.textContent = cat;
+      btn.addEventListener("click", function() {
+        window.WorkDailyRouter.setActiveCategory(catKey);
+      });
+      navContainer.appendChild(btn);
+    });
+  };
 
   window.renderBlogGrid = function() {
     const grid = document.getElementById("wd-blog-grid");
@@ -5656,15 +5726,19 @@ body {
       </div>
     ` : '';
 
+    const categoryName = typeof featured.category === 'string' ? featured.category : (featured.categories && featured.categories[0] ? String(featured.categories[0]) : 'Update');
+
     featuredSlot.innerHTML = `
       <div class="wd-featured-article ${hasImage ? 'has-image' : 'no-image'}" data-post-id="${featured.id}">
         <div class="${ambientBgClass}" ${ambientBgStyle}></div>
         <div class="wd-featured-gradient-overlay"></div>
-        <span class="wd-featured-badge">FEATURED</span>
+        <div class="wd-featured-badge-wrap">
+          <span class="wd-featured-badge">FEATURED</span>
+        </div>
         <div class="wd-featured-layout">
           <div class="wd-featured-content">
             <div class="wd-featured-meta">
-              <span class="wd-featured-category-pill">${featured.category || 'Update'}</span>
+              <span class="wd-featured-category-pill">${categoryName}</span>
               <span class="wd-featured-sep">•</span>
               <span class="wd-featured-date">${featured.publishedAt || ''}</span>
               <span class="wd-featured-sep">•</span>
