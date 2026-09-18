@@ -9,11 +9,7 @@
   <b:if cond='data:view.isHomepage'>
     <title>WorkDaily - 100% Offline Attendance &amp; Wage Tracker</title>
   <b:else/>
-    <b:if cond='data:view.title'>
-      <title><data:view.title/> - WorkDaily</title>
-    <b:else/>
-      <title>WorkDaily - 100% Offline Attendance &amp; Wage Tracker</title>
-    </b:if>
+    <title>WorkDaily - 100% Offline Attendance &amp; Wage Tracker</title>
   </b:if>
 
   <!-- Theme Initialization Script (Prevents FOUC) -->
@@ -28,55 +24,16 @@
   })();
   //]]></script>
 
-  <!-- Canonical URL -->
+  <!-- Meta SEO & OpenGraph -->
+  <meta content='Track your daily attendance, overtime, and advances with WorkDaily. A private, offline-first ledger for daily wage earners with shareable PDF passbooks and secure backups.' name='description'/>
   <link expr:href='data:blog.canonicalUrl' rel='canonical'/>
-
-  <!-- Description Metadata -->
-  <b:if cond='data:view.description'>
-    <meta expr:content='data:view.description' name='description'/>
-    <meta expr:content='data:view.description' property='og:description'/>
-    <meta expr:content='data:view.description' name='twitter:description'/>
-  <b:else/>
-    <meta content='Track your daily attendance, overtime, and advances with WorkDaily. A private, offline-first ledger for daily wage earners with shareable PDF passbooks and secure backups.' name='description'/>
-    <meta content='Track your daily attendance, overtime, and advances with WorkDaily. A private, offline-first ledger for daily wage earners with shareable PDF passbooks and secure backups.' property='og:description'/>
-    <meta content='Track your daily attendance, overtime, and advances with WorkDaily. A private, offline-first ledger for daily wage earners with shareable PDF passbooks and secure backups.' name='twitter:description'/>
-  </b:if>
-
-  <!-- Open Graph & Twitter Title Metadata -->
-  <b:if cond='data:view.isHomepage'>
-    <meta content='WorkDaily - 100% Offline Attendance &amp; Wage Tracker' property='og:title'/>
-    <meta content='WorkDaily - 100% Offline Attendance &amp; Wage Tracker' name='twitter:title'/>
-  <b:else/>
-    <b:if cond='data:view.title'>
-      <meta expr:content='data:view.title' property='og:title'/>
-      <meta expr:content='data:view.title' name='twitter:title'/>
-    <b:else/>
-      <meta content='WorkDaily - 100% Offline Attendance &amp; Wage Tracker' property='og:title'/>
-      <meta content='WorkDaily - 100% Offline Attendance &amp; Wage Tracker' name='twitter:title'/>
-    </b:if>
-  </b:if>
-
-  <!-- Open Graph Type Metadata -->
-  <b:if cond='data:view.isPost'>
-    <meta content='article' property='og:type'/>
-  <b:else/>
-    <meta content='website' property='og:type'/>
-  </b:if>
-
-  <!-- Open Graph & Twitter URL & Site Name -->
+  <meta content='WorkDaily - 100% Offline Attendance &amp; Wage Tracker' property='og:title'/>
+  <meta content='Track your daily attendance, overtime, and advances with WorkDaily. A private, offline-first ledger for daily wage earners with shareable PDF passbooks and secure backups.' property='og:description'/>
   <meta expr:content='data:blog.canonicalUrl' property='og:url'/>
   <meta content='WorkDaily' property='og:site_name'/>
   <meta content='summary_large_image' name='twitter:card'/>
-
-  <!-- Open Graph & Twitter Image Metadata -->
-  <b:if cond='data:view.featuredImage'>
-    <meta expr:content='data:view.featuredImage' property='og:image'/>
-    <meta expr:content='data:view.featuredImage' name='twitter:image'/>
-  <b:else/>
-    <meta content='https://i.postimg.cc/3NRBHFJk/Screenshot-20260910-205058.jpg' property='og:image'/>
-    <meta content='https://i.postimg.cc/3NRBHFJk/Screenshot-20260910-205058.jpg' name='twitter:image'/>
-  </b:if>
-
+  <meta content='WorkDaily - 100% Offline Attendance &amp; Wage Tracker' name='twitter:title'/>
+  <meta content='Track your daily attendance, overtime, and advances with WorkDaily. A private, offline-first ledger for daily wage earners with shareable PDF passbooks and secure backups.' name='twitter:description'/>
   <meta content='#F8FAFB' name='theme-color'/>
   <meta content='light' name='color-scheme'/>
 
