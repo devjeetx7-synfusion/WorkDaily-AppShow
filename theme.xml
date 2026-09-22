@@ -117,14 +117,11 @@
       <meta expr:content='data:widgets.Blog.first.posts[0].title.escaped' name='twitter:title'/>
       <meta expr:content='data:widgets.Blog.first.posts[0].snippet.escaped' property='og:description'/>
       <meta expr:content='data:widgets.Blog.first.posts[0].snippet.escaped' name='twitter:description'/>
-      <b:if cond='data:widgets.Blog.first.posts[0].featuredImage'>
-        <meta expr:content='resizeImage(data:widgets.Blog.first.posts[0].featuredImage, 1200, &quot;1200:630&quot;)' property='og:image'/>
-        <meta expr:content='resizeImage(data:widgets.Blog.first.posts[0].featuredImage, 1200, &quot;1200:630&quot;)' name='twitter:image'/>
-        <link expr:href='resizeImage(data:widgets.Blog.first.posts[0].featuredImage, 1200, &quot;1200:630&quot;)' rel='image_src'/>
-      <b:else/>
-        <meta content='https://i.postimg.cc/hGvVCbsr/20260813-220349.png' property='og:image'/>
-        <meta content='https://i.postimg.cc/hGvVCbsr/20260813-220349.png' name='twitter:image'/>
-      </b:if>
+      <b:loop reverse='true' values='data:widgets.Blog.first.posts where (p =&gt; p.featuredImage)' var='socialPost'>
+        <meta expr:content='resizeImage(data:socialPost.featuredImage, 1200, &quot;1200:630&quot;)' property='og:image'/>
+        <meta expr:content='resizeImage(data:socialPost.featuredImage, 1200, &quot;1200:630&quot;)' name='twitter:image'/>
+        <link expr:href='resizeImage(data:socialPost.featuredImage, 1200, &quot;1200:630&quot;)' rel='image_src'/>
+      </b:loop>
     <b:else/>
       <meta content='WorkDaily - 100% Offline Attendance &amp; Wage Tracker' property='og:title'/>
       <meta content='WorkDaily - 100% Offline Attendance &amp; Wage Tracker' name='twitter:title'/>
