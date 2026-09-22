@@ -70,17 +70,17 @@
   <meta content='WorkDaily' property='og:site_name'/>
   <meta content='summary_large_image' name='twitter:card'/>
 
-  <!-- SOCIAL LINK PREVIEW: latest published post on homepage, current post on article URLs. -->
+  <!-- SOCIAL LINK PREVIEW: reliable Blogger image metadata for social crawlers. -->
   <b:if cond='data:view.isHomepage and data:widgets.Blog.first.posts[0]'>
+    <meta expr:content='data:widgets.Blog.first.posts[0].title.escaped' property='og:title'/>
+    <meta expr:content='data:widgets.Blog.first.posts[0].title.escaped' name='twitter:title'/>
+    <meta expr:content='data:widgets.Blog.first.posts[0].snippet.escaped' property='og:description'/>
+    <meta expr:content='data:widgets.Blog.first.posts[0].snippet.escaped' name='twitter:description'/>
     <b:if cond='data:widgets.Blog.first.posts[0].featuredImage'>
       <meta expr:content='resizeImage(data:widgets.Blog.first.posts[0].featuredImage, 1200, &quot;1200:630&quot;)' property='og:image'/>
-      <meta expr:content='resizeImage(data:widgets.Blog.first.posts[0].featuredImage, 1200, &quot;1200:630&quot;)' property='og:image:url'/>
-      <meta expr:content='resizeImage(data:widgets.Blog.first.posts[0].featuredImage, 1200, &quot;1200:630&quot;)' property='og:image:secure_url'/>
       <meta expr:content='resizeImage(data:widgets.Blog.first.posts[0].featuredImage, 1200, &quot;1200:630&quot;)' name='twitter:image'/>
     <b:elseif cond='data:widgets.Blog.first.posts[0].firstImageUrl'/>
       <meta expr:content='resizeImage(data:widgets.Blog.first.posts[0].firstImageUrl, 1200, &quot;1200:630&quot;)' property='og:image'/>
-      <meta expr:content='resizeImage(data:widgets.Blog.first.posts[0].firstImageUrl, 1200, &quot;1200:630&quot;)' property='og:image:url'/>
-      <meta expr:content='resizeImage(data:widgets.Blog.first.posts[0].firstImageUrl, 1200, &quot;1200:630&quot;)' property='og:image:secure_url'/>
       <meta expr:content='resizeImage(data:widgets.Blog.first.posts[0].firstImageUrl, 1200, &quot;1200:630&quot;)' name='twitter:image'/>
     <b:else/>
       <meta content='https://i.postimg.cc/hGvVCbsr/20260813-220349.png' property='og:image'/>
@@ -88,41 +88,28 @@
     </b:if>
     <meta content='1200' property='og:image:width'/>
     <meta content='630' property='og:image:height'/>
-    <meta expr:content='data:widgets.Blog.first.posts[0].title.escaped' property='og:title'/>
-    <meta expr:content='data:widgets.Blog.first.posts[0].title.escaped' name='twitter:title'/>
-    <meta expr:content='data:widgets.Blog.first.posts[0].snippet.escaped' property='og:description'/>
-    <meta expr:content='data:widgets.Blog.first.posts[0].snippet.escaped' name='twitter:description'/>
-  <b:elseif cond='data:view.isPost and data:view.featuredImage'/>
-    <meta expr:content='resizeImage(data:view.featuredImage, 1200, &quot;1200:630&quot;)' property='og:image'/>
-    <meta expr:content='resizeImage(data:view.featuredImage, 1200, &quot;1200:630&quot;)' property='og:image:url'/>
-    <meta expr:content='resizeImage(data:view.featuredImage, 1200, &quot;1200:630&quot;)' property='og:image:secure_url'/>
-    <meta expr:content='resizeImage(data:view.featuredImage, 1200, &quot;1200:630&quot;)' name='twitter:image'/>
-    <meta expr:content='resizeImage(data:view.featuredImage, 1200, &quot;1200:630&quot;)' name='twitter:image:src'/>
-    <meta expr:content='resizeImage(data:view.featuredImage, 1200, &quot;1200:630&quot;)' itemprop='image'/>
-    <link expr:href='resizeImage(data:view.featuredImage, 0)' rel='image_src'/>
-    <meta content='1200' property='og:image:width'/>
-    <meta content='630' property='og:image:height'/>
-  <b:elseif cond='data:view.isPost and data:blog.postImageUrl'/>
-    <meta expr:content='resizeImage(data:blog.postImageUrl, 1200, &quot;1200:630&quot;)' property='og:image'/>
-    <meta expr:content='resizeImage(data:blog.postImageUrl, 1200, &quot;1200:630&quot;)' property='og:image:url'/>
-    <meta expr:content='resizeImage(data:blog.postImageUrl, 1200, &quot;1200:630&quot;)' property='og:image:secure_url'/>
-    <meta expr:content='resizeImage(data:blog.postImageUrl, 1200, &quot;1200:630&quot;)' name='twitter:image'/>
-    <meta expr:content='resizeImage(data:blog.postImageUrl, 1200, &quot;1200:630&quot;)' name='twitter:image:src'/>
-    <meta expr:content='resizeImage(data:blog.postImageUrl, 1200, &quot;1200:630&quot;)' itemprop='image'/>
-    <link expr:href='resizeImage(data:blog.postImageUrl, 0)' rel='image_src'/>
+  <b:elseif cond='data:view.isPost'/>
+    <meta expr:content='data:view.title.escaped' property='og:title'/>
+    <meta expr:content='data:view.title.escaped' name='twitter:title'/>
+    <b:if cond='data:view.featuredImage'>
+      <meta expr:content='resizeImage(data:view.featuredImage, 1200, &quot;1200:630&quot;)' property='og:image'/>
+      <meta expr:content='resizeImage(data:view.featuredImage, 1200, &quot;1200:630&quot;)' property='og:image:url'/>
+      <meta expr:content='resizeImage(data:view.featuredImage, 1200, &quot;1200:630&quot;)' property='og:image:secure_url'/>
+      <meta expr:content='resizeImage(data:view.featuredImage, 1200, &quot;1200:630&quot;)' name='twitter:image'/>
+      <meta expr:content='resizeImage(data:view.featuredImage, 1200, &quot;1200:630&quot;)' itemprop='image'/>
+    <b:elseif cond='data:blog.postImageUrl'/>
+      <meta expr:content='resizeImage(data:blog.postImageUrl, 1200, &quot;1200:630&quot;)' property='og:image'/>
+      <meta expr:content='resizeImage(data:blog.postImageUrl, 1200, &quot;1200:630&quot;)' name='twitter:image'/>
+      <meta expr:content='resizeImage(data:blog.postImageUrl, 1200, &quot;1200:630&quot;)' itemprop='image'/>
+    <b:else/>
+      <meta content='https://i.postimg.cc/hGvVCbsr/20260813-220349.png' property='og:image'/>
+      <meta content='https://i.postimg.cc/hGvVCbsr/20260813-220349.png' name='twitter:image'/>
+    </b:if>
     <meta content='1200' property='og:image:width'/>
     <meta content='630' property='og:image:height'/>
   <b:else/>
     <meta content='https://i.postimg.cc/hGvVCbsr/20260813-220349.png' property='og:image'/>
     <meta content='https://i.postimg.cc/hGvVCbsr/20260813-220349.png' name='twitter:image'/>
-  </b:if>
-
-  <b:if cond='data:view.isPost'>
-    <meta expr:content='data:view.title.escaped' property='og:image:alt'/>
-  <b:elseif cond='data:view.isHomepage and data:widgets.Blog.first.posts[0]'/>
-    <meta expr:content='data:widgets.Blog.first.posts[0].title.escaped' property='og:image:alt'/>
-  <b:else/>
-    <meta content='WorkDaily' property='og:image:alt'/>
   </b:if>
 
   <meta content='#F8FAFB' name='theme-color'/>
