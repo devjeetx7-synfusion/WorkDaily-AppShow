@@ -1464,45 +1464,6 @@ body {
   border-top: 1px solid var(--color-border);
 }
 
-/* CATEGORY FILTERS */
-.wd-blog-categories-wrap {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  margin-bottom: 40px;
-  flex-wrap: wrap;
-}
-
-.wd-category-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 8px 20px;
-  border-radius: var(--radius-full);
-  font-size: 13.5px;
-  font-weight: 600;
-  color: var(--color-text-muted);
-  background: var(--color-bg);
-  border: 1px solid var(--color-border);
-  cursor: pointer;
-  transition: all var(--transition-fast);
-  text-decoration: none;
-}
-
-.wd-category-chip:hover {
-  color: var(--color-primary);
-  border-color: var(--color-primary);
-  transform: translateY(-1px);
-}
-
-.wd-category-chip.active {
-  background: linear-gradient(135deg, var(--color-primary) 0%, #10B981 100%);
-  color: #FFFFFF;
-  border-color: transparent;
-  box-shadow: 0 4px 14px rgba(15, 159, 122, 0.25);
-}
-
 /* FEATURED ARTICLE - LAYERED AMBIENT BLUR REDESIGN */
 .wd-featured-article {
   position: relative;
@@ -4166,11 +4127,6 @@ body {
               <b:else/>
                 <!-- 1. BLOG LIST VIEW CONTAINER -->
               <div id="wd-blog-list-view">
-                  <!-- Dynamic Category Navigation Chips -->
-                  <nav class="wd-blog-categories-wrap" aria-label="Blog Categories">
-                    <button class="wd-category-chip active" data-category="all">All</button>
-                  </nav>
-
                 <!-- Dynamic Featured Post Header container -->
                 <div id="wd-featured-post-slot"></div>
 
@@ -5420,31 +5376,6 @@ body {
                 .replace(/\/w\d+-h\d+-[^/]+\//, "/s1600/");
     }
 
-    function normalizeCategoryLabel(label) {
-      if (!label) return "";
-      let clean = "";
-      if (typeof label === "string") {
-        clean = label;
-      } else if (typeof label === "object" && label !== null) {
-        clean = label.name || label.term || label.label || label.title || (label.$t ? label.$t : "");
-        if (typeof clean === "object" && clean !== null && clean.$t) clean = clean.$t;
-        if (typeof clean !== "string") clean = String(clean || "");
-      } else {
-        clean = String(label);
-      }
-      clean = clean.trim();
-      if (!clean || clean === "[object Object]") return "";
-
-      const lower = clean.toLowerCase();
-      if (lower === "update" || lower === "updates") return "Update";
-      if (lower === "news") return "News";
-      if (lower === "article" || lower === "articles" || lower === "blog" || lower === "blogs") return "Article";
-      if (lower === "feedback" || lower === "feedbacks") return "Feedback";
-      if (lower === "featured") return "Featured";
-      return clean.charAt(0).toUpperCase() + clean.slice(1);
-    }
-    window.normalizeCategoryLabel = normalizeCategoryLabel;
-
     function formatDate(rawDate) {
       if (!rawDate) return "";
       let val = rawDate;
@@ -5497,22 +5428,7 @@ body {
       const thumbnail = optimizeBloggerImageUrl(rawThumb) || "";
       const hasThumbnail = Boolean(thumbnail);
 
-      let rawLabels = [];
-      if (Array.isArray(rawPost.labels)) {
-        rawLabels = rawPost.labels;
-      } else if (Array.isArray(rawPost.category)) {
-        rawLabels = rawPost.category;
-      } else if (rawPost.category) {
-        rawLabels = [rawPost.category];
-      } else if (Array.isArray(rawPost.categories)) {
-        rawLabels = rawPost.categories;
-      }
-
-      const normalizedLabels = Array.from(new Set(rawLabels.map(normalizeCategoryLabel).filter(Boolean)));
-      const isFeatured = normalizedLabels.some(l => l.toLowerCase() === "featured") || (rawPost.isFeatured === true);
-      const displayCategories = normalizedLabels.filter(c => c.toLowerCase() !== "featured");
-      const categories = displayCategories;
-      const category = categories[0] || "";
+      const isFeatured = rawPost.isFeatured === true;
 
       let author = "WorkDaily Team";
       if (rawPost.author) {
@@ -5538,9 +5454,6 @@ body {
         thumbnail,
         image: thumbnail,
         hasThumbnail,
-        category,
-        categories,
-        labels: categories,
         author,
         publishedAt,
         updatedAt,
