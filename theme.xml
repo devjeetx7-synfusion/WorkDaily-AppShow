@@ -99,6 +99,7 @@
     <meta expr:content='resizeImage(data:blog.postImageUrl, 1200, &quot;1200:630&quot;)' name='twitter:image'/>
     <meta content='1200' property='og:image:width'/>
     <meta content='630' property='og:image:height'/>
+  </b:elseif>
   <b:elseif cond='data:view.featuredImage'/>
     <meta expr:content='resizeImage(data:view.featuredImage, 1200, &quot;1200:630&quot;)' property='og:image'/>
     <meta expr:content='resizeImage(data:view.featuredImage, 1200, &quot;1200:630&quot;)' property='og:image:url'/>
