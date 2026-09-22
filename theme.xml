@@ -5,15 +5,15 @@
   <meta charset='utf-8'/>
   <meta content='width=device-width, initial-scale=1.0, viewport-fit=cover' name='viewport'/>
 
-  <!-- Dynamic Title -->
+  <!-- Dynamic SEO Title -->
   <b:if cond='data:view.isHomepage'>
     <title>WorkDaily - 100% Offline Attendance &amp; Wage Tracker</title>
+  <b:elseif cond='data:view.isPost'/>
+    <title><data:view.title/> | WorkDaily</title>
+  <b:elseif cond='data:view.isPage'/>
+    <title><data:view.title/> | WorkDaily</title>
   <b:else/>
-    <b:if cond='data:view.title'>
-      <title><data:view.title/> - WorkDaily</title>
-    <b:else/>
-      <title>WorkDaily - 100% Offline Attendance &amp; Wage Tracker</title>
-    </b:if>
+    <title><data:blog.pageTitle/> | WorkDaily</title>
   </b:if>
 
   <!-- Theme Initialization Script (Prevents FOUC) -->
@@ -31,29 +31,24 @@
   <!-- Canonical URL -->
   <link expr:href='data:blog.canonicalUrl' rel='canonical'/>
 
-  <!-- Description Metadata -->
+  <!-- Dynamic Description Metadata -->
   <b:if cond='data:view.description'>
-    <meta expr:content='data:view.description' name='description'/>
-    <meta expr:content='data:view.description' property='og:description'/>
-    <meta expr:content='data:view.description' name='twitter:description'/>
+    <meta expr:content='data:view.description.escaped' name='description'/>
+    <meta expr:content='data:view.description.escaped' property='og:description'/>
+    <meta expr:content='data:view.description.escaped' name='twitter:description'/>
   <b:else/>
-    <meta content='Track your daily attendance, overtime, and advances with WorkDaily. A private, offline-first ledger for daily wage earners with shareable PDF passbooks and secure backups.' name='description'/>
-    <meta content='Track your daily attendance, overtime, and advances with WorkDaily. A private, offline-first ledger for daily wage earners with shareable PDF passbooks and secure backups.' property='og:description'/>
-    <meta content='Track your daily attendance, overtime, and advances with WorkDaily. A private, offline-first ledger for daily wage earners with shareable PDF passbooks and secure backups.' name='twitter:description'/>
+    <meta content='Track your daily attendance, overtime, advances and wages with WorkDaily. Private, offline-first attendance and wage tracking with digital passbooks and secure backups.' name='description'/>
+    <meta content='Track your daily attendance, overtime, advances and wages with WorkDaily. Private, offline-first attendance and wage tracking with digital passbooks and secure backups.' property='og:description'/>
+    <meta content='Track your daily attendance, overtime, advances and wages with WorkDaily. Private, offline-first attendance and wage tracking with digital passbooks and secure backups.' name='twitter:description'/>
   </b:if>
 
-  <!-- Open Graph & Twitter Title Metadata -->
+  <!-- Dynamic Open Graph & Twitter Title -->
   <b:if cond='data:view.isHomepage'>
     <meta content='WorkDaily - 100% Offline Attendance &amp; Wage Tracker' property='og:title'/>
     <meta content='WorkDaily - 100% Offline Attendance &amp; Wage Tracker' name='twitter:title'/>
   <b:else/>
-    <b:if cond='data:view.title'>
-      <meta expr:content='data:view.title' property='og:title'/>
-      <meta expr:content='data:view.title' name='twitter:title'/>
-    <b:else/>
-      <meta content='WorkDaily - 100% Offline Attendance &amp; Wage Tracker' property='og:title'/>
-      <meta content='WorkDaily - 100% Offline Attendance &amp; Wage Tracker' name='twitter:title'/>
-    </b:if>
+    <meta expr:content='data:view.title.escaped' property='og:title'/>
+    <meta expr:content='data:view.title.escaped' name='twitter:title'/>
   </b:if>
 
   <!-- Open Graph Type Metadata -->
@@ -68,10 +63,13 @@
   <meta content='WorkDaily' property='og:site_name'/>
   <meta content='summary_large_image' name='twitter:card'/>
 
-  <!-- Open Graph & Twitter Image Metadata -->
+  <!-- Dynamic Social Preview Image -->
   <b:if cond='data:view.featuredImage'>
-    <meta expr:content='data:view.featuredImage' property='og:image'/>
-    <meta expr:content='data:view.featuredImage' name='twitter:image'/>
+    <meta expr:content='resizeImage(data:view.featuredImage, 1200, &quot;1200:630&quot;)' property='og:image'/>
+    <meta expr:content='resizeImage(data:view.featuredImage, 1200, &quot;1200:630&quot;)' name='twitter:image'/>
+  <b:elseif cond='data:blog.postImageUrl'/>
+    <meta expr:content='resizeImage(data:blog.postImageUrl, 1200, &quot;1200:630&quot;)' property='og:image'/>
+    <meta expr:content='resizeImage(data:blog.postImageUrl, 1200, &quot;1200:630&quot;)' name='twitter:image'/>
   <b:else/>
     <meta content='https://i.postimg.cc/3NRBHFJk/Screenshot-20260910-205058.jpg' property='og:image'/>
     <meta content='https://i.postimg.cc/3NRBHFJk/Screenshot-20260910-205058.jpg' name='twitter:image'/>
@@ -79,6 +77,36 @@
 
   <meta content='#F8FAFB' name='theme-color'/>
   <meta content='light' name='color-scheme'/>
+
+  <!-- Robots / crawler directives -->
+  <meta content='index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' name='robots'/>
+  <meta content='index, follow' name='googlebot'/>
+
+  <!-- Dynamic structured data -->
+  <b:if cond='data:view.isHomepage'>
+    <script type='application/ld+json'>
+    {
+      "@context":"https://schema.org",
+      "@type":"WebSite",
+      "name":"WorkDaily",
+      "url":"<data:blog.homepageUrl/>",
+      "description":"Track attendance, daily wages, overtime, advances and digital passbooks with WorkDaily."
+    }
+    </script>
+  <b:elseif cond='data:view.isPost'/>
+    <script type='application/ld+json'>
+    {
+      "@context":"https://schema.org",
+      "@type":"BlogPosting",
+      "headline":"<data:view.title/>",
+      "url":"<data:blog.canonicalUrl/>",
+      "description":"<data:view.description/>",
+      "image":["<data:blog.postImageUrl/>"],
+      "mainEntityOfPage":{"@type":"WebPage","@id":"<data:blog.canonicalUrl/>"},
+      "publisher":{"@type":"Organization","name":"WorkDaily","url":"<data:blog.homepageUrl/>"}
+    }
+    </script>
+  </b:if>
 
   <!-- Google Typography & Google Identity Services -->
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
