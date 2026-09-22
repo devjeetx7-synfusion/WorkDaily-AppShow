@@ -6214,12 +6214,11 @@ body {
 
     const categoryMap = new Map();
     allPosts.forEach(post => {
-      let cats = [];
-      if (Array.isArray(post.categories)) cats = cats.concat(post.categories);
-      if (Array.isArray(post.labels)) cats = cats.concat(post.labels);
-      if (post.category) cats.push(post.category);
-      cats.forEach(cat => {
-        const norm = window.normalizeCategoryLabel(cat);
+      let labels = [];
+      if (Array.isArray(post.labels)) labels = post.labels;
+      else if (Array.isArray(post.categories)) labels = post.categories;
+      labels.forEach(label => {
+        const norm = window.normalizeCategoryLabel(label);
         if (!norm || norm.toLowerCase() === "featured") return;
         const key = norm.trim().toLowerCase();
         if (!categoryMap.has(key)) categoryMap.set(key, norm.trim());
@@ -6281,8 +6280,7 @@ body {
 
       card.className = hasThumb ? "wd-blog-card" : "wd-blog-card no-image";
       card.setAttribute("data-post-id", post.id);
-      card.setAttribute("data-post-category", (post.category || "article").toLowerCase());
-      card.setAttribute("data-post-labels", (post.categories || []).map(c => c.toLowerCase()).join(","));
+      card.setAttribute("data-post-labels", (Array.isArray(post.labels) ? post.labels : (Array.isArray(post.categories) ? post.categories : [])).map(c => String(c).toLowerCase()).join(","));
 
       const thumbSectionHtml = hasThumb ? `
         <div class="wd-blog-thumb">
