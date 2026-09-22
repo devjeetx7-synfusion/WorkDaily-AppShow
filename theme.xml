@@ -992,7 +992,7 @@ body {
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none; /* Firefox */
   overscroll-behavior-y: auto;
-  touch-action: pan-x;
+  touch-action: pan-x pan-y;
 }
 
 .wd-showcase-viewport::-webkit-scrollbar {
@@ -1015,7 +1015,7 @@ body {
   overflow-x: auto;
   overflow-y: hidden;
   scroll-snap-type: x mandatory;
-  touch-action: pan-x;
+  touch-action: pan-x pan-y;
 }
 
 .wd-slide {
@@ -2880,7 +2880,8 @@ body {
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
-    touch-action: pan-x;
+    touch-action: pan-x pan-y;
+    overscroll-behavior-x: contain;
     overscroll-behavior-y: auto;
   }
 
@@ -2925,8 +2926,8 @@ body {
 
   /* DYNAMIC SIZING FOR MOBILE APP SCREENSHOT PHONE MOCKUP */
   .wd-slide-phone {
-    height: clamp(320px, 58svh, 520px);
-    max-height: 60svh;
+    height: clamp(280px, 52svh, 460px);
+    max-height: 54svh;
   }
 
   /* SMALL DEVICE OPTIMIZATIONS (320px-380px width or short viewports <= 700px) */
@@ -2936,8 +2937,8 @@ body {
     }
 
     .wd-slide-phone {
-      height: clamp(280px, 54svh, 440px);
-      max-height: 56svh;
+      height: clamp(250px, 48svh, 400px);
+      max-height: 50svh;
     }
 
     .wd-indicator-wrapper {
@@ -3207,13 +3208,16 @@ body {
 /* DEDICATED BLOGGER POST VIEW */
 .post-view {
   overflow-x: hidden;
+  background: var(--color-bg);
 }
 .post-view .wd-blog-section {
-  min-height: 100vh;
+  width: 100%;
+  min-height: 0;
   padding: 0;
   margin: 0;
   background: var(--color-bg);
-  border-top: 0;
+  border: 0;
+  border-radius: 0;
 }
 .post-view .wd-blog-section > .wd-container {
   width: 100%;
@@ -3235,33 +3239,100 @@ body {
 }
 .post-view .wd-server-post-container {
   width: 100%;
-  max-width: 1100px;
-  min-height: 100vh;
-  margin: 0 auto;
-  padding: clamp(28px, 5vw, 72px) clamp(16px, 4vw, 32px) 72px;
+  max-width: none;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
 }
 .post-view .wd-server-post {
   width: 100%;
-  max-width: 900px;
-  margin: 0 auto;
+  max-width: none;
+  margin: 0;
+  padding: 0 0 64px;
+  overflow: visible;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
 }
-.post-view .wd-post-body img {
+.post-view .wd-server-post .wd-post-header {
+  width: 100%;
+  max-width: 980px;
+  margin: 0 auto;
+  padding: clamp(24px, 4vw, 48px) clamp(16px, 4vw, 32px) clamp(20px, 3vw, 34px);
+  box-sizing: border-box;
+}
+.post-view .wd-server-post .wd-post-top-bar {
+  margin-bottom: clamp(24px, 4vw, 42px);
+}
+.post-view .wd-server-post .wd-post-title {
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.post-view .wd-server-post .wd-post-hero-server {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+.post-view .wd-server-post .wd-post-hero-server img {
+  display: block;
+  width: 100%;
+  max-width: none;
+  height: auto;
+  max-height: none;
+  object-fit: cover;
+  border-radius: 0;
+  margin: 0;
+  box-shadow: none;
+}
+.post-view .wd-server-post .wd-post-body {
+  width: min(900px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 40px 0 0;
+  box-sizing: border-box;
+}
+.post-view .wd-server-post .wd-post-body img {
   max-width: 100%;
   height: auto;
 }
-.post-view .wd-post-body iframe,
-.post-view .wd-post-body video {
+.post-view .wd-server-post .wd-post-body iframe,
+.post-view .wd-server-post .wd-post-body video {
   max-width: 100%;
 }
-.post-view .wd-post-body table {
+.post-view .wd-server-post .wd-post-body table {
   max-width: 100%;
   overflow-x: auto;
   display: block;
 }
-.post-view .wd-post-body pre {
+.post-view .wd-server-post .wd-post-body pre {
   max-width: 100%;
   overflow-x: auto;
+}
+.post-view .wd-server-post .wd-post-footer {
+  width: min(900px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 0;
+}
+@media (max-width: 767px) {
+  .post-view .wd-server-post .wd-post-header {
+    padding: 22px 16px 20px;
+  }
+  .post-view .wd-server-post .wd-post-title {
+    font-size: clamp(30px, 8vw, 42px);
+    line-height: 1.12;
+  }
+  .post-view .wd-server-post .wd-post-body {
+    width: calc(100% - 32px);
+    padding-top: 28px;
+    font-size: 17px;
+    line-height: 1.7;
+  }
 }
 
 /* SHARE CONTROLS & POPOVER */
@@ -3424,7 +3495,6 @@ body {
   <b:class cond='data:view.isPost' name='post-view'/>
   <b:class cond='data:view.isPage' name='page-view'/>
 
-  <b:if cond='!data:view.isPost'>
   <!-- ================= HEADER ================= -->
   <header class="wd-header" id="wd-header">
     <div class="wd-header-container">
@@ -3501,8 +3571,6 @@ body {
       </div>
     </div>
   </div>
-  </b:if>
-
   <!-- Blogger Layout Section for Header Widget (suppressed to prevent duplicate title text) -->
   <b:section class='header-section' id='header-section' maxwidgets='1' showelement='no'>
     <b:widget id='Header1' locked='true' title='Header' type='Header'>
@@ -4272,6 +4340,27 @@ body {
     }
   ];
 
+  function removeDuplicateServerPostHero() {
+    const posts = document.querySelectorAll(".wd-server-post");
+    posts.forEach(function(article) {
+      const hero = article.querySelector(".wd-post-hero-server img");
+      const body = article.querySelector(".wd-post-body");
+      if (!hero || !body) return;
+      const heroUrl = (hero.currentSrc || hero.src || "").split("?")[0];
+      const firstBodyImg = body.querySelector("img");
+      if (!firstBodyImg || !heroUrl) return;
+      const bodyUrl = (firstBodyImg.currentSrc || firstBodyImg.src || "").split("?")[0];
+      if (!bodyUrl || bodyUrl !== heroUrl) return;
+      let node = firstBodyImg;
+      const parent = node.parentElement;
+      if (parent && (parent.tagName === "P" || parent.tagName === "DIV" || parent.tagName === "FIGURE") &&
+          parent.children.length === 1 && parent.textContent.trim() === "") {
+        node = parent;
+      }
+      node.remove();
+    });
+  }
+
   document.addEventListener("DOMContentLoaded", function() {
     initThemeToggle();
     initHeader();
@@ -4279,6 +4368,7 @@ body {
     initFaqAccordion();
     initShowcase();
     initKeyboardNav();
+    removeDuplicateServerPostHero();
     initBlogSystem();
     initCustomVideoPlayer();
     initAppImageLoaders();
@@ -5915,6 +6005,7 @@ body {
     allBtn.textContent = "All";
     allBtn.addEventListener("click", function() {
       window.WorkDailyRouter.setActiveCategory("all");
+      window.filterBlogPosts("all");
     });
     navContainer.appendChild(allBtn);
 
@@ -5926,6 +6017,7 @@ body {
       btn.textContent = cat;
       btn.addEventListener("click", function() {
         window.WorkDailyRouter.setActiveCategory(catKey);
+        window.filterBlogPosts(catKey);
       });
       navContainer.appendChild(btn);
     });
