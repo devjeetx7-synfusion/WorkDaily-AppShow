@@ -6497,23 +6497,8 @@ body {
       }
     }, { passive: true });
 
-    // Convert wheel input to horizontal movement while the pointer is over the showcase.
-    viewport.addEventListener("wheel", function(e) {
-      const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
-      const atStart = viewport.scrollLeft <= 2;
-      const atEnd = viewport.scrollLeft + viewport.clientWidth >= viewport.scrollWidth - 2;
-
-      if (delta > 0 && !atEnd) {
-        e.preventDefault();
-        viewport.scrollBy({ left: delta, behavior: "auto" });
-      } else if (delta < 0 && !atStart) {
-        e.preventDefault();
-        viewport.scrollBy({ left: delta, behavior: "auto" });
-      }
-    }, { passive: false });
-
-    // Native touch scrolling handles horizontal swipes. Do not hijack touchmove;
-    // this prevents accidental vertical page jumps and keeps mobile scrolling responsive.
+    // Do not trap vertical page scrolling inside the showcase.
+    // Native horizontal touch/trackpad gestures remain available through overflow-x.
     function updateActiveIndicator(activeIndex) {
       currentNumEl.textContent = String(activeIndex + 1).padStart(2, '0');
       const dots = rail.querySelectorAll(".wd-indicator-dot");
