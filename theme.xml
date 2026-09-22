@@ -1578,20 +1578,6 @@ body {
   flex-wrap: wrap;
 }
 
-.wd-featured-category-pill {
-  display: inline-flex;
-  align-items: center;
-  padding: 4px 12px;
-  background: rgba(16, 185, 129, 0.25);
-  border: 1px solid rgba(16, 185, 129, 0.5);
-  color: #34D399;
-  border-radius: var(--radius-full);
-  font-size: 12px;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
 .wd-featured-sep {
   opacity: 0.6;
   color: rgba(255, 255, 255, 0.7);
@@ -3221,113 +3207,6 @@ body {
 .post-view .wd-section-header,
 .post-view #wd-blog-list-view,
 .post-view #wd-article-detail-view,
-.post-view .wd-blog-categories-wrap,
-.post-view .wd-pagination {
-  display: none !important;
-}
-.post-view .wd-main-content {
-  width: 100%;
-  margin: 0;
-  padding: 0;
-}
-.post-view .wd-server-post-container {
-  width: 100%;
-  max-width: none;
-  min-height: 0;
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-.post-view .wd-server-post {
-  width: 100%;
-  max-width: none;
-  margin: 0;
-  padding: 0 0 64px;
-  overflow: visible;
-  border: 0;
-  border-radius: 0;
-  background: transparent;
-  box-shadow: none;
-}
-.post-view .wd-server-post .wd-post-header {
-  width: 100%;
-  max-width: 980px;
-  margin: 0 auto;
-  padding: clamp(24px, 4vw, 48px) clamp(16px, 4vw, 32px) clamp(20px, 3vw, 34px);
-  box-sizing: border-box;
-}
-.post-view .wd-server-post .wd-post-top-bar {
-  margin-bottom: clamp(24px, 4vw, 42px);
-}
-.post-view .wd-server-post .wd-post-title {
-  max-width: 900px;
-  margin-left: auto;
-  margin-right: auto;
-}
-.post-view .wd-server-post .wd-post-hero-server {
-  width: 100%;
-  max-width: none;
-  margin: 0;
-  padding: 0;
-  border: 0;
-  border-radius: 0;
-  background: transparent;
-}
-.post-view .wd-server-post .wd-post-hero-server img {
-  display: block;
-  width: 100%;
-  max-width: none;
-  height: auto;
-  max-height: none;
-  object-fit: cover;
-  border-radius: 0;
-  margin: 0;
-  box-shadow: none;
-}
-.post-view .wd-server-post .wd-post-body {
-  width: min(900px, calc(100% - 32px));
-  margin: 0 auto;
-  padding: 40px 0 0;
-  box-sizing: border-box;
-}
-.post-view .wd-server-post .wd-post-body img {
-  max-width: 100%;
-  height: auto;
-}
-.post-view .wd-server-post .wd-post-body iframe,
-.post-view .wd-server-post .wd-post-body video {
-  max-width: 100%;
-}
-.post-view .wd-server-post .wd-post-body table {
-  max-width: 100%;
-  overflow-x: auto;
-  display: block;
-}
-.post-view .wd-server-post .wd-post-body pre {
-  max-width: 100%;
-  overflow-x: auto;
-}
-.post-view .wd-server-post .wd-post-footer {
-  width: min(900px, calc(100% - 32px));
-  margin: 0 auto;
-  padding: 0;
-}
-@media (max-width: 767px) {
-  .post-view .wd-server-post .wd-post-header {
-    padding: 22px 16px 20px;
-  }
-  .post-view .wd-server-post .wd-post-title {
-    font-size: clamp(30px, 8vw, 42px);
-    line-height: 1.12;
-  }
-  .post-view .wd-server-post .wd-post-body {
-    width: calc(100% - 32px);
-    padding-top: 28px;
-    font-size: 17px;
-    line-height: 1.7;
-  }
-}
-
 /* SHARE CONTROLS & POPOVER */
 .wd-server-post-container {
   width: 100%;
@@ -3558,7 +3437,6 @@ body {
 .post-view .wd-server-post .wd-post-body img { display: block; max-width: 100%; margin: 10px auto; border-radius: 12px; }
 .post-view .wd-server-post .wd-post-footer { margin-top: 28px; padding-bottom: 16px; }
 .wd-blog-card { cursor: pointer; }
-.wd-blog-categories-wrap { display: flex !important; visibility: visible !important; opacity: 1 !important; }
 .wd-img-container.is-loaded .wd-img-loader,
 .wd-img-container.is-error .wd-img-loader { display: none !important; opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; }
 .wd-img-container.is-loaded .wd-img-spinner,
@@ -5586,7 +5464,6 @@ body {
   /* WORKDAILY URL ROUTER & HISTORY SYSTEM */
   window.WorkDailyRouter = (function() {
     let currentRoute = { view: "blog", postId: null };
-    let activeCategory = "all";
 
     function parseCurrentRoute() {
       const hash = window.location.hash || "";
@@ -5634,14 +5511,6 @@ body {
 
       // Default Blog View
       return { view: "blog", postId: null };
-    }
-
-    function setActiveCategory(cat) {
-      if (cat) activeCategory = String(cat).toLowerCase();
-    }
-
-    function getActiveCategory() {
-      return activeCategory;
     }
 
     function navigateTo(routeObj, pushState = true) {
@@ -5701,9 +5570,7 @@ body {
         if (articleDetailView) articleDetailView.style.display = "none";
         if (blogListView) blogListView.style.display = "block";
 
-        if (typeof window.filterBlogPosts === "function") {
-          window.filterBlogPosts(activeCategory);
-        }
+        renderBlogGrid();
       }
     }
 
@@ -5726,8 +5593,6 @@ body {
       navigateToBlog,
       renderRoute,
       handleUrlChange,
-      setActiveCategory,
-      getActiveCategory,
       init,
       get currentRoute() { return currentRoute; }
     };
@@ -6016,21 +5881,6 @@ body {
   async function initBlogSystem() {
     // Real Blogger post URLs are fully server-rendered above; skip the SPA/feed on those pages.
     if (document.getElementById("wd-server-post-view")) return;
-    const categoryChips = document.querySelectorAll(".wd-category-chip");
-    categoryChips.forEach(function(chip) {
-      if (chip.dataset.bound) return;
-      chip.dataset.bound = "true";
-      chip.addEventListener("click", function(e) {
-        e.preventDefault();
-        categoryChips.forEach(c => c.classList.remove("active"));
-        chip.classList.add("active");
-
-        const selectedCat = (chip.getAttribute("data-category") || "all").toLowerCase();
-        window.WorkDailyRouter.setActiveCategory(selectedCat);
-        filterBlogPosts(selectedCat);
-      });
-    });
-
     document.querySelectorAll("#wd-back-to-blog, #wd-article-error-back-btn, #wd-article-404-back-btn").forEach(function(btn) {
       if (btn.dataset.bound) return;
       btn.dataset.bound = "true";
@@ -6103,66 +5953,9 @@ body {
       return;
     }
 
-    buildCategoryNav();
     buildFeaturedPost();
     renderBlogGrid();
-    filterBlogPosts(window.WorkDailyRouter.getActiveCategory());
   }
-
-  window.buildCategoryNav = function() {
-    const navContainer = document.querySelector(".wd-blog-categories-wrap");
-    if (!navContainer) return;
-
-    const allPosts = window.WorkDailyBlogStore.getAllPosts();
-    const activeCat = window.WorkDailyRouter.getActiveCategory() || "all";
-
-    const categoryMap = new Map();
-    allPosts.forEach(post => {
-      let labels = [];
-      if (Array.isArray(post.labels)) labels = post.labels;
-      else if (Array.isArray(post.categories)) labels = post.categories;
-      labels.forEach(label => {
-        const norm = window.normalizeCategoryLabel(label);
-        if (!norm || norm.toLowerCase() === "featured") return;
-        const key = norm.trim().toLowerCase();
-        if (!categoryMap.has(key)) categoryMap.set(key, norm.trim());
-      });
-    });
-    if (categoryMap.size === 0) {
-      document.querySelectorAll("#wd-blog-grid .wd-label-pill").forEach(function(pill) {
-        const norm = window.normalizeCategoryLabel(pill.textContent || "");
-        if (!norm || norm.toLowerCase() === "featured") return;
-        const key = norm.toLowerCase();
-        if (!categoryMap.has(key)) categoryMap.set(key, norm);
-      });
-    }
-    const presentCategories = Array.from(categoryMap.values()).sort((a, b) => a.localeCompare(b, undefined, { sensitivity: "base" }));
-
-    navContainer.innerHTML = "";
-
-    const allBtn = document.createElement("button");
-    allBtn.className = "wd-category-chip" + (activeCat.toLowerCase() === "all" ? " active" : "");
-    allBtn.setAttribute("data-category", "all");
-    allBtn.textContent = "All";
-    allBtn.addEventListener("click", function() {
-      window.WorkDailyRouter.setActiveCategory("all");
-      window.filterBlogPosts("all");
-    });
-    navContainer.appendChild(allBtn);
-
-    presentCategories.forEach(cat => {
-      const catKey = cat.toLowerCase();
-      const btn = document.createElement("button");
-      btn.className = "wd-category-chip" + (activeCat.toLowerCase() === catKey ? " active" : "");
-      btn.setAttribute("data-category", catKey);
-      btn.textContent = cat;
-      btn.addEventListener("click", function() {
-        window.WorkDailyRouter.setActiveCategory(catKey);
-        window.filterBlogPosts(catKey);
-      });
-      navContainer.appendChild(btn);
-    });
-  };
 
   window.renderBlogGrid = function() {
     const grid = document.getElementById("wd-blog-grid");
@@ -6184,8 +5977,6 @@ body {
 
       card.className = hasThumb ? "wd-blog-card" : "wd-blog-card no-image";
       card.setAttribute("data-post-id", post.id);
-      card.setAttribute("data-post-labels", (Array.isArray(post.labels) ? post.labels : (Array.isArray(post.categories) ? post.categories : [])).map(c => String(c).toLowerCase()).join(","));
-
       const thumbSectionHtml = hasThumb ? `
         <div class="wd-blog-thumb">
           <img src="${thumbUrl}" alt="${post.title}" loading="lazy" onerror="this.onerror=null; this.closest('.wd-blog-card').classList.add('no-image'); if(this.parentElement) this.parentElement.remove();"/>
@@ -6196,7 +5987,6 @@ body {
         ${thumbSectionHtml}
         <div class="wd-blog-card-body">
           <div class="wd-blog-meta">
-            <span class="wd-label-pill">${post.category || "Article"}</span>
             <span class="wd-blog-date">${post.publishedAt || ""}</span>
           </div>
           <h3 class="wd-blog-card-title">
@@ -6262,8 +6052,6 @@ body {
       </div>
     ` : '';
 
-    const categoryName = typeof featured.category === 'string' ? featured.category : (featured.categories && featured.categories[0] ? String(featured.categories[0]) : 'Update');
-
     featuredSlot.innerHTML = `
       <div class="wd-featured-article ${hasImage ? 'has-image' : 'no-image'}" data-post-id="${featured.id}">
         <div class="${ambientBgClass}" ${ambientBgStyle}></div>
@@ -6272,8 +6060,6 @@ body {
         <div class="wd-featured-layout">
           <div class="wd-featured-content">
             <div class="wd-featured-meta">
-              <span class="wd-featured-category-pill">${categoryName}</span>
-              <span class="wd-featured-sep">•</span>
               <span class="wd-featured-date">${featured.publishedAt || ''}</span>
               <span class="wd-featured-sep">•</span>
               <span class="wd-featured-reading-time">${featured.readingTime || '1 min read'}</span>
@@ -6320,7 +6106,6 @@ body {
         ${thumbSectionHtml}
         <div class="wd-blog-card-body">
           <div class="wd-blog-meta">
-            <span class="wd-label-pill">${post.category || "Article"}</span>
             <span class="wd-blog-date">${post.publishedAt || ""}</span>
           </div>
           <h3 class="wd-blog-card-title">
@@ -6341,101 +6126,6 @@ body {
       relatedGrid.appendChild(card);
     });
   };
-
-  window.filterBlogPosts = function(category) {
-    const grid = document.getElementById("wd-blog-grid");
-    if (!grid) return;
-
-    if (window.WorkDailyBlogStore.hasError() || window.WorkDailyBlogStore.getAllPosts().length === 0) {
-      return;
-    }
-
-    renderBlogGrid();
-
-    const catLower = (category || "all").toLowerCase();
-
-    // Sync active category chip UI
-    document.querySelectorAll(".wd-category-chip").forEach(function(chip) {
-      const chipCat = (chip.getAttribute("data-category") || "all").toLowerCase();
-      if (chipCat === catLower) {
-        chip.classList.add("active");
-      } else {
-        chip.classList.remove("active");
-      }
-    });
-
-    if (!grid.dataset.cardNavigationBound) {
-      grid.dataset.cardNavigationBound = "true";
-      grid.addEventListener("click", function(e) {
-        const interactive = e.target.closest("a, button, input, textarea, select, video, iframe");
-        if (interactive) return;
-        const card = e.target.closest(".wd-blog-card[data-post-id]");
-        if (!card || !grid.contains(card)) return;
-        const postId = card.getAttribute("data-post-id");
-        if (postId && window.WorkDailyRouter) {
-          e.preventDefault();
-          window.WorkDailyRouter.openArticle(postId);
-        }
-      });
-      grid.addEventListener("keydown", function(e) {
-        if (e.key !== "Enter" && e.key !== " ") return;
-        const card = e.target.closest(".wd-blog-card[data-post-id]");
-        if (!card || e.target !== card) return;
-        e.preventDefault();
-        const postId = card.getAttribute("data-post-id");
-        if (postId && window.WorkDailyRouter) window.WorkDailyRouter.openArticle(postId);
-      });
-      grid.querySelectorAll(".wd-blog-card[data-post-id]").forEach(function(card) {
-        card.setAttribute("role", "link");
-        card.setAttribute("tabindex", "0");
-      });
-    }
-
-    const cards = grid.querySelectorAll(".wd-blog-card");
-    let visibleCount = 0;
-
-    cards.forEach(function(card) {
-      const cardCat = (card.getAttribute("data-post-category") || "").toLowerCase();
-      const labelsAttr = (card.getAttribute("data-post-labels") || "").toLowerCase();
-      const pills = card.querySelectorAll(".wd-label-pill");
-
-      let matches = (catLower === "all" || cardCat === catLower || labelsAttr.split(",").map(s => s.trim()).includes(catLower));
-
-      pills.forEach(function(pill) {
-        if (pill.textContent.trim().toLowerCase() === catLower) {
-          matches = true;
-        }
-      });
-
-      if (matches) {
-        card.style.display = "flex";
-        visibleCount++;
-      } else {
-        card.style.display = "none";
-      }
-    });
-
-    let existingEmptyCard = grid.querySelector(".wd-category-empty-card");
-    if (visibleCount === 0) {
-      if (!existingEmptyCard) {
-        const emptyDiv = document.createElement("div");
-        emptyDiv.className = "wd-article-state-card wd-category-empty-card";
-        emptyDiv.style.gridColumn = "1 / -1";
-        emptyDiv.style.width = "100%";
-        emptyDiv.innerHTML = `
-          <div class="wd-state-icon">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="9" x2="15" y2="9"/><line x1="9" y1="13" x2="15" y2="13"/></svg>
-          </div>
-          <h3 class="wd-state-title">No posts in this category yet.</h3>
-          <p class="wd-state-desc">Select another category above to view WorkDaily articles.</p>
-        `;
-        grid.appendChild(emptyDiv);
-      }
-    } else if (existingEmptyCard) {
-      existingEmptyCard.remove();
-    }
-  };
-
 
   /* HEADER SCROLL BEHAVIOR */
   function initHeader() {
