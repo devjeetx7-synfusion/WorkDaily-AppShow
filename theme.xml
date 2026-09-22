@@ -3566,9 +3566,6 @@ body {
 .post-view .wd-server-post .wd-post-title { position: relative; z-index: 1; }
 .post-view .wd-server-post .wd-post-hero-server { position: relative; z-index: 1; }
 .post-view .wd-server-post .wd-post-body { position: relative; z-index: 2; }
-.post-view .wd-server-post .wd-post-body > img:first-child,
-.post-view .wd-server-post .wd-post-body > p:first-child img,
-.post-view .wd-server-post .wd-post-body > figure:first-child img { display: none !important; }
 .post-view .wd-server-post .wd-post-body img { max-width: 100%; height: auto; }
 .post-view .wd-server-post .wd-post-footer { position: relative; z-index: 3; }
 @media (max-width: 767px) {
@@ -4020,11 +4017,6 @@ body {
                           <time expr:datetime='data:post.timestampISO8601'><data:post.timestamp/></time>
                         </div>
                       </header>
-                      <b:if cond='data:post.firstImageUrl'>
-                        <figure class="wd-post-hero-server">
-                          <img expr:src='data:post.firstImageUrl' expr:alt='data:post.title' width="1200" height="630" loading="eager" decoding="async"/>
-                        </figure>
-                      </b:if>
                       <div class="wd-post-body">
                         <data:post.body/>
                       </div>
@@ -5398,11 +5390,11 @@ body {
         rawLabels = rawPost.categories;
       }
 
-      const normalizedLabels = rawLabels.map(normalizeCategoryLabel).filter(Boolean);
+      const normalizedLabels = Array.from(new Set(rawLabels.map(normalizeCategoryLabel).filter(Boolean)));
       const isFeatured = normalizedLabels.some(l => l.toLowerCase() === "featured") || (rawPost.isFeatured === true);
       const displayCategories = normalizedLabels.filter(c => c.toLowerCase() !== "featured");
-      const categories = displayCategories.length > 0 ? displayCategories : (normalizedLabels.length > 0 ? normalizedLabels : ["Article"]);
-      const category = categories[0] || "Article";
+      const categories = displayCategories;
+      const category = categories[0] || "";
 
       let author = "WorkDaily Team";
       if (rawPost.author) {
@@ -5787,22 +5779,6 @@ body {
             heroImg.alt = post.title || "Article Image";
             heroWrap.style.display = "block";
 
-            if (bodyEl) {
-              const normHero = normalizeBloggerImageUrl(post.image);
-              const firstBodyImg = bodyEl.querySelector("img");
-              if (firstBodyImg) {
-                const firstSrc = firstBodyImg.getAttribute("src") || firstBodyImg.getAttribute("data-src") || "";
-                const normBody = normalizeBloggerImageUrl(firstSrc);
-                if (normHero && normBody && (normHero === normBody || normHero.endsWith(normBody) || normBody.endsWith(normHero))) {
-                  const parentP = firstBodyImg.closest("p, div, figure");
-                  if (parentP && parentP.children.length === 1 && parentP.textContent.trim() === "") {
-                    parentP.remove();
-                  } else {
-                    firstBodyImg.remove();
-                  }
-                }
-              }
-            }
           } else {
             heroWrap.style.display = "none";
           }
@@ -6116,25 +6092,17 @@ body {
     const allPosts = window.WorkDailyBlogStore.getAllPosts();
     const activeCat = window.WorkDailyRouter.getActiveCategory() || "all";
 
-    const categorySet = new Set();
+    const categoryMap = new Map();
     allPosts.forEach(post => {
-      const cats = post.categories || (post.category ? [post.category] : []);
+      const cats = Array.isArray(post.categories) ? post.categories : [];
       cats.forEach(cat => {
-        if (!cat) return;
         const norm = window.normalizeCategoryLabel(cat);
-        if (norm.toLowerCase() !== "featured") {
-          categorySet.add(norm);
-        }
+        if (!norm || norm.toLowerCase() === "featured") return;
+        const key = norm.toLowerCase();
+        if (!categoryMap.has(key)) categoryMap.set(key, norm);
       });
     });
-
-    const definedOrder = ["Update", "News", "Article", "Feedback"];
-    const presentCategories = definedOrder.filter(cat => categorySet.has(cat));
-    Array.from(categorySet).forEach(cat => {
-      if (!presentCategories.includes(cat)) {
-        presentCategories.push(cat);
-      }
-    });
+    const presentCategories = Array.from(categoryMap.values()).sort((a, b) => a.localeCompare(b, undefined, { sensitivity: "base" }));
 
     navContainer.innerHTML = "";
 
@@ -6345,6 +6313,33 @@ body {
         chip.classList.remove("active");
       }
     });
+
+    if (!grid.dataset.cardNavigationBound) {
+      grid.dataset.cardNavigationBound = "true";
+      grid.addEventListener("click", function(e) {
+        const interactive = e.target.closest("a, button, input, textarea, select, video, iframe");
+        if (interactive) return;
+        const card = e.target.closest(".wd-blog-card[data-post-id]");
+        if (!card || !grid.contains(card)) return;
+        const postId = card.getAttribute("data-post-id");
+        if (postId && window.WorkDailyRouter) {
+          e.preventDefault();
+          window.WorkDailyRouter.openArticle(postId);
+        }
+      });
+      grid.addEventListener("keydown", function(e) {
+        if (e.key !== "Enter" && e.key !== " ") return;
+        const card = e.target.closest(".wd-blog-card[data-post-id]");
+        if (!card || e.target !== card) return;
+        e.preventDefault();
+        const postId = card.getAttribute("data-post-id");
+        if (postId && window.WorkDailyRouter) window.WorkDailyRouter.openArticle(postId);
+      });
+      grid.querySelectorAll(".wd-blog-card[data-post-id]").forEach(function(card) {
+        card.setAttribute("role", "link");
+        card.setAttribute("tabindex", "0");
+      });
+    }
 
     const cards = grid.querySelectorAll(".wd-blog-card");
     let visibleCount = 0;
