@@ -3556,7 +3556,38 @@ body {
 }
 
 
-]]></b:skin>
+]]>
+/* FINAL BLOG POST VIEW FIXES */
+.post-view .wd-server-post-container { position: relative; z-index: 5; }
+.post-view .wd-server-post .wd-post-header { position: relative; z-index: 10; overflow: visible; }
+.post-view .wd-server-post .wd-post-top-bar { position: relative; z-index: 20; display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%; min-height: 38px; overflow: visible; }
+.post-view .wd-server-post .wd-back-link,
+.post-view .wd-server-post .wd-share-btn { position: relative; z-index: 21; flex: 0 0 auto; white-space: nowrap; display: inline-flex; align-items: center; visibility: visible !important; opacity: 1 !important; }
+.post-view .wd-server-post .wd-post-title { position: relative; z-index: 1; }
+.post-view .wd-server-post .wd-post-hero-server { position: relative; z-index: 1; }
+.post-view .wd-server-post .wd-post-body { position: relative; z-index: 2; }
+.post-view .wd-server-post .wd-post-body > img:first-child,
+.post-view .wd-server-post .wd-post-body > p:first-child img,
+.post-view .wd-server-post .wd-post-body > figure:first-child img { display: none !important; }
+.post-view .wd-server-post .wd-post-body img { max-width: 100%; height: auto; }
+.post-view .wd-server-post .wd-post-footer { position: relative; z-index: 3; }
+@media (max-width: 767px) {
+  .post-view .wd-server-post .wd-post-header { padding: 18px 16px 20px; }
+  .post-view .wd-server-post .wd-post-top-bar { margin-bottom: 20px; gap: 8px; }
+  .post-view .wd-server-post .wd-back-link,
+  .post-view .wd-server-post .wd-share-btn { min-width: 0; height: 38px; padding: 8px 12px; font-size: 13px; }
+  .post-view .wd-server-post .wd-back-link { max-width: 58%; overflow: hidden; }
+  .post-view .wd-server-post .wd-back-link span,
+  .post-view .wd-server-post .wd-share-btn span { overflow: hidden; text-overflow: ellipsis; }
+  .post-view .wd-server-post .wd-share-wrapper { max-width: 42%; }
+}
+@media (max-width: 380px) {
+  .post-view .wd-server-post .wd-back-link { max-width: 55%; }
+  .post-view .wd-server-post .wd-share-wrapper { max-width: 45%; }
+  .post-view .wd-server-post .wd-back-link,
+  .post-view .wd-server-post .wd-share-btn { padding-left: 10px; padding-right: 10px; font-size: 12px; }
+}
+</b:skin>
 </head>
 <body>
   <b:class cond='data:view.isPost' name='post-view'/>
@@ -3973,11 +4004,12 @@ body {
                     <article class="wd-single-post wd-server-post">
                       <header class="wd-post-header">
                         <div class="wd-post-top-bar">
-                          <a expr:href='data:blog.homepageUrl' class="wd-back-link">
+                          <a expr:href='data:blog.homepageUrl' class="wd-back-link" aria-label="Back to WorkDaily home">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
                             <span>Back to Home</span>
                           </a>
-                          <button class="wd-share-btn" type="button" onclick="if(navigator.share){navigator.share({title:this.closest('article').querySelector('h1').textContent,url:window.location.href});}else{if(navigator.clipboard)navigator.clipboard.writeText(window.location.href);}" aria-label="Share article">
+                          <button class="wd-share-btn" type="button" onclick="if(navigator.share){navigator.share({title:this.closest('article').querySelector('h1').textContent,url:window.location.href});}else if(navigator.clipboard){navigator.clipboard.writeText(window.location.href);}" aria-label="Share article">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
                             <span>Share</span>
                           </button>
                         </div>
