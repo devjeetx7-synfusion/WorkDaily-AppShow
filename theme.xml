@@ -94,18 +94,21 @@
     }
     </script>
   <b:elseif cond='data:view.isPost'/>
-    <script type='application/ld+json'>
-    {
-      "@context":"https://schema.org",
-      "@type":"BlogPosting",
-      "headline":"<data:view.title/>",
-      "url":"<data:blog.canonicalUrl/>",
-      "description":"<data:view.description/>",
-      "image":["<data:blog.postImageUrl/>"],
-      "mainEntityOfPage":{"@type":"WebPage","@id":"<data:blog.canonicalUrl/>"},
-      "publisher":{"@type":"Organization","name":"WorkDaily","url":"<data:blog.homepageUrl/>"}
-    }
-    </script>
+    <b:loop values='data:posts' var='post'>
+      <script type='application/ld+json'>
+      {
+        "@context":"https://schema.org",
+        "@type":"BlogPosting",
+        "headline":"<data:post.title.escaped/>",
+        "url":"<data:post.url/>",
+        "description":"<data:view.description.escaped/>",
+        "image":["<data:post.firstImageUrl/>"],
+        "datePublished":"<data:post.timestampISO8601/>",
+        "mainEntityOfPage":{"@type":"WebPage","@id":"<data:post.url/>"},
+        "publisher":{"@type":"Organization","name":"WorkDaily","url":"<data:blog.homepageUrl/>"}
+      }
+      </script>
+    </b:loop>
   </b:if>
 
   <!-- Google Typography & Google Identity Services -->
@@ -3145,6 +3148,33 @@ body {
 .wd-hero, .wd-showcase-section, .wd-benefits-section, .wd-blog-section, .wd-cta-section, .wd-footer { overflow-x: hidden; max-width: 100vw; }
 
 /* SHARE CONTROLS & POPOVER */
+.wd-server-post-container {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px 24px 80px;
+}
+.wd-server-post {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+.wd-server-post .wd-post-header { padding: 40px 40px 28px; }
+.wd-server-post .wd-post-title { margin: 18px 0 12px; }
+.wd-server-post .wd-post-hero-server { margin: 0; background: var(--color-bg); }
+.wd-server-post .wd-post-hero-server img { display:block; width:100%; height:auto; max-height:560px; object-fit:cover; }
+.wd-server-post .wd-post-body { padding: 36px 40px 44px; color: var(--color-text); }
+.wd-server-post .wd-post-body img { max-width:100%; height:auto; }
+.wd-server-post .wd-post-footer { padding: 0 40px 40px; }
+@media (max-width:767px) {
+  .wd-server-post-container { padding:24px 14px 56px; }
+  .wd-server-post .wd-post-header { padding:28px 22px 22px; }
+  .wd-server-post .wd-post-body { padding:26px 22px 32px; }
+  .wd-server-post .wd-post-footer { padding:0 22px 28px; }
+}
+
 .wd-post-top-bar {
   display: flex;
   align-items: center;
@@ -3680,7 +3710,44 @@ body {
           <b:widget id='Blog1' locked='true' title='Blog Posts' type='Blog'>
             <b:includable id='main' var='top'>
 
-              <b:if cond='data:view.isPage'>
+              <!-- SERVER-RENDERED SINGLE POST VIEW: keeps canonical post URLs crawlable without JavaScript. -->
+              <b:if cond='data:view.isPost'>
+                <div id="wd-server-post-view" class="wd-server-post-container">
+                  <b:loop values='data:posts' var='post'>
+                    <article class="wd-single-post wd-server-post">
+                      <header class="wd-post-header">
+                        <div class="wd-post-top-bar">
+                          <a expr:href='data:blog.homepageUrl' class="wd-back-link">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                            <span>Back to Home</span>
+                          </a>
+                          <button class="wd-share-btn" type="button" onclick="if(navigator.share){navigator.share({title:this.closest('article').querySelector('h1').textContent,url:window.location.href});}else{if(navigator.clipboard)navigator.clipboard.writeText(window.location.href);}" aria-label="Share article">
+                            <span>Share</span>
+                          </button>
+                        </div>
+                        <h1 class="wd-post-title"><data:post.title/></h1>
+                        <div class="wd-post-byline">
+                          <span>By WorkDaily Team</span>
+                          <span class="wd-dot-sep">&#8226;</span>
+                          <time expr:datetime='data:post.timestampISO8601'><data:post.timestamp/></time>
+                        </div>
+                      </header>
+                      <b:if cond='data:post.firstImageUrl'>
+                        <figure class="wd-post-hero-server">
+                          <img expr:src='data:post.firstImageUrl' expr:alt='data:post.title' width="1200" height="630" loading="eager" decoding="async"/>
+                        </figure>
+                      </b:if>
+                      <div class="wd-post-body">
+                        <data:post.body/>
+                      </div>
+                      <footer class="wd-post-footer">
+                        <a expr:href='data:blog.homepageUrl' class="wd-btn wd-btn-secondary wd-btn-sm">Back to WorkDaily</a>
+                      </footer>
+                    </article>
+                  </b:loop>
+                </div>
+              <b:elseif cond='data:view.isPage'/>
+                <!-- STATIC PAGE CONTAINER (Privacy Policy, Terms & Conditions, etc.) -->
                 <!-- STATIC PAGE CONTAINER (Privacy Policy, Terms & Conditions, etc.) -->
                 <div id="wd-static-page-view" class="wd-static-page-container">
                   <b:loop values='data:posts' var='post'>
@@ -5594,6 +5661,8 @@ body {
 
   /* BLOG SYSTEM & CLICK HANDLERS */
   async function initBlogSystem() {
+    // Real Blogger post URLs are fully server-rendered above; skip the SPA/feed on those pages.
+    if (document.getElementById("wd-server-post-view")) return;
     const categoryChips = document.querySelectorAll(".wd-category-chip");
     categoryChips.forEach(function(chip) {
       if (chip.dataset.bound) return;
