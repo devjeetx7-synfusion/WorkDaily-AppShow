@@ -3630,6 +3630,69 @@ body {
   #wd-article-content .wd-post-title { font-size: clamp(28px, 8vw, 38px); line-height: 1.15; }
   #wd-article-content .wd-post-body { font-size: 17px; line-height: 1.65; }
 }
+
+/* FINAL BUTTON + ARTICLE SPACING FIX */
+/* Article controls inherit the theme text color: white in dark mode, black in light mode. */
+#wd-article-content .wd-back-link,
+#wd-article-content .wd-share-btn {
+  color: var(--color-text) !important;
+  border-color: var(--color-text) !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+#wd-article-content .wd-back-link svg,
+#wd-article-content .wd-share-btn svg {
+  color: var(--color-text) !important;
+  stroke: currentColor !important;
+}
+#wd-article-content .wd-back-link:hover,
+#wd-article-content .wd-share-btn:hover {
+  color: var(--color-text) !important;
+  border-color: var(--color-text) !important;
+  background: rgba(127,127,127,.08) !important;
+  transform: none !important;
+}
+#wd-article-content .wd-post-header {
+  margin-bottom: 8px !important;
+}
+#wd-article-content .wd-post-top-bar {
+  margin-bottom: 10px !important;
+}
+#wd-article-content .wd-post-title {
+  margin-top: 0 !important;
+  margin-bottom: 10px !important;
+}
+#wd-article-content .wd-post-byline {
+  margin-bottom: 0 !important;
+}
+#wd-article-content .wd-post-body {
+  padding-top: 0 !important;
+  margin-top: 0 !important;
+}
+#wd-article-content .wd-post-body > img:first-child,
+#wd-article-content .wd-post-body > p:first-child img,
+#wd-article-content .wd-post-body > figure:first-child img {
+  margin-top: 4px !important;
+}
+@media (max-width: 767px) {
+  #wd-article-content .wd-single-post {
+    padding-top: 6px !important;
+  }
+  #wd-article-content .wd-post-header {
+    margin-bottom: 4px !important;
+  }
+  #wd-article-content .wd-post-top-bar {
+    margin-bottom: 9px !important;
+  }
+  #wd-article-content .wd-post-title {
+    margin-bottom: 8px !important;
+  }
+  #wd-article-content .wd-back-link,
+  #wd-article-content .wd-share-btn {
+    color: var(--color-text) !important;
+    border-color: var(--color-text) !important;
+  }
+}
 </b:skin>
 </head>
 <body>
