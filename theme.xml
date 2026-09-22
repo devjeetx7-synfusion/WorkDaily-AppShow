@@ -32,7 +32,11 @@
   <link expr:href='data:blog.canonicalUrl' rel='canonical'/>
 
   <!-- Dynamic Description Metadata -->
-  <b:if cond='data:view.description'>
+  <b:if cond='data:view.isHomepage and data:widgets.Blog.first.posts[0].snippet'>
+    <meta expr:content='data:widgets.Blog.first.posts[0].snippet.escaped' name='description'/>
+    <meta expr:content='data:widgets.Blog.first.posts[0].snippet.escaped' property='og:description'/>
+    <meta expr:content='data:widgets.Blog.first.posts[0].snippet.escaped' name='twitter:description'/>
+  <b:elseif cond='data:view.description'/>
     <meta expr:content='data:view.description.escaped' name='description'/>
     <meta expr:content='data:view.description.escaped' property='og:description'/>
     <meta expr:content='data:view.description.escaped' name='twitter:description'/>
@@ -43,7 +47,10 @@
   </b:if>
 
   <!-- Dynamic Open Graph & Twitter Title -->
-  <b:if cond='data:view.isHomepage'>
+  <b:if cond='data:view.isHomepage and data:widgets.Blog.first.posts[0]'>
+    <meta expr:content='data:widgets.Blog.first.posts[0].title.escaped' property='og:title'/>
+    <meta expr:content='data:widgets.Blog.first.posts[0].title.escaped' name='twitter:title'/>
+  <b:elseif cond='data:view.isHomepage'/>
     <meta content='WorkDaily - 100% Offline Attendance &amp; Wage Tracker' property='og:title'/>
     <meta content='WorkDaily - 100% Offline Attendance &amp; Wage Tracker' name='twitter:title'/>
   <b:else/>
