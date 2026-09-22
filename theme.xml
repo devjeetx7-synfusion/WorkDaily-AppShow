@@ -64,7 +64,16 @@
   <meta content='summary_large_image' name='twitter:card'/>
 
   <!-- Dynamic Social Preview Image -->
-  <b:if cond='data:view.featuredImage'>
+  <b:if cond='data:view.isHomepage and data:widgets.Blog.first.posts[0].featuredImage'>
+    <meta expr:content='data:widgets.Blog.first.posts[0].featuredImage resizeImage 1200' property='og:image'/>
+    <meta expr:content='data:widgets.Blog.first.posts[0].featuredImage resizeImage 1200' name='twitter:image'/>
+    <meta content='1200' property='og:image:width'/>
+    <meta content='630' property='og:image:height'/>
+    <meta expr:content='data:widgets.Blog.first.posts[0].title.escaped' property='og:title'/>
+    <meta expr:content='data:widgets.Blog.first.posts[0].title.escaped' name='twitter:title'/>
+    <meta expr:content='data:widgets.Blog.first.posts[0].snippet.escaped' property='og:description'/>
+    <meta expr:content='data:widgets.Blog.first.posts[0].snippet.escaped' name='twitter:description'/>
+  <b:elseif cond='data:view.featuredImage'/>
     <meta expr:content='resizeImage(data:view.featuredImage, 1200, &quot;1200:630&quot;)' property='og:image'/>
     <meta expr:content='resizeImage(data:view.featuredImage, 1200, &quot;1200:630&quot;)' name='twitter:image'/>
     <meta content='1200' property='og:image:width'/>
@@ -81,6 +90,8 @@
 
   <b:if cond='data:view.isPost'>
     <meta expr:content='data:view.title.escaped' property='og:image:alt'/>
+  <b:elseif cond='data:view.isHomepage and data:widgets.Blog.first.posts[0]'/>
+    <meta expr:content='data:widgets.Blog.first.posts[0].title.escaped' property='og:image:alt'/>
   <b:else/>
     <meta content='WorkDaily' property='og:image:alt'/>
   </b:if>
@@ -1274,16 +1285,20 @@ body {
 /* BOTTOM-RIGHT VERTICAL INDICATOR */
 .wd-indicator-wrapper {
   position: absolute;
-  right: 32px;
-  bottom: 90px;
+  left: 50%;
+  right: auto;
+  bottom: clamp(18px, 5vh, 42px);
+  transform: translateX(-50%);
   z-index: 100;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
+  max-width: min(92vw, 520px);
+  box-sizing: border-box;
   background: rgba(20, 25, 21, 0.75);
   backdrop-filter: blur(16px);
-  padding: 14px 10px;
+  padding: 10px 14px;
   border-radius: var(--radius-full);
   border: 1px solid rgba(255, 255, 255, 0.12);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
@@ -1299,10 +1314,11 @@ body {
   font-weight: 800;
   color: #FFFFFF;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   line-height: 1.1;
   font-variant-numeric: tabular-nums;
+  white-space: nowrap;
 }
 
 .wd-indicator-counter #wd-indicator-current {
@@ -1312,17 +1328,18 @@ body {
 .wd-indicator-sep {
   opacity: 0.4;
   font-size: 9px;
-  margin: 2px 0;
+  margin: 0 4px;
 }
 
 .wd-indicator-rail {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  gap: 8px;
-  width: 12px;
+  gap: 7px;
+  width: auto;
+  max-width: 70vw;
+  overflow: hidden;
 }
-
 .wd-indicator-dot {
   width: 6px;
   height: 6px;
@@ -2917,24 +2934,23 @@ body {
     }
 
     .wd-indicator-wrapper {
-      right: 8px;
-      bottom: calc(10px + env(safe-area-inset-bottom, 0px));
-      padding: 5px 4px;
+      left: 50%;
+      right: auto;
+      bottom: calc(8px + env(safe-area-inset-bottom, 0px));
+      transform: translateX(-50%);
+      padding: 5px 7px;
     }
   }
 
-  /* BOTTOM-RIGHT VERTICAL INDICATOR ON MOBILE */
+  /* HORIZONTAL INDICATOR ON MOBILE */
   .wd-indicator-wrapper {
-    position: absolute;
-    right: 12px;
-    bottom: calc(16px + env(safe-area-inset-bottom));
-    padding: 8px 6px;
-    gap: 8px;
-    border-radius: var(--radius-full);
-    z-index: 100;
-    background: rgba(14, 20, 16, 0.85);
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.15);
+    left: 50%;
+    right: auto;
+    bottom: calc(10px + env(safe-area-inset-bottom, 0px));
+    transform: translateX(-50%);
+    max-width: calc(100vw - 24px);
+    padding: 7px 9px;
+    gap: 9px;
   }
 
   .wd-indicator-counter {
@@ -2943,21 +2959,23 @@ body {
 
   .wd-indicator-sep {
     font-size: 8px;
-    margin: 1px 0;
+    margin: 0 3px;
   }
 
   .wd-indicator-rail {
     gap: 5px;
-    width: 10px;
+    max-width: calc(100vw - 95px);
   }
 
   .wd-indicator-dot {
+    flex: 0 0 auto;
     width: 5px;
     height: 5px;
   }
 
   .wd-indicator-dot.active {
-    height: 16px;
+    width: 16px;
+    height: 5px;
     border-radius: 8px;
   }
 
@@ -3179,6 +3197,66 @@ body {
 
 .wd-hero, .wd-showcase-section, .wd-benefits-section, .wd-blog-section, .wd-cta-section, .wd-footer { overflow-x: hidden; max-width: 100vw; }
 
+/* DEDICATED BLOGGER POST VIEW */
+.post-view {
+  overflow-x: hidden;
+}
+.post-view .wd-blog-section {
+  min-height: 100vh;
+  padding: 0;
+  margin: 0;
+  background: var(--color-bg);
+  border-top: 0;
+}
+.post-view .wd-blog-section > .wd-container {
+  width: 100%;
+  max-width: none;
+  padding: 0;
+  margin: 0;
+}
+.post-view .wd-section-header,
+.post-view #wd-blog-list-view,
+.post-view #wd-article-detail-view,
+.post-view .wd-blog-categories-wrap,
+.post-view .wd-pagination {
+  display: none !important;
+}
+.post-view .wd-main-content {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+.post-view .wd-server-post-container {
+  width: 100%;
+  max-width: 1100px;
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: clamp(28px, 5vw, 72px) clamp(16px, 4vw, 32px) 72px;
+  box-sizing: border-box;
+}
+.post-view .wd-server-post {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+}
+.post-view .wd-post-body img {
+  max-width: 100%;
+  height: auto;
+}
+.post-view .wd-post-body iframe,
+.post-view .wd-post-body video {
+  max-width: 100%;
+}
+.post-view .wd-post-body table {
+  max-width: 100%;
+  overflow-x: auto;
+  display: block;
+}
+.post-view .wd-post-body pre {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
 /* SHARE CONTROLS & POPOVER */
 .wd-server-post-container {
   width: 100%;
@@ -3336,6 +3414,8 @@ body {
 ]]></b:skin>
 </head>
 <body>
+  <b:class cond='data:view.isPost' name='post-view'/>
+  <b:class cond='data:view.isPage' name='page-view'/>
 
   <b:if cond='!data:view.isPost'>
   <!-- ================= HEADER ================= -->
@@ -4042,6 +4122,7 @@ body {
     </div>
   </section>
 
+  <b:if cond='!data:view.isPost'>
   <!-- ================= FOOTER ================= -->
   <footer class="wd-footer" id="footer">
     <div class="wd-footer-circle"></div>
@@ -4092,6 +4173,8 @@ body {
       </div>
     </div>
   </footer>
+
+  </b:if>
 
   <!-- Optional Blogger Footer Section for Widgets (suppressed) -->
   <b:section class='footer-section' id='footer-section' showelement='no'>
@@ -5115,8 +5198,8 @@ body {
         author,
         publishedAt,
         updatedAt,
-        permalink: permalink || ("#article/" + id),
-        url: permalink || ("#article/" + id),
+        permalink: permalink,
+        url: permalink,
         readingTime,
         isFeatured
       };
@@ -5878,11 +5961,11 @@ body {
             <span class="wd-blog-date">${post.publishedAt || ""}</span>
           </div>
           <h3 class="wd-blog-card-title">
-            <a href="#article/${encodeURIComponent(post.id)}">${post.title}</a>
+            <a href="${post.permalink || post.url}">${post.title}</a>
           </h3>
           <p class="wd-blog-snippet">${post.excerpt}</p>
           <div class="wd-blog-card-footer">
-            <a href="#article/${encodeURIComponent(post.id)}" class="wd-blog-read-more">
+            <a href="${post.permalink || post.url}" class="wd-blog-read-more">
               <span>Read Article</span>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </a>
@@ -5891,11 +5974,6 @@ body {
         </div>
       `;
 
-      card.addEventListener("click", function(e) {
-        if (e.metaKey || e.ctrlKey || e.shiftKey) return;
-        e.preventDefault();
-        window.WorkDailyRouter.openArticle(post.id);
-      });
 
       grid.appendChild(card);
     });
@@ -5945,10 +6023,10 @@ body {
               <span class="wd-featured-reading-time">${featured.readingTime || '1 min read'}</span>
             </div>
             <h3 class="wd-featured-title">
-              <a href="#article/${encodeURIComponent(featured.id)}">${featured.title}</a>
+              <a href="${featured.permalink || featured.url}">${featured.title}</a>
             </h3>
             <p class="wd-featured-desc">${featured.excerpt}</p>
-            <a href="#article/${encodeURIComponent(featured.id)}" class="wd-btn wd-btn-glass wd-featured-read-btn">
+            <a href="${featured.permalink || featured.url}" class="wd-btn wd-btn-glass wd-featured-read-btn">
               <span>Read Full Article</span>
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </a>
@@ -5958,14 +6036,6 @@ body {
       </div>
     `;
 
-    const featuredCard = featuredSlot.querySelector(".wd-featured-article");
-    if (featuredCard) {
-      featuredCard.addEventListener("click", function(e) {
-        if (e.metaKey || e.ctrlKey || e.shiftKey) return;
-        e.preventDefault();
-        window.WorkDailyRouter.openArticle(featured.id);
-      });
-    }
   };
 
   window.renderRelatedArticles = function(currentPostId) {
@@ -5998,11 +6068,11 @@ body {
             <span class="wd-blog-date">${post.publishedAt || ""}</span>
           </div>
           <h3 class="wd-blog-card-title">
-            <a href="#article/${encodeURIComponent(post.id)}">${post.title}</a>
+            <a href="${post.permalink || post.url}">${post.title}</a>
           </h3>
           <p class="wd-blog-snippet">${post.excerpt}</p>
           <div class="wd-blog-card-footer">
-            <a href="#article/${encodeURIComponent(post.id)}" class="wd-blog-read-more">
+            <a href="${post.permalink || post.url}" class="wd-blog-read-more">
               <span>Read Article</span>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </a>
@@ -6011,11 +6081,6 @@ body {
         </div>
       `;
 
-      card.addEventListener("click", function(e) {
-        if (e.metaKey || e.ctrlKey || e.shiftKey) return;
-        e.preventDefault();
-        window.WorkDailyRouter.openArticle(post.id);
-      });
 
       relatedGrid.appendChild(card);
     });
@@ -6266,7 +6331,7 @@ body {
 
     initAppImageLoaders(track);
 
-    // Build Vertical Indicator Dots
+    // Build Horizontal Indicator Dots
     workDailyScreens.forEach(function(_, index) {
       const dot = document.createElement("button");
       dot.className = "wd-indicator-dot" + (index === 0 ? " active" : "");
@@ -6317,7 +6382,7 @@ body {
       observer.observe(slide);
     });
 
-    // Edge boundary fallback for the horizontal showcase.
+    // Keep indicator synchronized with horizontal scroll.
     viewport.addEventListener("scroll", function() {
       if (viewport.scrollLeft <= 10) {
         if (activeIdx !== 0) {
@@ -6333,44 +6398,23 @@ body {
       }
     }, { passive: true });
 
-    // Convert vertical wheel input into horizontal showcase movement.
+    // Convert wheel input to horizontal movement while the pointer is over the showcase.
     viewport.addEventListener("wheel", function(e) {
       const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
       const atStart = viewport.scrollLeft <= 2;
       const atEnd = viewport.scrollLeft + viewport.clientWidth >= viewport.scrollWidth - 2;
 
-      if ((atStart && delta < 0) || (atEnd && delta > 0)) {
-        window.scrollBy({ top: delta, behavior: "instant" });
-        return;
-      }
-
-      if (delta !== 0) {
+      if (delta > 0 && !atEnd) {
+        e.preventDefault();
+        viewport.scrollBy({ left: delta, behavior: "auto" });
+      } else if (delta < 0 && !atStart) {
         e.preventDefault();
         viewport.scrollBy({ left: delta, behavior: "auto" });
       }
     }, { passive: false });
 
-    // Touch boundary handling for horizontal swipes.
-    let touchStartX = 0;
-    viewport.addEventListener("touchstart", function(e) {
-      if (e.touches && e.touches.length > 0) {
-        touchStartX = e.touches[0].clientX;
-      }
-    }, { passive: true });
-
-    viewport.addEventListener("touchmove", function(e) {
-      if (!e.touches || e.touches.length === 0) return;
-      const touchX = e.touches[0].clientX;
-      const deltaX = touchStartX - touchX;
-      const atStart = viewport.scrollLeft <= 2;
-      const atEnd = viewport.scrollLeft + viewport.clientWidth >= viewport.scrollWidth - 2;
-
-      if ((atStart && deltaX < 0) || (atEnd && deltaX > 0)) {
-        window.scrollBy({ top: deltaX, behavior: "instant" });
-        touchStartX = touchX;
-      }
-    }, { passive: true });
-
+    // Native touch scrolling handles horizontal swipes. Do not hijack touchmove;
+    // this prevents accidental vertical page jumps and keeps mobile scrolling responsive.
     function updateActiveIndicator(activeIndex) {
       currentNumEl.textContent = String(activeIndex + 1).padStart(2, '0');
       const dots = rail.querySelectorAll(".wd-indicator-dot");
