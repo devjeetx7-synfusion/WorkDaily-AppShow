@@ -3584,6 +3584,24 @@ body {
   .post-view .wd-server-post .wd-back-link,
   .post-view .wd-server-post .wd-share-btn { padding-left: 10px; padding-right: 10px; font-size: 12px; }
 }
+
+.post-view .wd-server-post-container { padding-top: 92px !important; }
+.post-view .wd-server-post .wd-post-body { width: min(900px, calc(100% - 24px)); padding-top: 24px; }
+.post-view .wd-server-post .wd-post-body img { display: block; max-width: 100%; margin: 10px auto; border-radius: 12px; }
+.post-view .wd-server-post .wd-post-footer { margin-top: 28px; padding-bottom: 16px; }
+.wd-blog-card { cursor: pointer; }
+.wd-blog-categories-wrap { display: flex !important; visibility: visible !important; opacity: 1 !important; }
+.wd-img-container.is-loaded .wd-img-loader,
+.wd-img-container.is-error .wd-img-loader { display: none !important; opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; }
+.wd-img-container.is-loaded .wd-img-spinner,
+.wd-img-container.is-error .wd-img-spinner { display: none !important; }
+@media (max-width: 767px) {
+  .post-view .wd-server-post-container { padding-top: 76px !important; }
+  .post-view .wd-server-post .wd-post-header { padding: 16px 14px 18px; }
+  .post-view .wd-server-post .wd-post-top-bar { margin-bottom: 16px; }
+  .post-view .wd-server-post .wd-post-body { width: calc(100% - 20px); padding-top: 18px; }
+  .post-view .wd-server-post .wd-post-body img { width: 100%; max-width: 100%; margin: 8px auto; border-radius: 10px; }
+}
 </b:skin>
 </head>
 <body>
@@ -4526,12 +4544,14 @@ body {
       img.addEventListener('error', markError);
     }
 
-    if (img.complete) {
-      if (img.naturalWidth > 0) {
-        markLoaded();
-      } else {
-        markError();
-      }
+    if (img.complete && img.naturalWidth > 0) {
+      markLoaded();
+    } else if (img.complete && img.naturalWidth === 0) {
+      // Give the browser a moment for dynamically inserted/lazy images before showing an error state.
+      container.classList.add('is-loading');
+      setTimeout(function() {
+        if (img.naturalWidth > 0) markLoaded();
+      }, 250);
     } else {
       container.classList.remove('is-loaded', 'is-error');
       container.classList.add('is-loading');
@@ -6094,12 +6114,15 @@ body {
 
     const categoryMap = new Map();
     allPosts.forEach(post => {
-      const cats = Array.isArray(post.categories) ? post.categories : [];
+      let cats = [];
+      if (Array.isArray(post.categories)) cats = cats.concat(post.categories);
+      if (Array.isArray(post.labels)) cats = cats.concat(post.labels);
+      if (post.category) cats.push(post.category);
       cats.forEach(cat => {
         const norm = window.normalizeCategoryLabel(cat);
-        if (!norm || norm.toLowerCase() === "featured") return;
-        const key = norm.toLowerCase();
-        if (!categoryMap.has(key)) categoryMap.set(key, norm);
+        if (!norm || norm.toLowerCase() === "featured" || norm.toLowerCase() === "article") return;
+        const key = norm.trim().toLowerCase();
+        if (!categoryMap.has(key)) categoryMap.set(key, norm.trim());
       });
     });
     const presentCategories = Array.from(categoryMap.values()).sort((a, b) => a.localeCompare(b, undefined, { sensitivity: "base" }));
@@ -6181,6 +6204,23 @@ body {
       `;
 
 
+      card.addEventListener("click", function(e) {
+        if (e.target.closest("a, button, input, textarea, select, video, iframe")) return;
+        const postId = card.getAttribute("data-post-id");
+        if (postId && window.WorkDailyRouter) {
+          e.preventDefault();
+          window.WorkDailyRouter.openArticle(postId);
+        }
+      });
+      card.setAttribute("role", "link");
+      card.setAttribute("tabindex", "0");
+      card.addEventListener("keydown", function(e) {
+        if (e.key !== "Enter" && e.key !== " ") return;
+        if (e.target !== card) return;
+        e.preventDefault();
+        const postId = card.getAttribute("data-post-id");
+        if (postId && window.WorkDailyRouter) window.WorkDailyRouter.openArticle(postId);
+      });
       grid.appendChild(card);
     });
   };
@@ -6575,6 +6615,7 @@ body {
     });
 
     initAppImageLoaders(track);
+    setTimeout(function() { initAppImageLoaders(track); }, 300);
 
     // Build Horizontal Indicator Dots
     workDailyScreens.forEach(function(_, index) {
