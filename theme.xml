@@ -71,8 +71,8 @@
     <meta expr:content='resizeImage(data:blog.postImageUrl, 1200, &quot;1200:630&quot;)' property='og:image'/>
     <meta expr:content='resizeImage(data:blog.postImageUrl, 1200, &quot;1200:630&quot;)' name='twitter:image'/>
   <b:else/>
-    <meta content='https://i.postimg.cc/3NRBHFJk/Screenshot-20260910-205058.jpg' property='og:image'/>
-    <meta content='https://i.postimg.cc/3NRBHFJk/Screenshot-20260910-205058.jpg' name='twitter:image'/>
+    <meta content='https://i.postimg.cc/hGvVCbsr/20260813-220349.png' property='og:image'/>
+    <meta content='https://i.postimg.cc/hGvVCbsr/20260813-220349.png' name='twitter:image'/>
   </b:if>
 
   <meta content='#F8FAFB' name='theme-color'/>
@@ -974,6 +974,28 @@ body {
 .wd-showcase-track {
   width: 100%;
 }
+
+.wd-showcase-track {
+  width: max-content;
+  min-width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+/* Horizontal showcase behavior only: slide visuals remain unchanged. */
+.wd-showcase-viewport {
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  touch-action: pan-x;
+}
+
+.wd-slide {
+  flex: 0 0 100%;
+  width: 100%;
+  min-width: 100%;
+}
+
 
 /* SHOWCASE SLIDE */
 .wd-slide {
@@ -3305,6 +3327,7 @@ body {
 </head>
 <body>
 
+  <b:if cond='!data:view.isPost'>
   <!-- ================= HEADER ================= -->
   <header class="wd-header" id="wd-header">
     <div class="wd-header-container">
@@ -3381,6 +3404,7 @@ body {
       </div>
     </div>
   </div>
+  </b:if>
 
   <!-- Blogger Layout Section for Header Widget (suppressed to prevent duplicate title text) -->
   <b:section class='header-section' id='header-section' maxwidgets='1' showelement='no'>
@@ -3391,7 +3415,7 @@ body {
     </b:widget>
   </b:section>
 
-  <b:if cond='!data:view.isPage'>
+  <b:if cond='!data:view.isPage and !data:view.isPost'>
   <!-- ================= HERO SECTION ================= -->
   <section class="wd-hero" id="hero">
     <div class="wd-hero-bg-glow"></div>
@@ -6241,7 +6265,7 @@ body {
         e.preventDefault();
         const targetSlide = document.getElementById("wd-slide-" + index);
         if (targetSlide && viewport) {
-          viewport.scrollTo({ top: targetSlide.offsetTop, behavior: "smooth" });
+          viewport.scrollTo({ left: targetSlide.offsetLeft, behavior: "smooth" });
         }
       });
       rail.appendChild(dot);
@@ -6283,14 +6307,14 @@ body {
       observer.observe(slide);
     });
 
-    // Edge boundary fallback scroll listener to guarantee returning to Screenshot 01
+    // Edge boundary fallback for the horizontal showcase.
     viewport.addEventListener("scroll", function() {
-      if (viewport.scrollTop <= 10) {
+      if (viewport.scrollLeft <= 10) {
         if (activeIdx !== 0) {
           activeIdx = 0;
           updateActiveIndicator(0);
         }
-      } else if (viewport.scrollTop + viewport.clientHeight >= viewport.scrollHeight - 20) {
+      } else if (viewport.scrollLeft + viewport.clientWidth >= viewport.scrollWidth - 20) {
         const lastIdx = workDailyScreens.length - 1;
         if (activeIdx !== lastIdx) {
           activeIdx = lastIdx;
@@ -6299,35 +6323,41 @@ body {
       }
     }, { passive: true });
 
-    // Wheel boundary handling to chain scroll to outer page when at top/bottom limits
+    // Convert vertical wheel input into horizontal showcase movement.
     viewport.addEventListener("wheel", function(e) {
-      const deltaY = e.deltaY;
-      const atTop = viewport.scrollTop <= 2;
-      const atBottom = viewport.scrollTop + viewport.clientHeight >= viewport.scrollHeight - 2;
+      const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
+      const atStart = viewport.scrollLeft <= 2;
+      const atEnd = viewport.scrollLeft + viewport.clientWidth >= viewport.scrollWidth - 2;
 
-      if ((atTop && deltaY < 0) || (atBottom && deltaY > 0)) {
-        window.scrollBy({ top: deltaY, behavior: "instant" });
+      if ((atStart && delta < 0) || (atEnd && delta > 0)) {
+        window.scrollBy({ top: delta, behavior: "instant" });
+        return;
       }
-    }, { passive: true });
 
-    // Touch boundary handling to chain touch swipe to outer page when at limits
-    let touchStartY = 0;
+      if (delta !== 0) {
+        e.preventDefault();
+        viewport.scrollBy({ left: delta, behavior: "auto" });
+      }
+    }, { passive: false });
+
+    // Touch boundary handling for horizontal swipes.
+    let touchStartX = 0;
     viewport.addEventListener("touchstart", function(e) {
       if (e.touches && e.touches.length > 0) {
-        touchStartY = e.touches[0].clientY;
+        touchStartX = e.touches[0].clientX;
       }
     }, { passive: true });
 
     viewport.addEventListener("touchmove", function(e) {
       if (!e.touches || e.touches.length === 0) return;
-      const touchY = e.touches[0].clientY;
-      const deltaY = touchStartY - touchY; // Positive = swiping UP (scrolling DOWN)
-      const atTop = viewport.scrollTop <= 2;
-      const atBottom = viewport.scrollTop + viewport.clientHeight >= viewport.scrollHeight - 2;
+      const touchX = e.touches[0].clientX;
+      const deltaX = touchStartX - touchX;
+      const atStart = viewport.scrollLeft <= 2;
+      const atEnd = viewport.scrollLeft + viewport.clientWidth >= viewport.scrollWidth - 2;
 
-      if ((atTop && deltaY < 0) || (atBottom && deltaY > 0)) {
-        window.scrollBy({ top: deltaY, behavior: "instant" });
-        touchStartY = touchY;
+      if ((atStart && deltaX < 0) || (atEnd && deltaX > 0)) {
+        window.scrollBy({ top: deltaX, behavior: "instant" });
+        touchStartX = touchX;
       }
     }, { passive: true });
 
@@ -6363,10 +6393,10 @@ body {
       const inView = rect.top < window.innerHeight && rect.bottom > 0;
       if (!inView) return;
 
-      if (e.key === "ArrowDown" || e.key === "PageDown") {
-        viewport.scrollBy({ top: viewport.clientHeight, behavior: "smooth" });
-      } else if (e.key === "ArrowUp" || e.key === "PageUp") {
-        viewport.scrollBy({ top: -viewport.clientHeight, behavior: "smooth" });
+      if (e.key === "ArrowRight" || e.key === "PageDown") {
+        viewport.scrollBy({ left: viewport.clientWidth, behavior: "smooth" });
+      } else if (e.key === "ArrowLeft" || e.key === "PageUp") {
+        viewport.scrollBy({ left: -viewport.clientWidth, behavior: "smooth" });
       }
     });
   }
